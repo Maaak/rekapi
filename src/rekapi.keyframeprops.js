@@ -3,24 +3,24 @@ rekapiModules.push(function (context) {
   'use strict';
 
   var DEFAULT_EASING = 'linear';
-  var Kapi = context.Kapi;
-  var Tweenable = Kapi.Tweenable;
-  var _ = Kapi._;
+  var Rekapi = context.Rekapi;
+  var Tweenable = Rekapi.Tweenable;
+  var _ = Rekapi._;
   var interpolate = Tweenable.interpolate;
 
 
   /**
-   * Represents an individual component of a `Kapi.Actor`'s keyframe state.  In many cases you won't need to deal with this directly, `Kapi.Actor` abstracts a lot of what this Object does away for you.
+   * Represents an individual component of a `Rekapi.Actor`'s keyframe state.  In many cases you won't need to deal with this directly, `Rekapi.Actor` abstracts a lot of what this Object does away for you.
    *
    * __[Example](../../../../docs/examples/keyprop.html)__
-   * @param {Kapi.Actor} ownerActor The Actor to which this KeyframeProperty is associated.
+   * @param {Rekapi.Actor} ownerActor The Actor to which this KeyframeProperty is associated.
    * @param {number} millisecond Where in the animation this KeyframeProperty lives.
    * @param {string} name The property's name, such as "x" or "opacity."
    * @param {number|string} value The value of `name`.  This is the value to animate to.
    * @param {string=} opt_easing The easing at which to animate to `value`.  Defaults to linear.
    * @constructor
    */
-  Kapi.KeyframeProperty = function (
+  Rekapi.KeyframeProperty = function (
       ownerActor, millisecond, name, value, opt_easing) {
     this.id = _.uniqueId('keyframeProperty_');
     this.ownerActor = ownerActor;
@@ -32,11 +32,11 @@ rekapiModules.push(function (context) {
 
     return this;
   };
-  var KeyframeProperty = Kapi.KeyframeProperty;
+  var KeyframeProperty = Rekapi.KeyframeProperty;
 
 
   /**
-   * Modify a `KeyframeProperty`.  Any of the following are valid properties of `newProperties` and correspond to the formal parameters of `Kapi.KeyframeProperty`:
+   * Modify a `KeyframeProperty`.  Any of the following are valid properties of `newProperties` and correspond to the formal parameters of `Rekapi.KeyframeProperty`:
    *
    * - _millisecond_ (__number__)
    * - _easing_ (__string__)
@@ -58,7 +58,7 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * Create the reference to the next KeyframeProperty in an `Actor`'s `KeyframeProperty` track.  Tracks are linked lists of `Kapi.KeyframeProperty`s.
+   * Create the reference to the next KeyframeProperty in an `Actor`'s `KeyframeProperty` track.  Tracks are linked lists of `Rekapi.KeyframeProperty`s.
    *
    * __[Example](../../../../docs/examples/keyprop_link_to_next.html)__
    * @param {KeyframeProperty} nextProperty The KeyframeProperty that immediately follows this one in an animation.
@@ -69,7 +69,7 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * Calculate the midpoint between this `Kapi.KeyframeProperty` and the next `Kapi.KeyframeProperty` in a `Kapi.Actor`'s `Kapi.KeyframeProperty` track.
+   * Calculate the midpoint between this `Rekapi.KeyframeProperty` and the next `Rekapi.KeyframeProperty` in a `Rekapi.Actor`'s `Rekapi.KeyframeProperty` track.
    *
    * __[Example](../../../../docs/examples/keyprop_get_value_at.html)__
    * @param {number} millisecond The point in the animation to compute.
@@ -96,7 +96,7 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * Export a serializable `Object` of this `Kapi.KeyframeProperty`'s state data.
+   * Export a serializable `Object` of this `Rekapi.KeyframeProperty`'s state data.
    *
    * __[Example](../../../../docs/examples/keyprop_export_property_data.html)__
    * @return {Object}
