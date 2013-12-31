@@ -2,8 +2,8 @@ rekapiModules.push(function (context) {
 
   'use strict';
 
-  var Kapi = context.Kapi;
-  var _ = Kapi._;
+  var Rekapi = context.Rekapi;
+  var _ = Rekapi._;
 
 
   // PRIVATE UTILITY FUNCTIONS
@@ -29,77 +29,77 @@ rekapiModules.push(function (context) {
 
   /*!
    * Takes care of some pre-drawing tasks for canvas animations.
-   * @param {Kapi}
+   * @param {Rekapi}
    */
-  function beforeDraw (kapi) {
-    if (kapi.config.clearOnUpdate) {
-      kapi.canvas.clear();
+  function beforeDraw (rekapi) {
+    if (rekapi.config.clearOnUpdate) {
+      rekapi.canvas.clear();
     }
   }
 
 
   /*!
    * Draw all the `Actor`s at whatever position they are currently in.
-   * @param {Kapi}
-   * @return {Kapi}
+   * @param {Rekapi}
+   * @return {Rekapi}
    */
-  function draw (kapi) {
-    fireEvent(kapi, 'beforeDraw', _);
-    var len = kapi.canvas._drawOrder.length;
+  function draw (rekapi) {
+    fireEvent(rekapi, 'beforeDraw', _);
+    var len = rekapi.canvas._drawOrder.length;
     var drawOrder;
 
-    if (kapi.canvas._drawOrderSorter) {
+    if (rekapi.canvas._drawOrderSorter) {
       var orderedActors =
-          _.sortBy(kapi.canvas._canvasActors, kapi.canvas._drawOrderSorter);
+          _.sortBy(rekapi.canvas._canvasActors, rekapi.canvas._drawOrderSorter);
       drawOrder = _.pluck(orderedActors, 'id');
     } else {
-      drawOrder = kapi.canvas._drawOrder;
+      drawOrder = rekapi.canvas._drawOrder;
     }
 
     var currentActor, canvas_context;
 
     var i;
     for (i = 0; i < len; i++) {
-      currentActor = kapi.canvas._canvasActors[drawOrder[i]];
+      currentActor = rekapi.canvas._canvasActors[drawOrder[i]];
       canvas_context = currentActor.context();
       currentActor.draw(canvas_context, currentActor.get());
     }
-    fireEvent(kapi, 'afterDraw', _);
+    fireEvent(rekapi, 'afterDraw', _);
 
-    return kapi;
+    return rekapi;
   }
 
 
   /*!
-   * @param {Kapi} kapi
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi} rekapi
+   * @param {Rekapi.Actor} actor
    */
-  function addActor (kapi, actor) {
-    if (actor instanceof Kapi.CanvasActor) {
-      kapi.canvas._drawOrder.push(actor.id);
-      kapi.canvas._canvasActors[actor.id] = actor;
+  function addActor (rekapi, actor) {
+    if (actor instanceof Rekapi.CanvasActor) {
+      rekapi.canvas._drawOrder.push(actor.id);
+      rekapi.canvas._canvasActors[actor.id] = actor;
     }
   }
 
 
   /*!
-   * @param {Kapi} kapi
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi} rekapi
+   * @param {Rekapi.Actor} actor
    */
-  function removeActor (kapi, actor) {
-    if (actor instanceof Kapi.CanvasActor) {
-      kapi.canvas._drawOrder = _.without(kapi.canvas._drawOrder, actor.id);
-      delete kapi.canvas._canvasActors[actor.id];
+  function removeActor (rekapi, actor) {
+    if (actor instanceof Rekapi.CanvasActor) {
+      rekapi.canvas._drawOrder = _.without(rekapi.canvas._drawOrder, actor.id);
+      delete rekapi.canvas._canvasActors[actor.id];
     }
   }
 
 
   /*!
-   * Sets up an instance of CanvasRenderer and attaches it to a `Kapi`
-   * instance.  Also augments the Kapi instance with canvas-specific
+   * Sets up an instance of CanvasRenderer and attaches it to a `Rekapi`
+   * instance.  Also augments the Rekapi instance with canvas-specific
    * functions.
    */
-  Kapi.prototype._contextInitHook.canvas = function () {
+  Rekapi.prototype._contextInitHook.canvas = function () {
     if (!this.context.getContext) {
       return;
     }
@@ -112,7 +112,7 @@ rekapiModules.push(function (context) {
       ,'afterDraw': []
     });
 
-    // Set the dimensions on the <canvas> element based on Kapi constructor
+    // Set the dimensions on the <canvas> element based on Rekapi constructor
     // parameters
     _.each(['Height', 'Width'], function (dimension) {
       var dimensionLower = dimension.toLowerCase();
@@ -135,34 +135,34 @@ rekapiModules.push(function (context) {
   /**
    * You can use Rekapi to render to an HTML5 `<canvas>`.  The Canvas renderer does a few things:
    *
-   *   1. It subclasses `Kapi.Actor` as `Kapi.CanvasActor`.
-   *   2. If the  `Kapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Kapi.CanvasRenderer` to the `Kapi` instance, named `canvas`, at initialization time.  So:
-   *   3. It maintains a layer list that defines draw order for [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
+   *   1. It subclasses `Rekapi.Actor` as `Rekapi.CanvasActor`.
+   *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `canvas`, at initialization time.  So:
+   *   3. It maintains a layer list that defines draw order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
    *
    * ```
    * // With the Rekapi Canvas renderer loaded
-   * var kapi = new Kapi({ context: document.createElement('canvas') });
-   * kapi.canvas instanceof Kapi.CanvasRenderer; // true
+   * var rekapi = new Rekapi({ context: document.createElement('canvas') });
+   * rekapi.canvas instanceof Rekapi.CanvasRenderer; // true
    * ```
    *
-   * __Note:__ This `Kapi.CanvasRenderer` constructor is called for you automatically - there is no need to call it explicitly.
+   * __Note:__ This `Rekapi.CanvasRenderer` constructor is called for you automatically - there is no need to call it explicitly.
    *
-   * The Canvas renderer adds some new events you can bind to with [`Kapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Kapi#off`](../../src/rekapi.core.js.html#off)).
+   * The Canvas renderer adds some new events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)).
    *
    *  - __beforeDraw__: Fires just before an actor is drawn to the screen.
    *  - __afterDraw__: Fires just after an actor is drawn to the screen.
    *
-   * @param {Kapi} kapi
+   * @param {Rekapi} rekapi
    * @constructor
    */
-  Kapi.CanvasRenderer = function (kapi) {
-    this.kapi = kapi;
+  Rekapi.CanvasRenderer = function (rekapi) {
+    this.rekapi = rekapi;
     this._drawOrder = [];
     this._drawOrderSorter = null;
     this._canvasActors = {};
     return this;
   };
-  var CanvasRenderer = Kapi.CanvasRenderer;
+  var CanvasRenderer = Rekapi.CanvasRenderer;
 
 
   /**
@@ -172,7 +172,7 @@ rekapiModules.push(function (context) {
    * @return {number}
    */
   CanvasRenderer.prototype.height = function (opt_height) {
-    return dimension(this.kapi.context, 'height', opt_height);
+    return dimension(this.rekapi.context, 'height', opt_height);
   };
 
 
@@ -183,42 +183,42 @@ rekapiModules.push(function (context) {
    * @return {number}
    */
   CanvasRenderer.prototype.width = function (opt_width) {
-    return dimension(this.kapi.context, 'width', opt_width);
+    return dimension(this.rekapi.context, 'width', opt_width);
   };
 
 
   /**
    * Erase the `<canvas>`.
    *
-   * @return {Kapi}
+   * @return {Rekapi}
    */
   CanvasRenderer.prototype.clear = function () {
     // TODO: Is this check necessary?
-    if (this.kapi.context.getContext) {
+    if (this.rekapi.context.getContext) {
       this.context().clearRect(
           0, 0, this.width(), this.height());
     }
 
-    return this.kapi;
+    return this.rekapi;
   };
 
 
   /**
-   * Retrieve the 2d context of the `<canvas>` that is set as the `Kapi` instance's rendering context.  This is needed for all rendering operations.  It is also provided to a [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)'s `draw` method, so you mostly won't need to call it directly.  See the [MDN](https://developer.mozilla.org/en/Drawing_Graphics_with_Canvas) for info on the Canvas context APIs.
+   * Retrieve the 2d context of the `<canvas>` that is set as the `Rekapi` instance's rendering context.  This is needed for all rendering operations.  It is also provided to a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)'s `draw` method, so you mostly won't need to call it directly.  See the [MDN](https://developer.mozilla.org/en/Drawing_Graphics_with_Canvas) for info on the Canvas context APIs.
    * @return {CanvasRenderingContext2D}
    */
   CanvasRenderer.prototype.context = function () {
-    return this.kapi.context.getContext('2d');
+    return this.rekapi.context.getContext('2d');
   };
 
 
   /**
-   * Move a [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html) around in the layer list.  Each layer has one [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html), and [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s are drawn in order of their layer.  Lower layers (starting with 0) are drawn earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
+   * Move a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html) around in the layer list.  Each layer has one [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html), and [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are drawn in order of their layer.  Lower layers (starting with 0) are drawn earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
    *
    * __[Example](../../../../docs/examples/canvas_move_actor_to_layer.html)__
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {number} layer
-   * @return {Kapi.Actor|undefined}
+   * @return {Rekapi.Actor|undefined}
    */
   CanvasRenderer.prototype.moveActorToLayer = function (actor, layer) {
     if (layer < this._drawOrder.length) {
@@ -233,31 +233,31 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * Set a function that defines the draw order of the [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s are drawn.  The following example assumes that all [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Kapi.KeyframeProperty`](../../src/rekapi.keyframeprops.js.html).  The circles will be drawn in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
+   * Set a function that defines the draw order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are drawn.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframeprops.js.html).  The circles will be drawn in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
    *
    * ```
-   * kapi.canvas.setOrderFunction(function (actor) {
+   * rekapi.canvas.setOrderFunction(function (actor) {
    *   return actor.get().radius;
    * });
    * ```
-   * @param {function(Kapi.Actor,number)} sortFunction
-   * @return {Kapi}
+   * @param {function(Rekapi.Actor,number)} sortFunction
+   * @return {Rekapi}
    */
   CanvasRenderer.prototype.setOrderFunction = function (sortFunction) {
     this._drawOrderSorter = sortFunction;
-    return this.kapi;
+    return this.rekapi;
   };
 
 
   /**
-   * Remove the sort order function set by [`setOrderFunction`](#setOrderFunction).  Draw order defaults back to the order in which [`Kapi.CanvasActor`](rekapi.canvas.actor.js.html)s were added.
+   * Remove the sort order function set by [`setOrderFunction`](#setOrderFunction).  Draw order defaults back to the order in which [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s were added.
    *
    * __[Example](../../../../docs/examples/canvas_unset_order_function.html)__
-   * @return {Kapi}
+   * @return {Rekapi}
    */
   CanvasRenderer.prototype.unsetOrderFunction = function () {
     this._drawOrderSorter = null;
-    return this.kapi;
+    return this.rekapi;
   };
 
 });
