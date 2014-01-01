@@ -264,7 +264,7 @@ $(function () {
       'color': '#333'
     }));
 
-  var controls = new RerekapiScrubber(rekapi, canvas);
+  var controls = new RekapiScrubber(rekapi, canvas);
   updatePath();
   rekapi.play();
 

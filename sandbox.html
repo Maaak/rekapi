@@ -16,7 +16,7 @@
       <h2>A keyframe animation library for JavaScript</h2>
     </header>
     <p class="center">
-      Learn about the Actor API <a href="/dist/doc/src/rekapi.actor.js.html" target="_blank">here</a>. Preview the available easing formulae <a href="ease.html">here</a>.
+      Learn about the Actor API <a href="/dist/doc/src/rekapi.actor.js.html" target="_blank">here</a>. Preview the available easing curves <a href="ease.html">here</a>.
     </p>
     <p class="center">
 
@@ -62,12 +62,12 @@
       editor.getSession().setMode(new JavaScriptMode());
 
       canvas = $('canvas')
-      ,kapi = new Kapi({
+      ,rekapi = new Rekapi({
           'context': canvas[0]
           ,'height': 480
           ,'width': 400
         })
-      ,actor = new Kapi.CanvasActor({
+      ,actor = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -85,7 +85,7 @@
       });
 
       canvas.css('background', '#eee');
-      kapi.addActor(actor);
+      rekapi.addActor(actor);
       var update = $('#update')
           ,oldCode = editor.getSession().getValue();
 
@@ -93,17 +93,17 @@
         var newCode = editor.getSession().getValue();
 
         try {
-          kapi.stop();
+          rekapi.stop();
           actor.removeAllKeyframeProperties();
           eval(newCode);
-          kapi.play();
+          rekapi.play();
           oldCode = newCode;
         } catch (ex) {
           // eval failed, run the last code that didn't error out
-          kapi.stop();
+          rekapi.stop();
           actor.removeAllKeyframeProperties();
           eval(oldCode);
-          kapi.play();
+          rekapi.play();
           canvas.css('background', '#ff45b1');
 
           setTimeout(function () {
@@ -125,11 +125,11 @@
       });
 
       $('#play').on('click', function () {
-        kapi.play();
+        rekapi.play();
       });
 
       $('#pause').on('click', function () {
-        kapi.pause();
+        rekapi.pause();
       });
 
       update.click();
