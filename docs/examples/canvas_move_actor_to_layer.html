@@ -11,13 +11,13 @@
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
 
-      var kapi = new Kapi({
+      var rekapi = new Rekapi({
         'context': canvas,
         'height': 300,
         'width': 400
       });
 
-      var actor1 = new Kapi.CanvasActor({
+      var actor1 = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -35,7 +35,7 @@
         }
       });
 
-      var actor2 = new Kapi.CanvasActor({
+      var actor2 = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -53,25 +53,25 @@
         }
       });
 
-      kapi.addActor(actor1);
+      rekapi.addActor(actor1);
       actor1
         .keyframe(0, { x: 50,  y: 50 })
         .wait(1000);
 
-      kapi.addActor(actor2);
+      rekapi.addActor(actor2);
       actor2
         .keyframe(0, { x: 75,  y: 75 })
         .wait(1000);
 
-      kapi.play();
+      rekapi.play();
 
       // Alternate the layers on a loop
       var actor2IsOnTop = true;
       setInterval(function () {
         if (actor2IsOnTop) {
-          kapi.canvas.moveActorToLayer(actor2, 0);
+          rekapi.canvas.moveActorToLayer(actor2, 0);
         } else {
-          kapi.canvas.moveActorToLayer(actor2, 1);
+          rekapi.canvas.moveActorToLayer(actor2, 1);
         }
         actor2IsOnTop = !actor2IsOnTop;
       }, 500);

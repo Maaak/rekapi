@@ -11,13 +11,13 @@
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
 
-      var kapi = new Kapi({
+      var rekapi = new Rekapi({
         'context': canvas,
         'height': 300,
         'width': 400
       });
 
-      var actor = new Kapi.CanvasActor({
+      var actor = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -35,9 +35,9 @@
         }
       });
 
-      kapi.addActor(actor);
+      rekapi.addActor(actor);
 
-      var retrievedActor = kapi.getActor(0);
+      var retrievedActor = rekapi.getActor(0);
       console.log(retrievedActor);
       console.log(actor === retrievedActor);
     </script>

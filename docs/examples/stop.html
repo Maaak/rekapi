@@ -11,13 +11,13 @@
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
 
-      var kapi = new Kapi({
+      var rekapi = new Rekapi({
         'context': canvas,
         'height': 300,
         'width': 400
       });
 
-      var actor = new Kapi.CanvasActor({
+      var actor = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -35,15 +35,15 @@
         }
       });
 
-      kapi.addActor(actor);
+      rekapi.addActor(actor);
       actor
         .keyframe(0,    { x: 50,  y: 50 })
         .keyframe(1000, { x: 200, y: 150 });
 
-      kapi.play();
+      rekapi.play();
 
       setTimeout(function () {
-        kapi.stop();
+        rekapi.stop();
       }, 750);
     </script>
   </body>

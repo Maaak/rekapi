@@ -11,13 +11,13 @@
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
 
-      var kapi = new Kapi({
+      var rekapi = new Rekapi({
         'context': canvas,
         'height': 300,
         'width': 400
       });
 
-      var actor1 = new Kapi.CanvasActor({
+      var actor1 = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -35,7 +35,7 @@
         }
       });
 
-      var actor2 = new Kapi.CanvasActor({
+      var actor2 = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -53,26 +53,26 @@
         }
       });
 
-      kapi.addActor(actor1);
+      rekapi.addActor(actor1);
       actor1
         .keyframe(0, { x: 100,  y: 50, radius: 50 })
         .wait(2000);
 
-      kapi.addActor(actor2);
+      rekapi.addActor(actor2);
       actor2
         .keyframe(0, { x: 100,  y: 100, radius: 25 })
         .keyframe(2000, { radius: 75 });
 
       // Larger circles are drawn first.  Once actor2 grows larger than actor1,
       // it will be drawn on top.
-      kapi.canvas.setOrderFunction(function (actor) {
+      rekapi.canvas.setOrderFunction(function (actor) {
         return actor.get().radius;
       });
 
       // Allow actors to be drawn in default order.
-      kapi.canvas.unsetOrderFunction();
+      rekapi.canvas.unsetOrderFunction();
 
-      kapi.play();
+      rekapi.play();
 
     </script>
   </body>

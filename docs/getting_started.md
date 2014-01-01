@@ -1,18 +1,18 @@
 # Getting started
 
 Although Rekapi can render any type of View, such as DOM, let's start off by
-making a simple `<canvas>` animation.  The first step is to  make a new `Kapi`
+making a simple `<canvas>` animation.  The first step is to  make a new `Rekapi`
 instance.  Canvas animations require a `<canvas>` element to render to, which
-we will supply to the `Kapi` constructor:
+we will supply to the `Rekapi` constructor:
 
 ````javascript
 var canvas = document.getElementsByTagName('canvas')[0];
-var kapi = new Kapi({
+var rekapi = new Rekapi({
     'context': canvas
   });
 ````
 
-So now we have a Kapi instance... but it won't do terribly much until you
+So now we have a Rekapi instance... but it won't do terribly much until you
 define and add some Actors.
 
 ## Defining Actors
@@ -20,7 +20,7 @@ define and add some Actors.
 Here's the boilerplate for a canvas Actor:
 
 ````javascript
-var actor = new Kapi.CanvasActor({
+var actor = new Rekapi.CanvasActor({
 
   // Called every frame.  Receives a reference to the canvas context, and the
   // Actor's state.
@@ -35,11 +35,11 @@ Continuing from before, here's a sample implementation for a canvas actor:
 
 ````javascript
 var canvas = document.getElementsByTagName('canvas')[0];
-var kapi = new Kapi({
+var rekapi = new Rekapi({
     'context': canvas
   });
 
-var actor = new Kapi.CanvasActor({
+var actor = new Rekapi.CanvasActor({
   // Draws a circle.
   'draw': function (context, state) {
     context.beginPath();
@@ -58,13 +58,13 @@ var actor = new Kapi.CanvasActor({
 ````
 
 The Actor's `draw` method can do whatever you want it to, really.  The idea is
-that the `context` and `state` parameters are computed by `kapi`, and then
+that the `context` and `state` parameters are computed by `rekapi`, and then
 rendered to the `<canvas>` by the Actor's `draw` method.
 
-Now that we have an Actor instance, we just need to add it to `kapi`:
+Now that we have an Actor instance, we just need to add it to `rekapi`:
 
 ````javascript
-kapi.addActor(actor);
+rekapi.addActor(actor);
 ````
 
 Now we can define some keyframes.
@@ -118,19 +118,19 @@ So now we've set up a sweet animation - let's run it and see what it looks
 like.  Continuing from before:
 
 ````javascript
-kapi.play();
+rekapi.play();
 ````
 
 And the animation will just loop continuously.  We can also pass a `number` to
 `play()` to define how many times to play before stopping, like so:
 
 ````javascript
-kapi.play(3);
+rekapi.play(3);
 ````
 
 That will play the animation three times and stop.  When an animation stops, it
 will will just sit at the last frame that was rendered.  You can control the
-animation flow with `kapi.pause()` and `kapi.stop()`.
+animation flow with `rekapi.pause()` and `rekapi.stop()`.
 
 ## All together
 
@@ -146,11 +146,11 @@ Copy/paste/save this onto your machine to see a simple Rekapi animation:
   <canvas></canvas>
   <script>
   var canvas = document.getElementsByTagName('canvas')[0],
-      kapi = new Kapi({
+      rekapi = new Rekapi({
         'context': canvas
       });
 
-  var actor = new Kapi.CanvasActor({
+  var actor = new Rekapi.CanvasActor({
     // Draws a circle.
     'draw': function (context, state) {
       context.beginPath();
@@ -167,7 +167,7 @@ Copy/paste/save this onto your machine to see a simple Rekapi animation:
     }
   });
 
-  kapi.addActor(actor);
+  rekapi.addActor(actor);
 
   actor
     .keyframe(0, {
@@ -179,7 +179,7 @@ Copy/paste/save this onto your machine to see a simple Rekapi animation:
       y: 100
     }, 'easeOutExpo');
 
-  kapi.play();
+  rekapi.play();
 
   </script>
 </body>

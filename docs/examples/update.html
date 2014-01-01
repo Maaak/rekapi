@@ -8,14 +8,14 @@
   </head>
   <body>
     <script>
-      var kapi = new Kapi();
+      var rekapi = new Rekapi();
       
       var position = {
         x: 0,
         y: 0
       };
 
-      var actor = new Kapi.Actor({
+      var actor = new Rekapi.Actor({
         'context': position,
         'update': function(context, state) {
           context.x = state.x,
@@ -23,7 +23,7 @@
         }
       });
 
-      kapi.addActor(actor);
+      rekapi.addActor(actor);
       actor
         .keyframe(0,    { x: 50,  y: 50 })
         .keyframe(1000, { x: 200, y: 150 });
@@ -32,7 +32,7 @@
 
       // This updates the state of `position` at 500 millisecond in the animation.
       // This method is also used for the canvas extension (see docs/examples/draw.html)
-      kapi.update(500);
+      rekapi.update(500);
       
       console.log("position: " + position.x + ", " + position.y);
     </script>

@@ -11,13 +11,13 @@
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
 
-      var kapi = new Kapi({
+      var rekapi = new Rekapi({
         'context': canvas,
         'height': 300,
         'width': 400
       });
 
-      var actor = new Kapi.CanvasActor({
+      var actor = new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -38,10 +38,10 @@
       // A context wasn't specified - this logs `undefined`.
       console.log(actor.context());
 
-      kapi.addActor(actor);
+      rekapi.addActor(actor);
 
-      // Actually logs out kapi's context.  No context was specified for the
-      // actor when it was initialized, so it defaulted to kapi's context.
+      // Actually logs out rekapi's context.  No context was specified for the
+      // actor when it was initialized, so it defaulted to rekapi's context.
       console.log(actor.context());
     </script>
   </body>
