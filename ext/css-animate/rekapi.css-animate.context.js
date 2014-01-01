@@ -2,9 +2,9 @@ rekapiModules.push(function (context) {
 
   'use strict';
 
-  var Kapi = context.Kapi;
-  var _ = Kapi._;
-  var now = Kapi.Tweenable.now;
+  var Rekapi = context.Rekapi;
+  var _ = Rekapi._;
+  var now = Rekapi.Tweenable.now;
 
 
   // CONSTANTS
@@ -19,7 +19,7 @@ rekapiModules.push(function (context) {
   // PRIVATE UTILITY FUNCTIONS
   //
 
-  Kapi.prototype._contextInitHook.cssAnimate = function () {
+  Rekapi.prototype._contextInitHook.cssAnimate = function () {
     this.css = new CSSRenderer(this);
   };
 
@@ -69,13 +69,13 @@ rekapiModules.push(function (context) {
    * sure what causes this issue.  Not sure why this fixes it.  Not sure if
    * this affects Blink-based Opera browsers.
    *
-   * @param {Kapi} kapi
+   * @param {Rekapi} kapi
    */
   function forceStyleInjection (kapi) {
     var dummyDiv = document.createElement('div');
 
     _.each(kapi.getAllActors(), function (actor) {
-      if (actor instanceof Kapi.DOMActor) {
+      if (actor instanceof Rekapi.DOMActor) {
         var actorEl = actor._context;
         var actorElParent = actorEl.parentElement;
 
@@ -105,15 +105,15 @@ rekapiModules.push(function (context) {
    *
    *   - No start/stop/goto control - once the animation runs, it runs from start to finish.
    *   - Prerending animations can take a non-trivial amount of time, so you may have to be clever with how to spend the cycles to do it.
-   *   - Currently, no `Kapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
+   *   - Currently, no `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
    *
-   * This module requires both the [`toCSS`](/dist/doc/ext/to-css/rekapi.to-css.js.html) and [`Kapi.DOMActor`](/dist/doc/ext/dom/rekapi.dom.actor.js.html) modules (they are included in the standard Rekapi distribution).  Functionally, `CSSRenderer` works by prerendering a CSS animation and injecting it into the DOM.  You'll never have to call the `CSSRenderer` constructor explicitly, that is done for you when a Rekapi instance is initialized.
+   * This module requires both the [`toCSS`](/dist/doc/ext/to-css/rekapi.to-css.js.html) and [`Rekapi.DOMActor`](/dist/doc/ext/dom/rekapi.dom.actor.js.html) modules (they are included in the standard Rekapi distribution).  Functionally, `CSSRenderer` works by prerendering a CSS animation and injecting it into the DOM.  You'll never have to call the `CSSRenderer` constructor explicitly, that is done for you when a Rekapi instance is initialized.
    *
    * An advantage of this module is that CSS animations are not always available, but JavaScript animations are.  Keyframes are defined the same way, but you can choose what method of animation is appropriate at runtime:
    *
    * ```
-   *  var kapi = new Kapi();
-   *  var actor = new Kapi.DOMActor(document.getElementById('actor-1'));
+   *  var kapi = new Rekapi();
+   *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
    *
    *  kapi.addActor(actor);
    *  actor.keyframe(0,    { left: '0px'   });
@@ -129,11 +129,11 @@ rekapiModules.push(function (context) {
    *
    * __[Example](/ext/css-animate/sample/play-many-actors.html)__
    *
-   * @param {Kapi} kapi
+   * @param {Rekapi} kapi
    * @constructor
    */
-  Kapi.CSSRenderer = function (kapi) {
-    if (!Kapi.DOMActor && !Kapi.prototype.toCSS) {
+  Rekapi.CSSRenderer = function (kapi) {
+    if (!Rekapi.DOMActor && !Rekapi.prototype.toCSS) {
       throw 'CSSRenderer requires the DOMActor and toCSS modules.';
     }
 
@@ -158,7 +158,7 @@ rekapiModules.push(function (context) {
 
     return this;
   };
-  var CSSRenderer = Kapi.CSSRenderer;
+  var CSSRenderer = Rekapi.CSSRenderer;
 
 
   /**
