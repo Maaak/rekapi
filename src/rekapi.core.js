@@ -1,8 +1,8 @@
 var rekapiModules = [];
 
 // A hack for UglifyJS defines
-if (typeof KAPI_DEBUG === 'undefined') {
-  KAPI_DEBUG = true;
+if (typeof REKAPI_DEBUG === 'undefined') {
+  REKAPI_DEBUG = true;
 }
 
 
@@ -634,7 +634,7 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.util = {};
 
   // Some hooks for testing.
-  if (KAPI_DEBUG) {
+  if (REKAPI_DEBUG) {
     Rekapi._private = {
       'calculateLoopPosition': calculateLoopPosition
       ,'updateToCurrentMillisecond': updateToCurrentMillisecond

@@ -715,7 +715,7 @@ rekapiModules.push(function (context) {
     return serializedProps.join('');
   }
 
-  if (KAPI_DEBUG) {
+  if (REKAPI_DEBUG) {
     Rekapi._private.toCSS = {
       'TRANSFORM_TOKEN': TRANSFORM_TOKEN
       ,'VENDOR_TOKEN': VENDOR_TOKEN

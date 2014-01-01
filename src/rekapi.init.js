@@ -37,7 +37,7 @@ if (typeof define === 'function' && define.amd) {
                   underscore: underscoreSupportsAMD ? Underscore : _ };
     var Rekapi = rekapi({}, deps);
 
-    if (KAPI_DEBUG) {
+    if (REKAPI_DEBUG) {
       Rekapi.underscore_version = deps.underscore.VERSION;
     }
 
