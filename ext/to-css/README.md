@@ -38,7 +38,7 @@ There's only one command you need to export a Rekapi animation to CSS
 
 ````javascript
 var container = document.getElementById('container');
-var animation = new Kapi(container);
+var animation = new Rekapi(container);
 
 // Easy!
 var css = animation.toCSS();
@@ -88,5 +88,5 @@ animation.toCSS(options);
   * name: Define a custom name for your animation.  This becomes the class name
   targeted in the generated CSS selector, and also the name of the `@keyframes`
   rule that is generated.  Note that this does not match the CSS class that is
-  automatically added to the `Kapi.DOMActor` DOM element, so you will have to
+  automatically added to the `Rekapi.DOMActor` DOM element, so you will have to
   add that yourself.

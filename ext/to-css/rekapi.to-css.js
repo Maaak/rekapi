@@ -2,8 +2,8 @@ rekapiModules.push(function (context) {
 
   'use strict';
 
-  var Kapi = context.Kapi;
-  var _ = Kapi._;
+  var Rekapi = context.Rekapi;
+  var _ = Rekapi._;
 
 
   // CONSTANTS
@@ -12,7 +12,7 @@ rekapiModules.push(function (context) {
   var DEFAULT_FPS = 30;
   var TRANSFORM_TOKEN = 'TRANSFORM';
   var VENDOR_TOKEN = 'VENDOR';
-  var VENDOR_PREFIXES = Kapi.util.VENDOR_PREFIXES = {
+  var VENDOR_PREFIXES = Rekapi.util.VENDOR_PREFIXES = {
     'microsoft': '-ms-'
     ,'mozilla': '-moz-'
     ,'opera': '-o-'
@@ -74,7 +74,7 @@ rekapiModules.push(function (context) {
   //
 
   /**
-   * With `toCSS`, Rekapi can export your animations as CSS `@keyframes`.  `toCSS` depends on [`Kapi.DOMActor`](../dom/rekapi.dom.actor.js.html).  This function only builds and returns a string of CSS, it has no other side effects.  To actually run a CSS `@keyframe` animation, see [`CSSRenderer`](/dist/doc/ext/css-animate/rekapi.css-animate.context.js.html#CSSRenderer) (which wraps this function).
+   * With `toCSS`, Rekapi can export your animations as CSS `@keyframes`.  `toCSS` depends on [`Rekapi.DOMActor`](../dom/rekapi.dom.actor.js.html).  This function only builds and returns a string of CSS, it has no other side effects.  To actually run a CSS `@keyframe` animation, see [`CSSRenderer`](/dist/doc/ext/css-animate/rekapi.css-animate.context.js.html#CSSRenderer) (which wraps this function).
    *
    * ## Exporting
    *
@@ -82,7 +82,7 @@ rekapiModules.push(function (context) {
    *
    * ```
    * var container = document.getElementById('container');
-   * var animation = new Kapi(container);
+   * var animation = new Rekapi(container);
    *
    * var css = animation.toCSS();
    * ```
@@ -108,19 +108,19 @@ rekapiModules.push(function (context) {
    *    - `'w3'`
    *    - `'webkit'`
    *  - __fps__ _(number)_: Defaults to 30.  Defines the "resolution" of an exported animation.  CSS `@keyframes` are comprised of a series of explicitly defined keyframe steps, and more steps will allow for a more complex animation.  More steps will also result in a larger CSS string, and more time needed to generate the string.  There's no reason to go beyond 60, as the human eye cannot perceive motion smoother than that.
-   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  If omitted, the value is the same as the CSS class that was added when the DOM element was used to initialize its `Kapi.DOMActor`.
+   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  If omitted, the value is the same as the CSS class that was added when the DOM element was used to initialize its `Rekapi.DOMActor`.
    *  - __isCentered__ _(boolean)_: If `true`, the generated CSS will contain `transform-origin: 0 0;`, which centers the DOM element along the path of motion.  If `false` or omitted, no `transform-origin` rule is specified and the element is aligned to the path of motion with its top-left corner.
    *  - __iterations__ _(number)_: How many times the generated animation should repeat.  If omitted, the animation will loop indefinitely.
    *
    * @param {Object} opts
    * @return {string}
    */
-  Kapi.prototype.toCSS = function (opts) {
+  Rekapi.prototype.toCSS = function (opts) {
     opts = opts || {};
     var animationCSS = [];
 
     _.each(this.getAllActors(), function (actor) {
-      if (actor instanceof Kapi.DOMActor) {
+      if (actor instanceof Rekapi.DOMActor) {
         animationCSS.push(actor.toCSS(opts));
       }
     });
@@ -131,15 +131,15 @@ rekapiModules.push(function (context) {
 
   /*!
    * Exports the CSS `@keyframes` for an individual Actor.
-   * @param {Object} opts Same as opts for Kapi.prototype.toCSS.
+   * @param {Object} opts Same as opts for Rekapi.prototype.toCSS.
    * @return {string}
    */
-  Kapi.Actor.prototype.toCSS = function (opts) {
+  Rekapi.Actor.prototype.toCSS = function (opts) {
     opts = opts || {};
     var actorCSS = [];
     var animName = opts.name || this.getCSSName();
     var fps = opts.fps || DEFAULT_FPS;
-    var steps = Math.ceil((this.kapi.animationLength() / 1000) * fps);
+    var steps = Math.ceil((this.rekapi.animationLength() / 1000) * fps);
     var combineProperties = !canOptimizeAnyKeyframeProperties(this);
     var actorClass = generateCSSClass(
         this, animName, combineProperties, opts.vendors, opts.iterations,
@@ -162,7 +162,7 @@ rekapiModules.push(function (context) {
    * @param {[string]} args
    * @return {string}
    */
-  var printf = Kapi.util.printf = function (formatter, args) {
+  var printf = Rekapi.util.printf = function (formatter, args) {
     var composedStr = formatter;
     _.each(args, function (arg) {
       composedStr = composedStr.replace('%s', arg);
@@ -183,7 +183,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} animName
    * @param {number} steps
    * @param {boolean} combineProperties
@@ -227,7 +227,7 @@ rekapiModules.push(function (context) {
    * @param {string} toKeyframes Generated keyframes to wrap in boilerplates
    * @param {string} animName
    * @param {Array.<string>} opt_vendors Vendor boilerplates to be applied.
-   *     Should be any of the values in Kapi.util.VENDOR_PREFIXES.
+   *     Should be any of the values in Rekapi.util.VENDOR_PREFIXES.
    * @return {string}
    */
   function applyVendorBoilerplates (toKeyframes, animName, opt_vendors) {
@@ -265,7 +265,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} animName
    * @param {boolean} combineProperties
    * @param {Array.<string>=} opt_vendors
@@ -296,7 +296,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} animName
    * @param {string} vendor
    * @param {boolean} combineProperties
@@ -317,7 +317,7 @@ rekapiModules.push(function (context) {
     generatedProperties.push(generateAnimationFillModeProperty(prefix));
     generatedProperties.push(generateAnimationTimingFunctionProperty(prefix));
     generatedProperties.push(generateAnimationIterationProperty(
-        actor.kapi, prefix, opt_iterations));
+        actor.rekapi, prefix, opt_iterations));
 
     if (opt_isCentered) {
       generatedProperties.push(generateAnimationCenteringRule(prefix));
@@ -328,7 +328,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} animName
    * @param {string} prefix
    * @param {boolean} combineProperties
@@ -356,7 +356,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} animName
    * @return {string}
    */
@@ -367,7 +367,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {number|string} delay
    * @return {string}
    */
@@ -395,19 +395,19 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi} kapi
+   * @param {Rekapi} rekapi
    * @param {string} prefix
    * @param {number|string} opt_iterations
    * @return {string}
    */
-  function generateAnimationIterationProperty (kapi, prefix, opt_iterations) {
+  function generateAnimationIterationProperty (rekapi, prefix, opt_iterations) {
     var iterationCount;
     if (opt_iterations) {
       iterationCount = opt_iterations;
     } else {
-      iterationCount = kapi._timesToIterate === -1
+      iterationCount = rekapi._timesToIterate === -1
         ? 'infinite'
-        : kapi._timesToIterate;
+        : rekapi._timesToIterate;
     }
 
     var ruleTemplate = '  %sanimation-iteration-count: %s;';
@@ -429,7 +429,7 @@ rekapiModules.push(function (context) {
   //
 
   /*!
-   * @param {Kapi.KeyframeProperty} property
+   * @param {Rekapi.KeyframeProperty} property
    * @return {boolean}
    */
   function canOptimizeKeyframeProperty (property) {
@@ -460,7 +460,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @return {boolean}
    */
   function canOptimizeAnyKeyframeProperties (actor) {
@@ -469,7 +469,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.KeyframeProperty} property
+   * @param {Rekapi.KeyframeProperty} property
    * @param {number} fromPercent
    * @param {number} toPercent
    * @return {string}
@@ -506,7 +506,7 @@ rekapiModules.push(function (context) {
   //
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {number} steps
    * @param {string} track
    * @return {string}
@@ -588,7 +588,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {number} steps
    * @return {string}
    */
@@ -599,7 +599,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} track
    * @param {number} actorStart
    * @return {string|undefined}
@@ -616,7 +616,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string} track
    * @param {number} actorStart
    * @param {number} actorEnd
@@ -634,7 +634,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.KeyframeProperty} property
+   * @param {Rekapi.KeyframeProperty} property
    * @param {number} actorStart
    * @param {number} actorLength
    * @return {number}
@@ -645,12 +645,12 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {number} increments
    * @param {number} incrementSize
    * @param {number} actorStart
    * @param {number} fromPercent
-   * @param {Kapi.KeyframeProperty=} opt_fromProp
+   * @param {Rekapi.KeyframeProperty=} opt_fromProp
    * @return {Array.<string>}
    */
   function generateActorTrackSegment (
@@ -680,7 +680,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.Actor} actor
+   * @param {Rekapi.Actor} actor
    * @param {string=} opt_targetProp
    * @return {string}
    */
@@ -716,7 +716,7 @@ rekapiModules.push(function (context) {
   }
 
   if (KAPI_DEBUG) {
-    Kapi._private.toCSS = {
+    Rekapi._private.toCSS = {
       'TRANSFORM_TOKEN': TRANSFORM_TOKEN
       ,'VENDOR_TOKEN': VENDOR_TOKEN
       ,'applyVendorBoilerplates': applyVendorBoilerplates
