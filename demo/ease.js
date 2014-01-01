@@ -47,8 +47,8 @@ $(function () {
   var prerenderedPath;
   function generatePathPrerender (x1, y1, x2, y2, easeX, easeY) {
     prerenderedPath = document.createElement('canvas');
-    prerenderedPath.width = kapi.canvas.width();
-    prerenderedPath.height = kapi.canvas.height();
+    prerenderedPath.width = rekapi.canvas.width();
+    prerenderedPath.height = rekapi.canvas.height();
     var ctx = prerenderedPath.ctx = prerenderedPath.getContext('2d');
     var points = generatePathPoints.apply(this, arguments);
 
@@ -124,12 +124,12 @@ $(function () {
   }
 
   var canvas = $('canvas')[0];
-  var kapi = new Kapi({
+  var rekapi = new Rekapi({
       'context': canvas
       ,'height': 400
       ,'width': 500
     })
-    ,circle = new Kapi.CanvasActor({
+    ,circle = new Rekapi.CanvasActor({
       'draw': function (canvas_context, state) {
 
         if (isPathShowing && prerenderedPath) {
@@ -176,9 +176,9 @@ $(function () {
 
     circle
       .modifyKeyframe(timeToModify, getCrosshairCoords(crosshairs[pos]))
-      .updateState(kapi._lastUpdatedMillisecond);
+      .updateState(rekapi._lastUpdatedMillisecond);
 
-    kapi
+    rekapi
       .canvas.clear()
       .update();
 
@@ -217,7 +217,7 @@ $(function () {
     easingObj[target.data('axis')] = target.val();
     circle.modifyKeyframe(animationDuration, {}, easingObj)
     updatePath();
-    kapi
+    rekapi
       .canvas.clear()
       .update();
   });
@@ -226,7 +226,7 @@ $(function () {
   var isPathShowing = true;
   showPath.on('change', function (evt) {
     isPathShowing = showPath.is(':checked');
-    kapi.update();
+    rekapi.update();
   });
 
   duration.on('keyup', function (evt) {
@@ -255,7 +255,7 @@ $(function () {
     duration.trigger('keyup');
   });
 
-  kapi.addActor(circle);
+  rekapi.addActor(circle);
   circle.keyframe(0, _.extend(getCrosshairCoords(crosshairs.from), {
       'color': '#777'
       ,'radius': 15
@@ -264,8 +264,8 @@ $(function () {
       'color': '#333'
     }));
 
-  var controls = new RekapiScrubber(kapi, canvas);
+  var controls = new RerekapiScrubber(rekapi, canvas);
   updatePath();
-  kapi.play();
+  rekapi.play();
 
 });

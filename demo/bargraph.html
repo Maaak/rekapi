@@ -13,10 +13,10 @@
       rekapi: "../dist/rekapi"
     }
   });
-  require(['rekapi', 'underscore'], function(Kapi) {
+  require(['rekapi', 'underscore'], function(Rekapi) {
 
     function makeBarActor (val) {
-      return new Kapi.CanvasActor({
+      return new Rekapi.CanvasActor({
         'setup': function () {
           this.data = {
             'val': val
@@ -56,7 +56,7 @@
     }
 
     var canvas = document.getElementsByTagName('canvas')[0]
-        ,kapi = new Kapi({
+        ,rekapi = new Rekapi({
           'context': canvas
           ,'height': 400
           ,'width': 250
@@ -75,7 +75,7 @@
       var time = 0;
       var xOffset = getXOffset();
 
-      kapi.addActor(bar);
+      rekapi.addActor(bar);
 
       bar.keyframe(time, {
         'x': xOffset
@@ -93,7 +93,7 @@
     });
 
 
-    kapi.play();
+    rekapi.play();
 
   });
   </script>

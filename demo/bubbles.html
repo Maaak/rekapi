@@ -13,10 +13,10 @@
       rekapi: "../dist/rekapi"
     }
   });
-  require(['rekapi', 'shifty', 'underscore'], function(Kapi, Tweenable) {
+  require(['rekapi', 'shifty', 'underscore'], function(Rekapi, Tweenable) {
 
     function makeBubble () {
-      return new Kapi.CanvasActor({
+      return new Rekapi.CanvasActor({
         'draw': function (canvas_context, state) {
           canvas_context.beginPath();
           canvas_context.arc(
@@ -50,11 +50,11 @@
     }
 
     function getBubbleX () {
-      return Math.random() * kapi.canvas.width();
+      return Math.random() * rekapi.canvas.width();
     }
 
     function getBubbleY () {
-      return Math.random() * kapi.canvas.height();
+      return Math.random() * rekapi.canvas.height();
     }
 
     function getSize () {
@@ -97,11 +97,11 @@
       for (i = 0; i < 30; i++) {
         time = 0;
         bubbles[i] = makeBubble();
-        kapi.addActor(bubbles[i]);
+        rekapi.addActor(bubbles[i]);
 
         bubbles[i].keyframe(time, {
-          'x': kapi.canvas.width() / 2
-          ,'y': kapi.canvas.height() + 50
+          'x': rekapi.canvas.width() / 2
+          ,'y': rekapi.canvas.height() + 50
           ,'radius': 0
           ,'color': getColor()
         }, {
@@ -144,26 +144,26 @@
     function generateSequence() {
       _.each(bubbles, function (bubble) {
         bubble.removeAllKeyframeProperties();
-        kapi.removeActor(bubble)
+        rekapi.removeActor(bubble)
       });
 
       bubbles = [];
       generateKeyframes(bubbles);
       mungeKeyframes(bubbles);
-      kapi.play(1);
+      rekapi.play(1);
     }
 
     var canvas = document.getElementsByTagName('canvas')[0]
-        ,kapi = new Kapi({
+        ,rekapi = new Rekapi({
           'context': canvas
           ,'height': 500
           ,'width': 500
         })
         ,bubbles = [];
 
-    kapi.on('animationComplete', generateSequence)
+    rekapi.on('animationComplete', generateSequence)
 
-    kapi.canvas.setOrderFunction(function (actor) {
+    rekapi.canvas.setOrderFunction(function (actor) {
       return actor.get().radius;
     });
 
