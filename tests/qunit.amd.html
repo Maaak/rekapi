@@ -20,13 +20,13 @@
   -->
   <script src="test-amd/require-1.0.7+undef.js"></script>
   <script>
-  function setupTestKapi (Kapi) {
-    return new Kapi();
+  function setupTestRekapi (Rekapi) {
+    return new Rekapi();
   }
 
-  function  setupTestActor (Kapi, forKapi) {
-    var actor = new Kapi.Actor();
-    forKapi.addActor(actor);
+  function  setupTestActor (Rekapi, forRekapi) {
+    var actor = new Rekapi.Actor();
+    forRekapi.addActor(actor);
     return actor;
   }
 
@@ -53,47 +53,47 @@
       }
     });
 
-    asyncTest("Can load the minified version of Rekapi", function() {
+    asyncTest("Can load the minified version of Rerekapi", function() {
       requireConfig({
         rekapi: '../dist/rekapi.min'
       });
 
-      require(['rekapi'], function(Kapi) {
-        var testKapi
+      require(['rekapi'], function(Rekapi) {
+        var testRekapi
             ,testActor;
 
-        testKapi = setupTestKapi(Kapi);
-        testActor = setupTestActor(Kapi, testKapi);
+        testRekapi = setupTestRekapi(Rekapi);
+        testActor = setupTestActor(Rekapi, testRekapi);
 
-        ok(testKapi !== undefined);
+        ok(testRekapi !== undefined);
         ok(testActor !== undefined);
         start();
       });
     });
 
-    asyncTest("Can instantiate Kapi and Actor objects", function() {
+    asyncTest("Can instantiate Rekapi and Actor objects", function() {
       requireConfig();
 
-      require(['rekapi'], function(Kapi) {
-        var testKapi
+      require(['rekapi'], function(Rekapi) {
+        var testRekapi
             ,testActor;
 
-        testKapi = setupTestKapi(Kapi);
-        testActor = setupTestActor(Kapi, testKapi);
+        testRekapi = setupTestRekapi(Rekapi);
+        testActor = setupTestActor(Rekapi, testRekapi);
 
-        ok(testKapi !== undefined);
+        ok(testRekapi !== undefined);
         ok(testActor !== undefined);
         start();
       });
     });
 
-    asyncTest("Global scope is not polluted by Kapi and its dependencies", function() {
+    asyncTest("Global scope is not polluted by Rekapi and its dependencies", function() {
       requireConfig();
 
-      require(['rekapi'], function(Kapi) {
-        var k = new Kapi({});
+      require(['rekapi'], function(Rekapi) {
+        var k = new Rekapi({});
 
-        ok(window.Kapi === undefined);
+        ok(window.Rekapi === undefined);
         ok(window.Tweenable === undefined);
 
         // The loaded version of Underscore does not support AMD, so it will
@@ -109,11 +109,11 @@
         underscore: "test-amd/underscore-1.2.2"
       });
 
-      require(['rekapi'], function(Kapi) {
-        ok(Kapi !== undefined);
-        ok(Kapi.underscore_version === '1.2.2');
+      require(['rekapi'], function(Rekapi) {
+        ok(Rekapi !== undefined);
+        ok(Rekapi.underscore_version === '1.2.2');
 
-        var k = new Kapi({});
+        var k = new Rekapi({});
         ok(k !== undefined);
         start();
       });
@@ -125,19 +125,19 @@
         underscore: "test-amd/underscore-1.3.3"
       });
 
-      require(['rekapi'], function(Kapi) {
-        ok(Kapi !== undefined);
-        ok(Kapi.underscore_version === '1.3.3');
+      require(['rekapi'], function(Rekapi) {
+        ok(Rekapi !== undefined);
+        ok(Rekapi.underscore_version === '1.3.3');
 
-        var k = new Kapi({});
+        var k = new Rekapi({});
         ok(k !== undefined);
-        // Make sure that Rekapi did not touch the global _ property.
+        // Make sure that Rerekapi did not touch the global _ property.
         ok(window._ !== undefined);
         start();
       });
     });
 
-    // In some applications, Underscore will need to be loaded earlier than Rekapi.
+    // In some applications, Underscore will need to be loaded earlier than Rerekapi.
     asyncTest("Can work well with a previously loaded Underscore", function() {
       requireConfig({
         // Use a version which creates a global
@@ -156,10 +156,10 @@
           }
         });
 
-        require(['rekapi'], function(Kapi) {
-          ok(Kapi !== undefined);
+        require(['rekapi'], function(Rekapi) {
+          ok(Rekapi !== undefined);
 
-          var k = new Kapi({});
+          var k = new Rekapi({});
           ok(k !== undefined);
 
           // Make sure that `_` still has its mixin
@@ -173,14 +173,14 @@
     asyncTest("Can instantiate a DOMActor", function() {
       requireConfig();
 
-      require(['rekapi'], function(Kapi) {
+      require(['rekapi'], function(Rekapi) {
         var actor, el;
 
-        ok(Kapi.DOMActor !== undefined);
+        ok(Rekapi.DOMActor !== undefined);
 
-        if (Kapi.DOMActor) {
+        if (Rekapi.DOMActor) {
           el = document.createElement("div");
-          actor = new Kapi.DOMActor(el);
+          actor = new Rekapi.DOMActor(el);
           ok(actor !== undefined);
         }
         start();
@@ -191,7 +191,7 @@
 </script>
 </head>
 <body>
-<h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rekapi</a></h1>
+<h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rerekapi</a></h1>
  <h2 id="qunit-banner"></h2>
  <div id="qunit-testrunner-toolbar"></div>
  <h2 id="qunit-userAgent"></h2>

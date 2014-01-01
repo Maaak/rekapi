@@ -18,13 +18,13 @@
   <script src="../src/rekapi.keyframeprops.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
-  function setupTestKapi () {
-    return new Kapi();
+  function setupTestRekapi () {
+    return new Rekapi();
   }
 
-  function  setupTestActor (forKapi) {
-    var actor = new Kapi.Actor();
-    forKapi.addActor(actor);
+  function  setupTestActor (forRekapi) {
+    var actor = new Rekapi.Actor();
+    forRekapi.addActor(actor);
     return actor;
   }
 
@@ -36,8 +36,8 @@
 
     test('Can create a KeyframeProperty', function () {
 
-      var actor = new Kapi.Actor();
-      var keyprop = new Kapi.KeyframeProperty(
+      var actor = new Rekapi.Actor();
+      var keyprop = new Rekapi.KeyframeProperty(
           actor, 500, 'x', 10, 'easeInQuad');
 
       equal(keyprop.ownerActor, actor, 'ownerActor was set');
@@ -53,8 +53,8 @@
 
     test('Can modify a KeyframeProperty', function () {
 
-      var actor = new Kapi.Actor();
-      var keyprop = new Kapi.KeyframeProperty(
+      var actor = new Rekapi.Actor();
+      var keyprop = new Rekapi.KeyframeProperty(
           actor, 500, 'x', 10, 'easeInQuad');
 
       keyprop.modifyWith({
@@ -74,10 +74,10 @@
 
     test('Can link one KeyframeProperty to another', function () {
 
-      var actor = new Kapi.Actor();
-      var keyprop = new Kapi.KeyframeProperty(
+      var actor = new Rekapi.Actor();
+      var keyprop = new Rekapi.KeyframeProperty(
           actor, 500, 'x', 10, 'easeInQuad');
-      var linkedKeyprop = new Kapi.KeyframeProperty(
+      var linkedKeyprop = new Rekapi.KeyframeProperty(
           actor, 1000, 'x', 20, 'swingTo');
 
       keyprop.linkToNext(linkedKeyprop);
@@ -93,10 +93,10 @@
     test('Can compute midpoint values between to KeyframeProperties',
         function () {
 
-      var actor = new Kapi.Actor();
-      var keyprop = new Kapi.KeyframeProperty(
+      var actor = new Rekapi.Actor();
+      var keyprop = new Rekapi.KeyframeProperty(
           actor, 500, 'x', 10, 'linear');
-      var linkedKeyprop = new Kapi.KeyframeProperty(
+      var linkedKeyprop = new Rekapi.KeyframeProperty(
           actor, 1000, 'x', 20, 'linear');
 
       keyprop.linkToNext(linkedKeyprop);
@@ -111,8 +111,8 @@
 
     test('Exported data has key data points', function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
         'x': 1
       });
@@ -133,7 +133,7 @@
   </script>
 </head>
 <body>
-  <h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rekapi</a></h1>
+  <h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rerekapi</a></h1>
    <h2 id="qunit-banner"></h2>
    <div id="qunit-testrunner-toolbar"></div>
    <h2 id="qunit-userAgent"></h2>

@@ -11,15 +11,15 @@
   <script src="../ext/dom/rekapi.dom.actor.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
-  function setupTestKapi () {
-    var kapi = new Kapi();
+  function setupTestRekapi () {
+    var rekapi = new Rekapi();
 
-    return kapi;
+    return rekapi;
   }
 
-  function  setupTestActor (forKapi) {
-    var actor = new Kapi.DOMActor(document.createElement('div'));
-    forKapi.addActor(actor);
+  function  setupTestActor (forRekapi) {
+    var actor = new Rekapi.DOMActor(document.createElement('div'));
+    forRekapi.addActor(actor);
     return actor;
   }
 
@@ -28,11 +28,11 @@
     module('DOM extension');
 
     test('Support the transform property', function() {
-      var testKapi
+      var testRekapi
           ,testActor1;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -44,7 +44,7 @@
           ,'background': '#00f'
         });
 
-      testKapi.update(500);
+      testRekapi.update(500);
 
       var expectedValue = 'translateX(200px) translateY(200px) rotate(90deg)';
       equal(testActor._context.style.transform, expectedValue,
@@ -53,11 +53,11 @@
 
 
     test('Support independent transform properties', function() {
-      var testKapi
+      var testRekapi
           ,testActor1;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -73,7 +73,7 @@
           ,'height': '50px'
         });
 
-      testKapi.update(1000);
+      testRekapi.update(1000);
 
       var expectedValue = 'translateX(50px) translateY(50px) rotate(125deg)';
       equal(testActor._context.style.transform, expectedValue,
@@ -85,11 +85,11 @@
 
 
     test('Allow default transform order to be overriden', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       var setWrongFunctions = _.bind(testActor.setTransformOrder, testActor,
         ['foo', 'bar', 'rotate']);
@@ -120,7 +120,7 @@
         });
 
       testActor.setTransformOrder(['rotate', 'translateY', 'translateX']);
-      testKapi.update(1000);
+      testRekapi.update(1000);
 
       var expectedValue = 'rotate(125deg) translateY(50px) translateX(50px)';
       equal(testActor._context.style.transform, expectedValue,
@@ -129,8 +129,8 @@
 
 
     test('translate3d does not break easing value cardinality', function () {
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -139,7 +139,7 @@
           transform: 'translate3d(1, 1, 1)'
         }, 'linear easeInQuad easeOutQuad');
 
-        testKapi.update(50);
+        testRekapi.update(50);
 
         var transformChunks = testActor.get().transform.match(/(\d|\.)+/g);
         equal(
@@ -158,8 +158,8 @@
 
 
     test('3d hack does not break "3deg" case', function () {
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -167,7 +167,7 @@
         .keyframe(100, {
           transform: 'rotate(6deg)'});
 
-        testKapi.update(50);
+        testRekapi.update(50);
 
         var transformMatch = testActor.get().transform.match(/(\d|\.)+/g);
         equal(
@@ -180,7 +180,7 @@
   </script>
 </head>
 <body>
-  <h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rekapi</a></h1>
+  <h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rerekapi</a></h1>
    <h2 id="qunit-banner"></h2>
    <div id="qunit-testrunner-toolbar"></div>
    <h2 id="qunit-userAgent"></h2>

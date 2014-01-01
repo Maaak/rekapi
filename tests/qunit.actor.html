@@ -18,13 +18,13 @@
   <script src="../src/rekapi.keyframeprops.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
-  function setupTestKapi () {
-    return new Kapi();
+  function setupTestRekapi () {
+    return new Rekapi();
   }
 
-  function  setupTestActor (forKapi) {
-    var actor = new Kapi.Actor();
-    forKapi.addActor(actor);
+  function  setupTestActor (forRekapi) {
+    var actor = new Rekapi.Actor();
+    forRekapi.addActor(actor);
     return actor;
   }
 
@@ -34,11 +34,11 @@
 
     test('Correctly interpolate Actor positions at various positions mid-frame',
         function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
 
       testActor.keyframe(0, {
@@ -78,11 +78,11 @@
     test('Keyframes inherit missing properties from the previous keyframe',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0,{
         'x': 100
@@ -99,11 +99,11 @@
     test('Tweens are only valid if there is an end point',
       function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0,{
         // Nothing!
@@ -120,11 +120,11 @@
     test('Interpolate Actor positions at various positions mid-frame',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
 
       testActor.keyframe(1000, {
@@ -163,12 +163,12 @@
 
     test('Applied easing is taken from the destination frame', function () {
 
-      var testKapi
+      var testRekapi
           ,testActor
           ,tweenableComparator;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 0
@@ -205,11 +205,11 @@
     test('If there are no current or future properties, use the latest property',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 50
@@ -237,11 +237,11 @@
     test('If a given millisecond doesn\'t have a previous keyframe, return null',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 50
@@ -265,11 +265,11 @@
     test('Keyframes can be removed from the middle of the animation',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, { x: 1 })
@@ -289,11 +289,11 @@
     test('Single keyframe properties can be removed from an actor at a time',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
           'x': 0
@@ -316,11 +316,11 @@
     test('Multiple keyframe properties can be removed from an actor at a time',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
           'x': 0
@@ -352,11 +352,11 @@
     test('Keyframes can be removed from the end of the animation',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -371,16 +371,16 @@
 
       testActor.removeKeyframe(2000);
 
-      equal(testKapi._animationLength, 1000,
+      equal(testRekapi._animationLength, 1000,
           'The animation length is shortened when the final keyframe is removed');
     });
 
     test('.removeAllKeyframes removes all keyframes', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -395,7 +395,7 @@
 
       testActor.removeAllKeyframeProperties();
 
-      equal(testKapi._animationLength, 0, 'Animation length is 0');
+      equal(testRekapi._animationLength, 0, 'Animation length is 0');
       equal(testActor._propertyTracks.x.length, 0,
           'x property track exists, but is empty');
 
@@ -406,11 +406,11 @@
 
 
     test('Unmodified keyframe properties are copied.', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
           'x': 50
         }, {
@@ -436,11 +436,11 @@
 
 
     test('Original keyframe position property is changed' , function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -460,11 +460,11 @@
 
 
     test('Original keyframe easing property is changed' , function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -491,11 +491,11 @@
 
 
     test('Actor can determine if it has a keyframe at a given millisecond' , function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -518,11 +518,11 @@
 
 
     test('Actor can determine if it has a keyframe on a given property track' , function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {
@@ -548,8 +548,8 @@
 
 
     test('Does not move a keyframe to a point on the timeline when there already is one', function () {
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {x: 1})
@@ -570,8 +570,8 @@
 
 
     test('Does not move a keyframe if there is nothing at the requested point on the timeline', function () {
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {x: 1})
@@ -585,8 +585,8 @@
 
 
     test('Moves keyframe to requested point on the timeline', function () {
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, {x: 1})
@@ -595,7 +595,7 @@
       var movedKeyframe = testActor.moveKeyframe(10, 20);
       var hasKeyframeAtTarget = testActor.hasKeyframeAt(20);
       var hasKeyframeAtOldPosition = testActor.hasKeyframeAt(10);
-      var animationLength = testKapi.animationLength();
+      var animationLength = testRekapi.animationLength();
 
       equal(movedKeyframe, true,
           'moveKeyframe indicated that keyframe was moved');
@@ -612,11 +612,11 @@
 
 
     test('Can copy keyframes (one initial keyframe)', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 50
@@ -629,11 +629,11 @@
 
 
     test('Can copy keyframes (multiple initial keyframe)', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 50
@@ -648,11 +648,11 @@
 
 
     test('wait() extends all lagging KeyframeProperties', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 51
@@ -683,11 +683,11 @@
     test('wait() copies all of the most recent KeyframeProperties',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, {
         'x': 0
@@ -711,7 +711,7 @@
 
 
     test('Can create keyframes on unattached actors', function () {
-      var actor = new Kapi.Actor();
+      var actor = new Rekapi.Actor();
 
       actor.keyframe(0, { x: 0 });
       ok(actor._propertyTracks.x, 'A property track was created');
@@ -720,16 +720,16 @@
 
     test('Animation length is updated when an actor with prior keyframes is added.',
         function () {
-      var actor = new Kapi.Actor();
+      var actor = new Rekapi.Actor();
 
       actor
       .keyframe(0, { x: 0 })
       .keyframe(1000, { x: 10 });
 
-      var kapi = new Kapi();
-      kapi.addActor(actor);
+      var rekapi = new Rekapi();
+      rekapi.addActor(actor);
 
-      equal(kapi.animationLength(), 1000,
+      equal(rekapi.animationLength(), 1000,
         'Animation length reflects actor keyframes added before the Actor was added');
     });
 
@@ -737,28 +737,28 @@
     module('context');
 
 
-    test('Actor inherits the Kapi instance\'s context by default',
+    test('Actor inherits the Rekapi instance\'s context by default',
         function () {
-      var kapiContext = {};
-      var testKapi = new Kapi({context: kapiContext});
-      var testActor = setupTestActor(testKapi);
+      var rekapiContext = {};
+      var testRekapi = new Rekapi({context: rekapiContext});
+      var testActor = setupTestActor(testRekapi);
 
-      ok(testActor.context() === testKapi.context,
-        'Actor has the same context as the Kapi instance');
+      ok(testActor.context() === testRekapi.context,
+        'Actor has the same context as the Rekapi instance');
     });
 
 
-    test('Actor can override the inherited context from the Kapi instance',
+    test('Actor can override the inherited context from the Rekapi instance',
         function () {
-      var kapiContext = {};
+      var rekapiContext = {};
       var actorContext = {};
-      var testKapi = new Kapi({context: kapiContext});
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = new Rekapi({context: rekapiContext});
+      var testActor = setupTestActor(testRekapi);
 
       testActor.context(actorContext);
 
-      ok(testActor.context() !== testKapi.context,
-        'Actor has a different context from the Kapi instance');
+      ok(testActor.context() !== testRekapi.context,
+        'Actor has a different context from the Rekapi instance');
       ok(testActor.context() === actorContext,
         'Actor has retained the context that was explicitly set');
     });
@@ -770,8 +770,8 @@
     test('KeyframePropererties created with .keyframe can be retrieved with .getKeyframeProperty',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, { x: 10 });
 
@@ -786,8 +786,8 @@
     test('KeyframeProperties created with .keyframe can be modified with .modifyKeyframeProperty',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor.keyframe(0, { x: 10 });
       testActor.modifyKeyframeProperty('x', 0, { value: 20 });
@@ -803,11 +803,11 @@
     test('getTrackLength returns the number of KeyframeProperties in a track',
         function () {
 
-      var testKapi
+      var testRekapi
           ,testActor1;
 
-      testKapi = setupTestKapi();
-      testActor1 = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor1 = setupTestActor(testRekapi);
 
       testActor1
         .keyframe(0, { x: 1 })
@@ -825,8 +825,8 @@
     test('Get the start of an Actor\'s movement in the animation',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(250, {
@@ -845,8 +845,8 @@
     test('Get the start of an Actor\'s property track',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0, { y: 45 })
@@ -866,8 +866,8 @@
     test('Get the end of an Actor\'s movement in the animation',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(250, {
@@ -886,8 +886,8 @@
     test('Get the end of an Actor\'s property track',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(250,  { x: 1,  y: 10 })
@@ -906,8 +906,8 @@
 
     test('Get the length of time that an Actor animates for', function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(250, {
@@ -926,8 +926,8 @@
     test('Get the length of time that an Actor track animates for',
         function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor
         .keyframe(0,    { y: 10 })
@@ -943,11 +943,11 @@
 
 
     test('Actor track with no KeyframeProperties cannot be measured', function () {
-      var testKapi
+      var testRekapi
           ,testActor1;
 
-      testKapi = setupTestKapi();
-      testActor1 = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor1 = setupTestActor(testRekapi);
 
       testActor1
         .keyframe(0, {})
@@ -963,11 +963,11 @@
 
 
     test('Actor track names can be retrieved', function () {
-      var testKapi
+      var testRekapi
           ,testActor1;
 
-      testKapi = setupTestKapi();
-      testActor1 = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor1 = setupTestActor(testRekapi);
 
       testActor1
         .keyframe(0, {
@@ -991,11 +991,11 @@
 
 
     test('Exported Actor data has key data points', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
         'x': 1
         ,'y': 10
@@ -1026,11 +1026,11 @@
 
 
     test('Imported data matches exported data', function () {
-      var exportKapi
+      var exportRekapi
           ,exportActor;
 
-      exportKapi = setupTestKapi();
-      exportActor = setupTestActor(exportKapi);
+      exportRekapi = setupTestRekapi();
+      exportActor = setupTestActor(exportRekapi);
       exportActor.keyframe(0, {
         'x': 1
         ,'y': 10
@@ -1040,7 +1040,7 @@
       });
 
       var exportedActorData = exportActor.exportTimeline();
-      var importActor = new Kapi.Actor();
+      var importActor = new Rekapi.Actor();
       importActor.importTimeline(exportedActorData);
 
       var firstImportXKeyProp = importActor.getKeyframeProperty('x', 0);
@@ -1086,8 +1086,8 @@
 
     test('Arbitrary data can be stored on an Actor', function () {
 
-      var testKapi = setupTestKapi();
-      var testActor = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor = setupTestActor(testRekapi);
 
       testActor.data = { a: 'hello' };
 
@@ -1100,11 +1100,11 @@
 
 
     test('Single keyframe properties are added to Actors successfully', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
         'x': 50
         ,'y': 50
@@ -1122,7 +1122,7 @@
         propTrackCount++;
       }
 
-      ok(testActor._keyframeProperties[keyProp] instanceof Kapi.KeyframeProperty,
+      ok(testActor._keyframeProperties[keyProp] instanceof Rekapi.KeyframeProperty,
           'The Actor\'s _keyframeProperties Object contains KeyframeProperty instances')
       equal(testActor._propertyTracks.x.length, 1, 'Property was added to the "x" track');
       equal(testActor._propertyTracks.y.length, 1, 'Property was added to the "y" track');
@@ -1133,11 +1133,11 @@
 
 
     test('Multiple keyframe properties are added to Actors successfully', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
           'x': 50
           ,'y': 50
@@ -1170,11 +1170,11 @@
 
 
     test('Can modify the position of a KeyframeProperty', function () {
-      var testKapi
+      var testRekapi
           ,testActor;
 
-      testKapi = setupTestKapi();
-      testActor = setupTestActor(testKapi);
+      testRekapi = setupTestRekapi();
+      testActor = setupTestActor(testRekapi);
       testActor.keyframe(0, {
           'x': 50
           ,'y': 50
@@ -1234,9 +1234,9 @@
 
     test('Early-ending Actors reach their final state', function () {
 
-      var testKapi = setupTestKapi();
-      var testActor1 = setupTestActor(testKapi);
-      var testActor2 = setupTestActor(testKapi);
+      var testRekapi = setupTestRekapi();
+      var testActor1 = setupTestActor(testRekapi);
+      var testActor2 = setupTestActor(testRekapi);
 
       testActor1.keyframe(0, {
           'x': 0
@@ -1250,9 +1250,9 @@
           'x': 100
         });
 
-      testKapi._loopTimestamp = 0;
+      testRekapi._loopTimestamp = 0;
       mockTime = function () { return 250; };
-      Kapi._private.updateToCurrentMillisecond(testKapi);
+      Rekapi._private.updateToCurrentMillisecond(testRekapi);
 
       equal(testActor1.get().x, 25,
           'testActor1 has correct midpoint while both Actors are animating');
@@ -1260,7 +1260,7 @@
           'testActor2 has correct midpoint while both Actors are animating');
 
       mockTime = function () { return 750; };
-      Kapi._private.updateToCurrentMillisecond(testKapi);
+      Rekapi._private.updateToCurrentMillisecond(testRekapi);
 
       equal(testActor1.get().x, 75,
           'testActor1 has correct midpoint while still animating after testActor2 has finished');
