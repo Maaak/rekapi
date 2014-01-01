@@ -2,8 +2,8 @@ rekapiModules.push(function (context) {
 
   'use strict';
 
-  var Kapi = context.Kapi;
-  var _ = Kapi._;
+  var Rekapi = context.Rekapi;
+  var _ = Rekapi._;
   var vendorTransforms = [
     'transform'
     ,'webkitTransform'
@@ -71,13 +71,13 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * `Kapi.DOMActor` is a subclass of [`Kapi.Actor`](../../src/rekapi.actor.js.html).  Please note that `Kapi.DOMActor` accepts `opt_config` as the second parameter, not the first.  Instantiate a `Kapi.DOMActor` with an `HTMLElement`, and then add it to the animation:
+   * `Rekapi.DOMActor` is a subclass of [`Rekapi.Actor`](../../src/rekapi.actor.js.html).  Please note that `Rekapi.DOMActor` accepts `opt_config` as the second parameter, not the first.  Instantiate a `Rekapi.DOMActor` with an `HTMLElement`, and then add it to the animation:
    *
    * ```
-   * var kapi = new Kapi();
-   * var actor = new Kapi.DOMActor(document.getElementById('actor'));
+   * var rekapi = new Rekapi();
+   * var actor = new Rekapi.DOMActor(document.getElementById('actor'));
    *
-   * kapi.addActor(actor);
+   * rekapi.addActor(actor);
    * ```
    *
    * Now you can keyframe `actor` like you would any Actor.
@@ -93,12 +93,12 @@ rekapiModules.push(function (context) {
    *     ,'top': '200px'
    *   }, 'easeOutExpo');
    *
-   * kapi.play();
+   * rekapi.play();
    * ```
    *
    * ## Transforms
    *
-   * `Kapi.DOMActor` supports CSS3 transforms as keyframe properties. Here's an example:
+   * `Rekapi.DOMActor` supports CSS3 transforms as keyframe properties. Here's an example:
    *
    * ```
    * actor
@@ -116,9 +116,9 @@ rekapiModules.push(function (context) {
    *
    * The list of supported transforms is: `translateX`, `translateY`, `scale`, `scaleX`, `scaleY`, `rotate`, `skewX`, `skewY`.
    *
-   * Internally, this builds a CSS3 `transform` rule that gets applied to the `Kapi.DOMActor`'s DOM node on each animation update.
+   * Internally, this builds a CSS3 `transform` rule that gets applied to the `Rekapi.DOMActor`'s DOM node on each animation update.
    *
-   * Typically, when writing a `transform` rule, it is necessary to write the same rule multiple times, in order to support the vendor prefixes for all of the browser rendering engines. `Kapi.DOMActor` takes care of the cross browser inconsistencies for you.
+   * Typically, when writing a `transform` rule, it is necessary to write the same rule multiple times, in order to support the vendor prefixes for all of the browser rendering engines. `Rekapi.DOMActor` takes care of the cross browser inconsistencies for you.
    *
    * You can also use the `transform` property directly:
    *
@@ -135,8 +135,8 @@ rekapiModules.push(function (context) {
    * @param {Object} opt_config
    * @constructor
    */
-  Kapi.DOMActor = function (element, opt_config) {
-    Kapi.Actor.call(this, opt_config);
+  Rekapi.DOMActor = function (element, opt_config) {
+    Rekapi.Actor.call(this, opt_config);
     this._context = element;
     var className = this.getCSSName();
 
@@ -155,11 +155,11 @@ rekapiModules.push(function (context) {
 
     return this;
   };
-  var DOMActor = Kapi.DOMActor;
+  var DOMActor = Rekapi.DOMActor;
 
 
   function DOMActorMethods () {}
-  DOMActorMethods.prototype = Kapi.Actor.prototype;
+  DOMActorMethods.prototype = Rekapi.Actor.prototype;
   DOMActor.prototype = new DOMActorMethods();
 
 
@@ -197,7 +197,7 @@ rekapiModules.push(function (context) {
    * tweenable value.  Transform "3d(" to "__THREED__" to prevent this, and
    * transform it back in _afterKeyframePropertyInterpolate.
    *
-   * @param {Kapi.KeyframeProperty} keyframeProperty
+   * @param {Rekapi.KeyframeProperty} keyframeProperty
    * @override
    */
   DOMActor.prototype._beforeKeyframePropertyInterpolate =
@@ -217,7 +217,7 @@ rekapiModules.push(function (context) {
 
 
   /*!
-   * @param {Kapi.KeyframeProperty} keyframeProperty
+   * @param {Rekapi.KeyframeProperty} keyframeProperty
    * @param {Object} interpolatedObject
    * @override
    */
@@ -249,7 +249,7 @@ rekapiModules.push(function (context) {
 
 
   /**
-   * This can be useful when used with [toCSS](../to-css/rekapi.to-css.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Kapi.DOMActor` from said element.
+   * This can be useful when used with [toCSS](../to-css/rekapi.to-css.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
    * @return {string}
    */
   DOMActor.prototype.getCSSName = function () {
@@ -261,7 +261,7 @@ rekapiModules.push(function (context) {
    * Overrides the default transform function order.
    *
    * @param {Array} orderedFunctions The Array of transform function names
-   * @return {Kapi.DOMActor}
+   * @return {Rekapi.DOMActor}
    */
   DOMActor.prototype.setTransformOrder = function (orderedFunctions) {
     // TODO: Document this better...

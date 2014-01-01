@@ -1,4 +1,4 @@
-# Kapi.DOMActor
+# Rekapi.DOMActor
 
 You can use Rekapi to animate DOM nodes with the DOM renderer extension.
 
@@ -6,19 +6,19 @@ You can use Rekapi to animate DOM nodes with the DOM renderer extension.
 /**
  * @param {HTMLElement} element
  * @constructor
- * @extends Kapi.Actor
+ * @extends Rekapi.Actor
  */
-Kapi.DOMActor = function (element)
+Rekapi.DOMActor = function (element)
 ````
 
-`Kapi.DOMActor` is a subclass of `Kapi.Actor`.  All methods of the `Kapi.Actor`
-prototype are available to `Kapi.DOMActor`.  Instantiate a `Kapi.DOMActor` with
-an `HTMLElement`, and then add it to the animation:
+`Rekapi.DOMActor` is a subclass of `Rekapi.Actor`.  All methods of the
+`Rekapi.Actor` prototype are available to `Rekapi.DOMActor`.  Instantiate a
+`Rekapi.DOMActor` with an `HTMLElement`, and then add it to the animation:
 
 ````javascript
-var actor = new Kapi.DOMActor(document.getElementById('actor'));
+var actor = new Rekapi.DOMActor(document.getElementById('actor'));
 
-kapi.addActor(actor);
+rekapi.addActor(actor);
 ````
 
 Now you can keyframe `actor` like you would any Actor.
@@ -34,7 +34,7 @@ actor
     ,'top': '200px'
   }, 'easeOutExpo');
 
-kapi.play();
+rekapi.play();
 ````
 
 ## Transforms
@@ -88,7 +88,7 @@ for each Actor DOM element.
 /**
  * @return {string}
  */
-Kapi.DOMActor.prototype.getCSSName();
+Rekapi.DOMActor.prototype.getCSSName();
 ````
 
 This can be useful when used with the `to-css` extension.  You might not ever
