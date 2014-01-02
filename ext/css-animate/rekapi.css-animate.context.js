@@ -69,12 +69,12 @@ rekapiModules.push(function (context) {
    * sure what causes this issue.  Not sure why this fixes it.  Not sure if
    * this affects Blink-based Opera browsers.
    *
-   * @param {Rekapi} kapi
+   * @param {Rekapi} rekapi
    */
-  function forceStyleInjection (kapi) {
+  function forceStyleInjection (rekapi) {
     var dummyDiv = document.createElement('div');
 
-    _.each(kapi.getAllActors(), function (actor) {
+    _.each(rekapi.getAllActors(), function (actor) {
       if (actor instanceof Rekapi.DOMActor) {
         var actorEl = actor._context;
         var actorElParent = actorEl.parentElement;
@@ -112,32 +112,32 @@ rekapiModules.push(function (context) {
    * An advantage of this module is that CSS animations are not always available, but JavaScript animations are.  Keyframes are defined the same way, but you can choose what method of animation is appropriate at runtime:
    *
    * ```
-   *  var kapi = new Rekapi();
+   *  var rekapi = new Rekapi();
    *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
    *
-   *  kapi.addActor(actor);
+   *  rekapi.addActor(actor);
    *  actor.keyframe(0,    { left: '0px'   });
    *  actor.keyframe(1000, { left: '250px' }, 'easeOutQuad');
    *
    *  // Feature detect for @keyframe support
-   *  if (kapi.css.canAnimateWithCSS()) {
-   *    kapi.css.play();
+   *  if (rekapi.css.canAnimateWithCSS()) {
+   *    rekapi.css.play();
    *  } else {
-   *    kapi.play();
+   *    rekapi.play();
    *  }
    * ```
    *
    * __[Example](/ext/css-animate/sample/play-many-actors.html)__
    *
-   * @param {Rekapi} kapi
+   * @param {Rekapi} rekapi
    * @constructor
    */
-  Rekapi.CSSRenderer = function (kapi) {
+  Rekapi.CSSRenderer = function (rekapi) {
     if (!Rekapi.DOMActor && !Rekapi.prototype.toCSS) {
       throw 'CSSRenderer requires the DOMActor and toCSS modules.';
     }
 
-    this.kapi = kapi;
+    this.rekapi = rekapi;
 
     // @private {number}
     this._playTimestamp = null;
@@ -152,7 +152,7 @@ rekapiModules.push(function (context) {
     // @private {number}
     this._stopSetTimeoutHandle = null;
 
-    kapi.on('timelineModified', _.bind(function () {
+    rekapi.on('timelineModified', _.bind(function () {
       this._cachedCSS = null;
     }, this));
 
@@ -179,7 +179,7 @@ rekapiModules.push(function (context) {
    * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
    */
   CSSRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
-    return this._cachedCSS = this.kapi.toCSS({
+    return this._cachedCSS = this.rekapi.toCSS({
       'vendors': [getVendorPrefix()]
       ,'fps': opt_fps
       ,'iterations': opt_iterations
@@ -203,17 +203,17 @@ rekapiModules.push(function (context) {
     this._playTimestamp = now();
 
     if (navigator.userAgent.match(/Presto/)) {
-      forceStyleInjection(this.kapi);
+      forceStyleInjection(this.rekapi);
     }
 
     if (opt_iterations) {
-      var animationLength = (opt_iterations * this.kapi.animationLength());
+      var animationLength = (opt_iterations * this.rekapi.animationLength());
       this._stopSetTimeoutHandle = setTimeout(
           _.bind(this.stop, this, true),
           animationLength + INJECTED_STYLE_REMOVAL_BUFFER_MS);
     }
 
-    fireEvent(this.kapi, 'play', _);
+    fireEvent(this.rekapi, 'play', _);
   };
 
 
@@ -234,14 +234,14 @@ rekapiModules.push(function (context) {
 
       var updateTime;
       if (opt_goToEnd) {
-        updateTime = this.kapi.animationLength();
+        updateTime = this.rekapi.animationLength();
       } else {
         updateTime = (now() - this._playTimestamp)
-            % this.kapi.animationLength();
+            % this.rekapi.animationLength();
       }
 
-      this.kapi.update(updateTime);
-      fireEvent(this.kapi, 'stop', _);
+      this.rekapi.update(updateTime);
+      fireEvent(this.rekapi, 'stop', _);
     }
   };
 
