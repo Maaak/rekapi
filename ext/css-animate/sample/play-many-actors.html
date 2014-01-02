@@ -34,7 +34,7 @@
     <div id="container"></div>
     <script>
       var container = document.getElementById('container');
-      var kapi = new Kapi();
+      var rekapi = new Rekapi();
       var gridSize = 6;
 
       _.range(gridSize).forEach(function (xNum, x) {
@@ -42,8 +42,8 @@
           var el = document.createElement('div');
           el.className = 'actor';
           container.appendChild(el);
-          var actor = new Kapi.DOMActor(el);
-          kapi.addActor(actor);
+          var actor = new Rekapi.DOMActor(el);
+          rekapi.addActor(actor);
 
           actor
             .keyframe(0, {
@@ -58,21 +58,21 @@
         });
       });
 
-      kapi.css.prerender();
+      rekapi.css.prerender();
 
       document.getElementById('btn-js').addEventListener('click', function () {
-        kapi.css.stop();
-        kapi.play();
+        rekapi.css.stop();
+        rekapi.play();
       });
 
       document.getElementById('btn-css').addEventListener('click', function () {
-        kapi.stop();
-        kapi.css.play();
+        rekapi.stop();
+        rekapi.css.play();
       });
 
       document.getElementById('btn-stop').addEventListener('click', function () {
-        kapi.stop();
-        kapi.css.stop();
+        rekapi.stop();
+        rekapi.css.stop();
       });
     </script>
   </body>

@@ -620,10 +620,10 @@ var rekapiCore = function (root, _, Tweenable) {
   /**
    * Import data that was created by [`Rekapi#exportTimeline`](#exportTimeline).  Sets up all necessary actors and keyframes.  Note that this method only creates `Rekapi.Actor` instances, not subclasses.
    *
-   * @param {Object} KapiData Any object that has the same data format as the object generated from Rekapi#exportTimeline.
+   * @param {Object} rekapiData Any object that has the same data format as the object generated from Rekapi#exportTimeline.
    */
-  Rekapi.prototype.importTimeline = function (kapiData) {
-    _.each(kapiData.actors, function (actorData) {
+  Rekapi.prototype.importTimeline = function (rekapiData) {
+    _.each(rekapiData.actors, function (actorData) {
       var actor = new Rekapi.Actor();
       actor.importTimeline(actorData);
       this.addActor(actor);

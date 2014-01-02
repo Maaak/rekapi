@@ -22,14 +22,14 @@
   <body>
     <div id="actor-1"></div>
     <script>
-      var kapi = new Kapi();
-      var actor = new Kapi.DOMActor(document.getElementById('actor-1'));
-      kapi.addActor(actor);
+      var rekapi = new Rekapi();
+      var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
+      rekapi.addActor(actor);
 
       actor.keyframe(0,    { transform: 'translateX(0px)'   });
       actor.keyframe(1000, { transform: 'translateX(250px)' }, 'easeOutQuad');
 
-      kapi.css.play(2);
+      rekapi.css.play(2);
     </script>
   </body>
 </html>

@@ -20,10 +20,10 @@
   <body>
     <div class="actor"></div>
     <script>
-      var kapi = new Kapi();
+      var rekapi = new Rekapi();
       var actorEl = document.querySelector('.actor');
-      var actor = new Kapi.DOMActor(actorEl);
-      kapi.addActor(actor);
+      var actor = new Rekapi.DOMActor(actorEl);
+      rekapi.addActor(actor);
 
       actor
         .keyframe(0, {
@@ -32,7 +32,7 @@
           transform: 'translate3d(300px, 300px, 0)'
         }, 'linear easeInQuad');
 
-      kapi.play(2);
+      rekapi.play(2);
 
     </script>
   </body>

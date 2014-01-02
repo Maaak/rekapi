@@ -42,14 +42,14 @@
       function init () {
         var container = document.getElementById('animation-container');
 
-        var animation = new Kapi();
+        var animation = new Rekapi();
 
         var child, actor, i = 0, children = [];
         for (i; i < 600; i++) {
           child = document.createElement('li');
           children.push(child);
           container.appendChild(child);
-          actor = new Kapi.DOMActor(child);
+          actor = new Rekapi.DOMActor(child);
           animation.addActor(actor);
           actor
             .keyframe(0, {
