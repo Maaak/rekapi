@@ -53,7 +53,7 @@
       }
     });
 
-    asyncTest("Can load the minified version of Rerekapi", function() {
+    asyncTest("Can load the minified version of Rekapi", function() {
       requireConfig({
         rekapi: '../dist/rekapi.min'
       });
@@ -131,13 +131,13 @@
 
         var k = new Rekapi({});
         ok(k !== undefined);
-        // Make sure that Rerekapi did not touch the global _ property.
+        // Make sure that Rekapi did not touch the global _ property.
         ok(window._ !== undefined);
         start();
       });
     });
 
-    // In some applications, Underscore will need to be loaded earlier than Rerekapi.
+    // In some applications, Underscore will need to be loaded earlier than Rekapi.
     asyncTest("Can work well with a previously loaded Underscore", function() {
       requireConfig({
         // Use a version which creates a global
@@ -191,7 +191,7 @@
 </script>
 </head>
 <body>
-<h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rerekapi</a></h1>
+<h1 id="qunit-header"><a href="https://github.com/jeremyckahn/rekapi">Rekapi</a></h1>
  <h2 id="qunit-banner"></h2>
  <div id="qunit-testrunner-toolbar"></div>
  <h2 id="qunit-userAgent"></h2>
