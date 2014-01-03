@@ -8,7 +8,7 @@ rekapiModules.push(function (context) {
   /**
    * Constructor for rendering Actors to a `<canvas>`.  Extends [`Rekapi.Actor`](../../src/rekapi.actor.js.html).  Valid options for `opt_config` are the same as those for [`Rekapi.Actor`](../../src/rekapi.actor.js.html), with the following additions:
    *
-   *  - __draw__ _(function(CanvasRenderingContext2D, Object))_: A function that renders something to a canvas.
+   *  - __render__ _(function(CanvasRenderingContext2D, Object))_: A function that renders something to a canvas.
    *
    * _Note_: `context` is inherited from the `Rekapi` instance if it is not provided here.
    * @param {Object=} opt_config
@@ -18,7 +18,7 @@ rekapiModules.push(function (context) {
     Rekapi.Actor.call(this, opt_config);
 
     opt_config = opt_config || {};
-    this.draw = opt_config.draw || noop;
+    this.render = opt_config.render || noop;
 
     return this;
   };
