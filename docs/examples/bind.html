@@ -43,7 +43,7 @@
       rekapi.on('play', function (rekapi) {
         console.log(rekapi, 'is now playing');
       });
-      rekapi.on('afterDraw', function (rekapi) {
+      rekapi.on('afterRender', function (rekapi) {
         console.log(rekapi, 'just rendered a frame');
       });
       rekapi.on('stop', function (rekapi) {

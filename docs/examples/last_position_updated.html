@@ -41,7 +41,7 @@
         .keyframe(1000, { x: 200, y: 150 });
 
       // For every frame, print where in the animation we are in the console.
-      rekapi.on('afterDraw', function () {
+      rekapi.on('afterRender', function () {
         console.log(rekapi.lastPositionUpdated());
       });
 
