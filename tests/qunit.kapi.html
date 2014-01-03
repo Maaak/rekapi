@@ -81,8 +81,8 @@
       equal(testRekapi._actors[testActor1.id], undefined,
           'Actor is no longer in the internal _actors Object');
 
-      equal(_.indexOf(testRekapi._drawOrder, testActor1.id), -1,
-          'Actor is not in the internal _drawOrder array');
+      equal(_.indexOf(testRekapi._renderOrder, testActor1.id), -1,
+          'Actor is not in the internal _renderOrder array');
     });
 
 

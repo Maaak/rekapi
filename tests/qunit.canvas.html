@@ -31,19 +31,19 @@
 
     module('Canvas extension');
 
-    test('Actors are added to the drawOrder array', function () {
+    test('Actors are added to the renderOrder array', function () {
       var testRekapi
           ,testActor1;
 
       testRekapi = setupTestRekapi();
       testActor1 = setupTestActor(testRekapi);
 
-      equal(testRekapi.canvas._drawOrder[0], testActor1.id,
-          'Actor is the first element in the internal _drawOrder array');
+      equal(testRekapi.canvas._renderOrder[0], testActor1.id,
+          'Actor is the first element in the internal _renderOrder array');
     });
 
 
-    test('Actors are removed from the drawOrder array', function () {
+    test('Actors are removed from the renderOrder array', function () {
       var testRekapi
           ,testActor1;
 
@@ -52,12 +52,12 @@
 
       testRekapi.removeActor(testActor1);
 
-      equal(testRekapi.canvas._drawOrder.length, 0,
-          'Actor is no longer present in the internal _drawOrder array');
+      equal(testRekapi.canvas._renderOrder.length, 0,
+          'Actor is no longer present in the internal _renderOrder array');
     });
 
 
-    test('Only CanvasActors are added to the drawOrder array', function () {
+    test('Only CanvasActors are added to the renderOrder array', function () {
       var testRekapi
           ,testCanvasActor1
           ,testCanvasActor2
@@ -69,31 +69,31 @@
       testActor = new Rekapi.Actor();
       testRekapi.addActor(testActor);
 
-      equal(testRekapi.canvas._drawOrder.length, 2,
-          'There are only two canvas actors in the drawOrder array');
-      equal(testRekapi.canvas._drawOrder.indexOf(testActor.id), -1,
-          'testActor is not present inside the drawOrder array');
+      equal(testRekapi.canvas._renderOrder.length, 2,
+          'There are only two canvas actors in the renderOrder array');
+      equal(testRekapi.canvas._renderOrder.indexOf(testActor.id), -1,
+          'testActor is not present inside the renderOrder array');
 
       testCanvasActor1.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
       testCanvasActor2.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
       testActor.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
 
-      testCanvasActor1.draw = function(context, state) {
+      testCanvasActor1.render = function(context, state) {
         ok(state != undefined);
       };
-      testCanvasActor2.draw = function(context, state) {
+      testCanvasActor2.render = function(context, state) {
         ok(state != undefined);
       };
-      // This is only for testing. Regular actors don't have a `draw` method.
-      testActor.draw = function() {
-        throw new Error('draw() should not be called on non-canvas actors');
+      // This is only for testing. Regular actors don't have a `render` method.
+      testActor.render = function() {
+        throw new Error('render() should not be called on non-canvas actors');
       };
 
       testRekapi.update(500);
     });
 
 
-    test('Actors can be moved to the beginning of the draw list', function () {
+    test('Actors can be moved to the beginning of the render list', function () {
       var testRekapi
           ,testActor1
           ,testActor2;
@@ -103,10 +103,10 @@
       testActor2 = setupTestActor(testRekapi);
       testRekapi.canvas.moveActorToLayer(testActor2, 0);
 
-      equal(testRekapi.canvas._drawOrder[0], testActor2.id,
+      equal(testRekapi.canvas._renderOrder[0], testActor2.id,
           'Second actor was moved to the first position.');
 
-      equal(testRekapi.canvas._drawOrder[1], testActor1.id,
+      equal(testRekapi.canvas._renderOrder[1], testActor1.id,
           'First actor was moved to the second position.');
 
       equal(testRekapi.actorCount(), 2,
@@ -114,7 +114,7 @@
     });
 
 
-    test('Actors can be moved to the end of the draw list', function () {
+    test('Actors can be moved to the end of the render list', function () {
       var testRekapi
           ,testActor1
           ,testActor2;
@@ -124,10 +124,10 @@
       testActor2 = setupTestActor(testRekapi);
       testRekapi.canvas.moveActorToLayer(testActor1, 1);
 
-      equal(testRekapi.canvas._drawOrder[0], testActor2.id,
+      equal(testRekapi.canvas._renderOrder[0], testActor2.id,
           'Second actor was moved to the first position.');
 
-      equal(testRekapi.canvas._drawOrder[1], testActor1.id,
+      equal(testRekapi.canvas._renderOrder[1], testActor1.id,
           'First actor was moved to the second position.');
 
       equal(testRekapi.actorCount(), 2,
@@ -145,10 +145,10 @@
       testActor2 = setupTestActor(testRekapi);
       testActor1.moveToLayer(1);
 
-      equal(testRekapi.canvas._drawOrder[0], testActor2.id,
+      equal(testRekapi.canvas._renderOrder[0], testActor2.id,
           'Second actor was moved to the first position.');
 
-      equal(testRekapi.canvas._drawOrder[1], testActor1.id,
+      equal(testRekapi.canvas._renderOrder[1], testActor1.id,
           'First actor was moved to the second position.');
 
       equal(testRekapi.actorCount(), 2,

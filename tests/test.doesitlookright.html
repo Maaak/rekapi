@@ -23,7 +23,7 @@
     var actor;
 
     actor = new Rekapi.CanvasActor({
-      'draw': function (canvas_context, state) {
+      'render': function (canvas_context, state) {
         if (isNaN(state.x)) {
           return;
         }
