@@ -63,13 +63,13 @@
         .keyframe(0, { x: 100,  y: 100, radius: 25 })
         .keyframe(2000, { radius: 75 });
 
-      // Larger circles are drawn first.  Once actor2 grows larger than actor1,
-      // it will be drawn on top.
+      // Larger circles are rendered first.  Once actor2 grows larger than
+      // actor1, it will be rendered on top.
       rekapi.canvas.setOrderFunction(function (actor) {
         return actor.get().radius;
       });
 
-      // Allow actors to be drawn in default order.
+      // Allow actors to be rendered in default order.
       rekapi.canvas.unsetOrderFunction();
 
       rekapi.play();
