@@ -1,9 +1,9 @@
 # Getting started
 
-Although Rekapi can render any type of View, such as DOM, let's start off by
-making a simple `<canvas>` animation.  The first step is to  make a new `Rekapi`
+Although Rekapi is renderer-agnostic, it's most straightforward to start off by
+making a simple `<canvas>` animation.  The first step is to make a new `Rekapi`
 instance.  Canvas animations require a `<canvas>` element to render to, which
-we will supply to the `Rekapi` constructor:
+gets passed to the `Rekapi` constructor:
 
 ````javascript
 var canvas = document.getElementsByTagName('canvas')[0];
@@ -12,18 +12,18 @@ var rekapi = new Rekapi({
   });
 ````
 
-So now we have a Rekapi instance... but it won't do terribly much until you
+You now have a `Rekapi` instance, but it won't do terribly much until you
 define and add some Actors.
 
 ## Defining Actors
 
-Here's the boilerplate for a canvas Actor:
+Here's the boilerplate for a canvas actor:
 
 ````javascript
 var actor = new Rekapi.CanvasActor({
 
   // Called every frame.  Receives a reference to the canvas context, and the
-  // Actor's state.
+  // actor's state.
   'draw': function (context, state) {
 
   }
@@ -57,44 +57,42 @@ var actor = new Rekapi.CanvasActor({
 });
 ````
 
-The Actor's `draw` method can do whatever you want it to, really.  The idea is
-that the `context` and `state` parameters are computed by `rekapi`, and then
-rendered to the `<canvas>` by the Actor's `draw` method.
+The actor's `draw` method can be whatever you want, so don't focus too much on
+what function is actually doing here.  The idea is that the `context` and
+`state` parameters are provided by `rekapi` on every screen update, and then
+rendered to the `<canvas>` by the actor's `draw` method.
 
-Now that we have an Actor instance, we just need to add it to `rekapi`:
+Now that you have an actor instance, you just need to add it to `rekapi`:
 
 ````javascript
 rekapi.addActor(actor);
 ````
 
-Now we can define some keyframes.
+Now you can define some keyframes.
 
 ## Defining keyframes
 
-A Rekapi keyframe is a way of saying "At a given point in time, the Actor
-should have a particular state."  Let's start off by giving `actor` a starting
-keyframe:
+A keyframe is a way of saying "At a given point in time, the actor should have
+a particular state."  Start off by giving `actor` a starting keyframe:
 
 ````javascript
-actor
-  .keyframe(0, {
+actor.keyframe(0, {
     x: 50,
     y: 50
   });
 ````
 
-`keyframe` is a method that takes two or three parameters - the first is how
+`keyframe` is a method that takes two to three parameters - the first is how
 many milliseconds into the animation this keyframe is going start, and the
-second is an Object whose properties define the state that the Actor should
-have.  The third parameter is a string that defines which
+second is an Object whose properties define the state that the actor should
+have.  The optional third parameter is a string that specifies which
 [Shifty](https://github.com/jeremyckahn/shifty) easing formula to use -
 "linear" is the default.  The previous snippet says, "at zero milliseconds into
-the animation, place `actor` at `x` 50, and `y` 50.  Continuing with the
-previous snippet, let's animate it to another point on the canvas:
+the animation, place `actor` at `x` 50, and `y` 50.  Continuing with that,
+animate it to another point on the canvas:
 
 ````javascript
-actor
-  .keyframe(0, {
+actor.keyframe(0, {
     x: 50,
     y: 50
   })
@@ -104,37 +102,38 @@ actor
   }, 'easeOutExpo');
 ````
 
-The animation defined here will last one second, as the second `keyframe` is
-placed at 1000 milliseconds.  It will have a nice `easeOutExpo` ease applied to
-it, as we can see in the third parameter.  Tweens get their easing formula from
-the keyframe they are animating to, not animating from.
+The animation defined here will last one second, as the final `keyframe` is
+set at 1000 milliseconds.  It will have a nice `easeOutExpo` ease applied to
+it, as you can see in the third parameter.  Individual tweens (that is,
+keyframed animation segments) get their easing curves from the keyframe they
+are animating to, not animating from.
 
 Rekapi inherits all of [Shifty's easing
-formulas](https://github.com/jeremyckahn/shifty/blob/master/src/shifty.formulas.js).
+functions](https://github.com/jeremyckahn/shifty/blob/master/src/shifty.formulas.js).
 
 ## Playing the animation
 
-So now we've set up a sweet animation - let's run it and see what it looks
-like.  Continuing from before:
+So now you've set up a sweet animation - run it and see what it looks like.
+Continuing from before:
 
 ````javascript
 rekapi.play();
 ````
 
-And the animation will just loop continuously.  We can also pass a `number` to
+And the animation will just loop continuously.  You can also pass a `number` to
 `play()` to define how many times to play before stopping, like so:
 
 ````javascript
 rekapi.play(3);
 ````
 
-That will play the animation three times and stop.  When an animation stops, it
-will will just sit at the last frame that was rendered.  You can control the
-animation flow with `rekapi.pause()` and `rekapi.stop()`.
+This will play the animation three times and stop.  When an animation stops, it
+will just sit at the last frame that was rendered.  You can control the
+animation playback with `rekapi.pause()` and `rekapi.stop()`.
 
 ## All together
 
-Copy/paste/save this onto your machine to see a simple Rekapi animation:
+Copy/paste/save this onto your computer to see a simple Rekapi animation:
 
 ````html
 <!DOCTYPE html>
@@ -169,8 +168,7 @@ Copy/paste/save this onto your machine to see a simple Rekapi animation:
 
   rekapi.addActor(actor);
 
-  actor
-    .keyframe(0, {
+  actor.keyframe(0, {
       x: 50,
       y: 50
     })
