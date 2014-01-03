@@ -18,7 +18,7 @@
       });
 
       var actor = new Rekapi.CanvasActor({
-        'draw': function (canvas_context, state) {
+        render: function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
               state.x || 0,
@@ -41,7 +41,7 @@
         .keyframe(1000, { x: 200, y: 150 });
 
       // This updates all actors at the 500 millisecond in the animation.
-      // The canvas extension then calls the 'draw' method of each CanvasActor.
+      // The canvas extension then calls the render method of each CanvasActor.
       rekapi.update(500);
     </script>
   </body>
