@@ -1,3 +1,29 @@
+# Upgrading to Rekapi 1.0.0
+
+The big breaking change is that the globally-exposed object is renamed from `Kapi` to `Rekapi`, to match the name of the project.  It is recommended that you update your code, but in lieu of that you might be able to get away with this:
+
+````javascript
+window.Kapi = window.Rekapi;
+````
+
+If you are loading Rekapi as an AMD module, there is a good chance that you won't need to change any of your code in order to upgrade, since the object names provided by the loader are arbitrary.  In other words, this should still work:
+
+````javascript
+define(['rekapi'], function (Kapi) {
+  // ...
+});
+````
+
+Note that __all__ internal references to `Kapi` objects have been renamed from `kapi` to `rekapi` as well, so that might break your code regardless of how Rekapi was loaded.  To demonstrate:
+
+````javascript
+var rekapi = new Rekapi();
+var actor = new Rekapi.Actor();
+rekapi.add(actor);
+
+rekapi === actor.rekapi; // <-- actor.rekapi used to be actor.kapi
+````
+
 # Upgrading to Rekapi 0.13.0
 
 `Kapi.Actor.prototype.data` is now just property, not a getter/setter method.
