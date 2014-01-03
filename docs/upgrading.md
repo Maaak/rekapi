@@ -1,6 +1,6 @@
 # Upgrading to Rekapi 1.0.0
 
-The big breaking change is that the globally-exposed object is renamed from `Kapi` to `Rekapi`, to match the name of the project.  It is recommended that you update your code, but in lieu of that you might be able to get away with this:
+There are several breaking changes in this release.  The most significant is that the globally-exposed object is renamed from `Kapi` to `Rekapi`, to match the name of the project.  It is recommended that you update your code, but in lieu of that you might be able to get away with this:
 
 ````javascript
 window.Kapi = window.Rekapi;
@@ -23,6 +23,10 @@ rekapi.add(actor);
 
 rekapi === actor.rekapi; // <-- actor.rekapi used to be actor.kapi
 ````
+
+## `draw` is now `render`
+
+`Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
 
 # Upgrading to Rekapi 0.13.0
 

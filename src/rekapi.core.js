@@ -418,7 +418,7 @@ var rekapiCore = function (root, _, Tweenable) {
 
 
   /**
-   * Play from the last frame that was drawn with [`update()`](#update). `opt_howManyTimes` works as it does in `play()`.
+   * Play from the last frame that was calculated with [`update()`](#update). `opt_howManyTimes` works as it does in `play()`.
    *
    * __[Example](../../../../docs/examples/play_from_current.html)__
    * @param {number} opt_howManyTimes
