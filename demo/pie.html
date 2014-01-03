@@ -59,7 +59,7 @@
 
     function getActor (basePercentage, color, previousPiece) {
       var actor = new Rekapi.CanvasActor({
-        'draw': function (canvas_context, state) {
+        'render': function (canvas_context, state) {
           var percent = basePercentage
               ,previousSum = getStartRad(this)
               ,x ,y

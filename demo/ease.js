@@ -130,7 +130,7 @@ $(function () {
       ,'width': 500
     })
     ,circle = new Rekapi.CanvasActor({
-      'draw': function (canvas_context, state) {
+      'render': function (canvas_context, state) {
 
         if (isPathShowing && prerenderedPath) {
           canvas_context.drawImage(prerenderedPath, 0, 0);
