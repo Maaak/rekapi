@@ -1,13 +1,13 @@
-var rekapiModules = [];
+// REKAPI-GLOBALS
+// These are global in development, but get wrapped in a closure at build-time.
 
-// A hack for UglifyJS defines
+
+// A hack for UglifyJS defines.  Gets removes in the build process.
 if (typeof REKAPI_DEBUG === 'undefined') {
   REKAPI_DEBUG = true;
 }
 
-
-// REKAPI-GLOBAL METHODS
-// These are global in development, but get wrapped in a closure at build-time.
+var rekapiModules = [];
 
 /*!
  * Fire an event bound to a Rekapi.
