@@ -8,7 +8,6 @@ rekapiModules.push(function (context) {
   var _ = Rekapi._;
   var interpolate = Tweenable.interpolate;
 
-
   /**
    * Represents an individual component of a `Rekapi.Actor`'s keyframe state.  In many cases you won't need to deal with this directly, `Rekapi.Actor` abstracts a lot of what this Object does away for you.
    *
@@ -34,7 +33,6 @@ rekapiModules.push(function (context) {
   };
   var KeyframeProperty = Rekapi.KeyframeProperty;
 
-
   /**
    * Modify a `KeyframeProperty`.  Any of the following are valid properties of `newProperties` and correspond to the formal parameters of `Rekapi.KeyframeProperty`:
    *
@@ -56,7 +54,6 @@ rekapiModules.push(function (context) {
     _.extend(this, modifiedProperties);
   };
 
-
   /**
    * Create the reference to the next KeyframeProperty in an `Actor`'s `KeyframeProperty` track.  Tracks are linked lists of `Rekapi.KeyframeProperty`s.
    *
@@ -66,7 +63,6 @@ rekapiModules.push(function (context) {
   KeyframeProperty.prototype.linkToNext = function (nextProperty) {
     this.nextProperty = nextProperty || null;
   };
-
 
   /**
    * Calculate the midpoint between this `Rekapi.KeyframeProperty` and the next `Rekapi.KeyframeProperty` in a `Rekapi.Actor`'s `Rekapi.KeyframeProperty` track.
@@ -93,7 +89,6 @@ rekapiModules.push(function (context) {
 
     return value;
   };
-
 
   /**
    * Export a serializable `Object` of this `Rekapi.KeyframeProperty`'s state data.

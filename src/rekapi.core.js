@@ -1,7 +1,6 @@
 // REKAPI-GLOBALS
 // These are global in development, but get wrapped in a closure at build-time.
 
-
 // A hack for UglifyJS defines.  Gets removes in the build process.
 if (typeof REKAPI_DEBUG === 'undefined') {
   REKAPI_DEBUG = true;
@@ -22,7 +21,6 @@ function fireEvent (rekapi, eventName, _, opt_data) {
   });
 }
 
-
 /*!
  * @param {Rekapi} rekapi
  */
@@ -36,14 +34,12 @@ function recalculateAnimationLength (rekapi, _) {
   rekapi._animationLength = Math.max.apply(Math, actorLengths);
 }
 
-
 /*!
  * Does nothing.  Absolutely nothing at all.
  */
 function noop () {
   // NOOP!
 }
-
 
 var rekapiCore = function (root, _, Tweenable) {
 
@@ -52,7 +48,6 @@ var rekapiCore = function (root, _, Tweenable) {
   // CONSTANTS
   //
   var UPDATE_TIME = 1000 / 60;
-
 
   /*!
    * Determines which iteration of the loop the animation is currently in.
@@ -65,7 +60,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return currentIteration;
   }
 
-
   /*!
    * Calculate how many milliseconds since the animation began.
    * @param {Rekapi} rekapi
@@ -74,7 +68,6 @@ var rekapiCore = function (root, _, Tweenable) {
   function calculateTimeSinceStart (rekapi) {
     return now() - rekapi._loopTimestamp;
   }
-
 
   /*!
    * Determines is the animation is complete or not.
@@ -85,7 +78,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return currentLoopIteration >= rekapi._timesToIterate
         && rekapi._timesToIterate !== -1;
   }
-
 
   /*!
    * Stops the animation if the animation is complete.
@@ -98,7 +90,6 @@ var rekapiCore = function (root, _, Tweenable) {
       fireEvent(rekapi, 'animationComplete', _);
     }
   }
-
 
   /*!
    * Calculate how far in the animation loop `rekapi` is, in milliseconds, based
@@ -118,7 +109,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return currentLoopPosition;
   }
 
-
   /*!
    * Calculate the position and state for a given millisecond.
    * Also updates the state internally and accounts for how many loop
@@ -134,7 +124,6 @@ var rekapiCore = function (root, _, Tweenable) {
     updatePlayState(rekapi, currentIteration);
   }
 
-
   /*!
    * Calculate how far in the animation loop `rekapi` is, in milliseconds, and
    * update based on that time.
@@ -143,7 +132,6 @@ var rekapiCore = function (root, _, Tweenable) {
   function updateToCurrentMillisecond (rekapi) {
     updateToMillisecond(rekapi, calculateTimeSinceStart(rekapi));
   }
-
 
   /*!
    * This is the heartbeat of an animation.  Updates the state and then calls
@@ -166,7 +154,6 @@ var rekapiCore = function (root, _, Tweenable) {
     }
   }
 
-
   /*!
    * @return {Function}
    */
@@ -182,7 +169,6 @@ var rekapiCore = function (root, _, Tweenable) {
       global.setTimeout;
   }
 
-
   /*!
    * @return {Function}
    */
@@ -194,7 +180,6 @@ var rekapiCore = function (root, _, Tweenable) {
       global.mozCancelRequestAnimationFrame ||
       global.clearTimeout;
   }
-
 
   /*!
    * Cancels an update loop.  This abstraction is needed to get around the fact
@@ -218,7 +203,6 @@ var rekapiCore = function (root, _, Tweenable) {
     ,'PAUSED': 'paused'
     ,'PLAYING': 'playing'
   };
-
 
   /**
    * Rekapi constructor.  Valid values for `opt_config` are:
@@ -277,19 +261,16 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   }
 
-
   // Decorate the Rekapi object with the dependencies so that other modules can
   // access them.
   Rekapi.Tweenable = Tweenable;
   Rekapi._ = _;
-
 
   /*!
    * @type {Object.<function>} Contains the context init function to be called
    * in the Rekapi constructor.
    */
   Rekapi.prototype._contextInitHook = {};
-
 
   /**
    * Add a `Rekapi.Actor` to the animation.
@@ -316,7 +297,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Retrieve a `Rekapi.Actor` from the `Rekapi` instance by its ID.  All `Actor`s have an `id` property.
    *
@@ -328,7 +308,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this._actors[actorId];
   };
 
-
   /**
    * Retrieve the IDs of all `Rekapi.Actor`s in a `Rekapi` instance as an Array.
    *
@@ -339,7 +318,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return _.pluck(this._actors, 'id');
   };
 
-
   /**
    * Retrieve all `Rekapi.Actor`s in the animation as an Object.  Actors' IDs correspond to the property names of the returned Object.
    *
@@ -349,7 +327,6 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.prototype.getAllActors = function () {
     return _.clone(this._actors);
   };
-
 
   /**
    * Remove a `Rekapi.Actor` from the animation.  This does not destroy the `Actor`, it only removes the link between it and the `Rekapi` instance.
@@ -368,7 +345,6 @@ var rekapiCore = function (root, _, Tweenable) {
 
     return this;
   };
-
 
   /**
    * Play the animation on a loop, either a set amount of times or infinitely.  If `opt_howManyTimes` is omitted, the animation will loop infinitely.
@@ -396,7 +372,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Move to a specific millisecond on the timeline and play from there. `opt_howManyTimes` works as it does in `play()`.
    *
@@ -412,7 +387,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Play from the last frame that was calculated with [`update()`](#update). `opt_howManyTimes` works as it does in `play()`.
    *
@@ -423,7 +397,6 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.prototype.playFromCurrent = function (opt_howManyTimes) {
     return this.playFrom(this._lastUpdatedMillisecond, opt_howManyTimes);
   };
-
 
   /**
    * Pause the animation.  A "paused" animation can be resumed from where it left off with `play()`.
@@ -446,7 +419,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Stop the animation.  A "stopped" animation will start from the beginning if `play()` is called.
    *
@@ -468,7 +440,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Return whether or not the animation is playing (meaning not paused or stopped).
    *
@@ -478,7 +449,6 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.prototype.isPlaying = function () {
     return this._playState === playState.PLAYING;
   };
-
 
   /**
    * Return the length of the animation, in milliseconds.
@@ -490,7 +460,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this._animationLength;
   };
 
-
   /**
    * Return the normalized (between 0 and 1) timeline position that was last calculated.
    *
@@ -501,7 +470,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return (this._lastUpdatedMillisecond / this._animationLength);
   };
 
-
   /**
    * Return the number of `Rekapi.Actor`s in the animation.
    *
@@ -511,7 +479,6 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.prototype.actorCount = function () {
     return _.size(this._actors);
   };
-
 
   /**
    * Update the position of all the `Rekapi.Actor`s to `opt_millisecond`.  If `opt_millisecond` is omitted, update to the last millisecond that the animation was updated to (it's a re-update).
@@ -537,7 +504,6 @@ var rekapiCore = function (root, _, Tweenable) {
 
     return this;
   };
-
 
   /**
    * Bind a handler function to a Rekapi event.  Valid events are:
@@ -568,7 +534,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Unbind `opt_handler` from a Rekapi event.  If `opt_handler` is omitted, all handler functions bound to `eventName` are unbound.  Valid events correspond to the list under [`on()`](#on).
    *
@@ -592,7 +557,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return this;
   };
 
-
   /**
    * Export the current state of the animation into a serializable `Object`.
    *
@@ -612,7 +576,6 @@ var rekapiCore = function (root, _, Tweenable) {
     return exportData;
   };
 
-
   /**
    * Import data that was created by [`Rekapi#exportTimeline`](#exportTimeline).  Sets up all necessary actors and keyframes.  Note that this method only creates `Rekapi.Actor` instances, not subclasses.
    *
@@ -625,7 +588,6 @@ var rekapiCore = function (root, _, Tweenable) {
       this.addActor(actor);
     }, this);
   };
-
 
   Rekapi.util = {};
 

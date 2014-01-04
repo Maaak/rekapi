@@ -28,7 +28,6 @@ rekapiModules.push(function (context) {
   CanvasActorMethods.prototype = Rekapi.Actor.prototype;
   CanvasActor.prototype = new CanvasActorMethods();
 
-
   /*!
    * @param {Object} opt_context
    * @return {Object}
@@ -40,7 +39,6 @@ rekapiModules.push(function (context) {
 
     return this._context && this._context.getContext('2d');
   };
-
 
   /**
    * Move this `Rekapi.CanvasActor` to a different layer in the `Rekapi` instance that it belongs to.  This returns `undefined` if the operation was unsuccessful.  This is just a wrapper for [moveActorToLayer](rekapi.canvas.context.js.html#moveActorToLayer).

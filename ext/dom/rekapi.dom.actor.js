@@ -20,11 +20,9 @@ rekapiModules.push(function (context) {
     'skewX',
     'skewY'];
 
-
   function setStyle (forElement, styleName, styleValue) {
     forElement.style[styleName] = styleValue;
   }
-
 
   /*!
    * @param {string} name A transform function name
@@ -33,7 +31,6 @@ rekapiModules.push(function (context) {
   function isTransformFunction (name) {
     return _.contains(transformFunctions, name);
   }
-
 
   /*!
    * Builds a concatenated string of given transform property values in order.
@@ -56,7 +53,6 @@ rekapiModules.push(function (context) {
     return transformComponents.join(' ');
   }
 
-
   /*!
    * Sets value for all vendor prefixed transform properties on a given context
    *
@@ -68,7 +64,6 @@ rekapiModules.push(function (context) {
       setStyle(context, prefixedTransform, transformValue);
     });
   }
-
 
   /**
    * `Rekapi.DOMActor` is a subclass of [`Rekapi.Actor`](../../src/rekapi.actor.js.html).  Please note that `Rekapi.DOMActor` accepts `opt_config` as the second parameter, not the first.  Instantiate a `Rekapi.DOMActor` with an `HTMLElement`, and then add it to the animation:
@@ -157,11 +152,9 @@ rekapiModules.push(function (context) {
   };
   var DOMActor = Rekapi.DOMActor;
 
-
   function DOMActorMethods () {}
   DOMActorMethods.prototype = Rekapi.Actor.prototype;
   DOMActor.prototype = new DOMActorMethods();
-
 
   /*!
    * @param {HTMLElement} context
@@ -190,7 +183,6 @@ rekapiModules.push(function (context) {
     }, this);
   };
 
-
   /*!
    * transform properties like translate3d and rotate3d break the cardinality
    * of multi-ease easing strings, because the "3" gets treated like a
@@ -215,7 +207,6 @@ rekapiModules.push(function (context) {
     }
   };
 
-
   /*!
    * @param {Rekapi.KeyframeProperty} keyframeProperty
    * @param {Object} interpolatedObject
@@ -239,14 +230,12 @@ rekapiModules.push(function (context) {
     }
   };
 
-
   // TODO:  Make this a private method.
   DOMActor.prototype.teardown = function (context, state) {
     var classList = this._context.className.match(/\S+/g);
     var sanitizedClassList = _.without(classList, this.getCSSName());
     this._context.className = sanitizedClassList;
   };
-
 
   /**
    * This can be useful when used with [toCSS](../to-css/rekapi.to-css.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
@@ -255,7 +244,6 @@ rekapiModules.push(function (context) {
   DOMActor.prototype.getCSSName = function () {
     return 'actor-' + this.id;
   };
-
 
   /**
    * Overrides the default transform function order.

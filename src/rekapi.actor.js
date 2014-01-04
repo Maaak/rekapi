@@ -7,7 +7,6 @@ rekapiModules.push(function (context) {
   var Tweenable = Rekapi.Tweenable;
   var _ = Rekapi._;
 
-
   /*!
    * Sorts an array numerically, from smallest to largest.
    * @param {Array} array The Array to sort.
@@ -18,7 +17,6 @@ rekapiModules.push(function (context) {
       return a - b;
     });
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -40,7 +38,6 @@ rekapiModules.push(function (context) {
     return -1;
   }
 
-
   /*!
    * Order all of an Actor's property tracks so they can be cached.
    * @param {Rekapi.Actor} actor
@@ -54,7 +51,6 @@ rekapiModules.push(function (context) {
     });
   }
 
-
   /*!
    * Compute and fill all timeline caches.
    * @param {Rekapi.Actor} actor
@@ -65,7 +61,6 @@ rekapiModules.push(function (context) {
       _.defaults(propertyCache, latestProperties);
     });
   }
-
 
   /*!
    * Gets all of the current and most recent Rekapi.KeyframeProperties for a
@@ -103,7 +98,6 @@ rekapiModules.push(function (context) {
     return latestProperties;
   }
 
-
   /*!
    * Links each KeyframeProperty to the next one in it's respective track.
    *
@@ -117,7 +111,6 @@ rekapiModules.push(function (context) {
       });
     });
   }
-
 
   /*!
    * Returns a requested KeyframeProperty at a millisecond on a specified
@@ -133,7 +126,6 @@ rekapiModules.push(function (context) {
       return keyframeProperty.millisecond === millisecond;
     });
   }
-
 
   /*!
    * Empty out and re-cache internal KeyframeProperty data.
@@ -166,7 +158,6 @@ rekapiModules.push(function (context) {
     }
   }
 
-
   /*!
    * Updates internal Rekapi and Actor data after a KeyframeProperty
    * modification method is called.
@@ -180,7 +171,6 @@ rekapiModules.push(function (context) {
     invalidatePropertyCache(actor);
     recalculateAnimationLength(actor.rekapi, _);
   }
-
 
   /**
    * Create a `Rekapi.Actor` instance.  Note that the rest of the API docs for `Rekapi.Actor` will simply refer to this Object as `Actor`.
@@ -225,7 +215,6 @@ rekapiModules.push(function (context) {
   };
   var Actor = Rekapi.Actor;
 
-
   // Kind of a fun way to set up an inheritance chain.  `ActorMethods` prevents
   // methods on `Actor.prototype` from polluting `Tweenable`'s prototype with
   // `Actor` specific methods.
@@ -234,7 +223,6 @@ rekapiModules.push(function (context) {
   Actor.prototype = new ActorMethods();
   // But the magic doesn't stop here!  `Actor`'s constructor steals the
   // `Tweenable` constructor.
-
 
   /**
    * Get and optionally set the `Actor`'s context.
@@ -250,7 +238,6 @@ rekapiModules.push(function (context) {
 
     return this._context;
   };
-
 
   /**
    * Create a keyframe for the `Actor`.  `millisecond` defines where in the animation to place the keyframe, in milliseconds (assumes that `0` is when the animation began).  The animation length will automatically "grow" to accommodate any keyframe position.
@@ -350,7 +337,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /**
    * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
    *
@@ -365,7 +351,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
       return this._propertyTracks[property][index];
     }
   };
-
 
   /**
    * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframeprops.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
@@ -389,7 +374,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /**
    * Get a list of all the track names for an `Actor`.
    *
@@ -399,7 +383,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   Actor.prototype.getTrackNames = function () {
     return _.keys(this._propertyTracks);
   };
-
 
   /**
    * Get the property track length for an `Actor` (how many `KeyframeProperty`s are in a given property track).
@@ -415,7 +398,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     return this._propertyTracks[trackName].length;
   };
-
 
   /**
    * Copy all of the properties that at one point in the timeline to another point. This is useful for many things, particularly for bringing a `Rekapi.Actor` back to its original position.
@@ -442,7 +424,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     this.keyframe(copyTo, sourcePositions, sourceEasings);
     return this;
   };
-
 
   /**
    * Extend the last state on this `Actor`'s timeline to create a animation wait. The state does not change during this time.
@@ -475,7 +456,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /**
    * Get the millisecond of the first state of an `Actor` (when it first starts animating).  You can get the start time of a specific track with `opt_trackName`.
    *
@@ -502,7 +482,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     return Math.min.apply(Math, starts);
   };
-
 
   /**
    * Get the millisecond of the last state of an `Actor` (when it is done animating).  You can get the last state for a specific track with `opt_trackName`.
@@ -533,7 +512,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return latest;
   };
 
-
   /**
    * Get the length of time in milliseconds that an `Actor` animates for.  You can get the length of time that a specific track animates for with `opt_trackName`.
    *
@@ -544,7 +522,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   Actor.prototype.getLength = function (opt_trackName) {
     return this.getEnd(opt_trackName) - this.getStart(opt_trackName);
   };
-
 
   /*
    * Determines if an actor has a keyframe set at a given millisecond.  Can optionally scope the lookup to a specific property name.
@@ -569,7 +546,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
       return retrievedProperty !== undefined;
     }, this) !== undefined;
   };
-
 
   /**
    * Moves a Keyframe from one point on the timeline to another.  Although this method does error checking for you to make sure the operation can be safely performed, an effective pattern is to use [`hasKeyframeAt`](#hasKeyframeAt) to see if there is already a keyframe at the requested `to` destination.
@@ -598,7 +574,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     return true;
   };
-
 
   /**
    * Augment the `value` or `easing` of the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond.  Any [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s omitted in `stateModification` or `opt_easing` are not modified.  Here's how you might use it:
@@ -649,7 +624,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /**
    * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond in the animation.
    *
@@ -686,7 +660,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /**
    * Remove all `KeyframeProperty`s set on the `Actor`.
    *
@@ -701,7 +674,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     this._keyframeProperties = {};
     return this.removeKeyframe(0);
   };
-
 
   /**
    * Calculate and set the `Actor`'s position at `millisecond` in the animation.
@@ -746,13 +718,11 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this;
   };
 
-
   /*!
    * @param {Rekapi.KeyframeProperty} keyframeProperty
    * @abstract
    */
   Actor.prototype._beforeKeyframePropertyInterpolate = noop;
-
 
   /*!
    * @param {Rekapi.KeyframeProperty} keyframeProperty
@@ -760,7 +730,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
    * @abstract
    */
   Actor.prototype._afterKeyframePropertyInterpolate = noop;
-
 
   /**
    * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s.
@@ -785,7 +754,6 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     return exportData;
   };
-
 
   /**
    * Import an `Object` to augment this actor's state.  Does not remove keyframe properties before importing new ones, so this could be used to "merge" keyframes across multiple actors.

@@ -20,7 +20,6 @@ var rekapi = function (global, deps) {
   return context.Rekapi;
 };
 
-
 if (typeof define === 'function' && define.amd) {
   var underscoreAlreadyInUse = (typeof _ !== 'undefined');
 

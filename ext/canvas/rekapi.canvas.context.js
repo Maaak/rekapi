@@ -5,7 +5,6 @@ rekapiModules.push(function (context) {
   var Rekapi = context.Rekapi;
   var _ = Rekapi._;
 
-
   // PRIVATE UTILITY FUNCTIONS
   //
 
@@ -26,7 +25,6 @@ rekapiModules.push(function (context) {
     return context[heightOrWidth];
   }
 
-
   /*!
    * Takes care of some pre-rendering tasks for canvas animations.
    * @param {Rekapi}
@@ -36,7 +34,6 @@ rekapiModules.push(function (context) {
       rekapi.canvas.clear();
     }
   }
-
 
   /*!
    * Render all the `Actor`s at whatever position they are currently in.
@@ -69,7 +66,6 @@ rekapiModules.push(function (context) {
     return rekapi;
   }
 
-
   /*!
    * @param {Rekapi} rekapi
    * @param {Rekapi.Actor} actor
@@ -81,7 +77,6 @@ rekapiModules.push(function (context) {
     }
   }
 
-
   /*!
    * @param {Rekapi} rekapi
    * @param {Rekapi.Actor} actor
@@ -92,7 +87,6 @@ rekapiModules.push(function (context) {
       delete rekapi.canvas._canvasActors[actor.id];
     }
   }
-
 
   /*!
    * Sets up an instance of CanvasRenderer and attaches it to a `Rekapi`
@@ -127,7 +121,6 @@ rekapiModules.push(function (context) {
     this.on('removeActor', removeActor);
     this.on('beforeRender', beforeRender);
   };
-
 
   // CANVAS RENDERER OBJECT
   //
@@ -164,7 +157,6 @@ rekapiModules.push(function (context) {
   };
   var CanvasRenderer = Rekapi.CanvasRenderer;
 
-
   /**
    * Get and optionally set the height of the associated `<canvas>` element.
    *
@@ -175,7 +167,6 @@ rekapiModules.push(function (context) {
     return dimension(this.rekapi.context, 'height', opt_height);
   };
 
-
   /**
    * Get and optionally set the width of the associated `<canvas>` element.
    *
@@ -185,7 +176,6 @@ rekapiModules.push(function (context) {
   CanvasRenderer.prototype.width = function (opt_width) {
     return dimension(this.rekapi.context, 'width', opt_width);
   };
-
 
   /**
    * Erase the `<canvas>`.
@@ -202,7 +192,6 @@ rekapiModules.push(function (context) {
     return this.rekapi;
   };
 
-
   /**
    * Retrieve the 2d context of the `<canvas>` that is set as the `Rekapi` instance's rendering context.  This is needed for all rendering operations.  It is also provided to a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)'s `render` method, so you mostly won't need to call it directly.  See the [MDN](https://developer.mozilla.org/en/Drawing_Graphics_with_Canvas) for info on the Canvas context APIs.
    * @return {CanvasRenderingContext2D}
@@ -210,7 +199,6 @@ rekapiModules.push(function (context) {
   CanvasRenderer.prototype.context = function () {
     return this.rekapi.context.getContext('2d');
   };
-
 
   /**
    * Move a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html) around in the layer list.  Each layer has one [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html), and [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered in order of their layer.  Lower layers (starting with 0) are rendered earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
@@ -231,7 +219,6 @@ rekapiModules.push(function (context) {
     return;
   };
 
-
   /**
    * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframeprops.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
    *
@@ -247,7 +234,6 @@ rekapiModules.push(function (context) {
     this._renderOrderSorter = sortFunction;
     return this.rekapi;
   };
-
 
   /**
    * Remove the sort order function set by [`setOrderFunction`](#setOrderFunction).  Render order defaults back to the order in which [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s were added.

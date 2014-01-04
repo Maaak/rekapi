@@ -6,7 +6,6 @@ rekapiModules.push(function (context) {
   var _ = Rekapi._;
   var now = Rekapi.Tweenable.now;
 
-
   // CONSTANTS
   //
 
@@ -15,14 +14,12 @@ rekapiModules.push(function (context) {
   // doesn't cut off the end.
   var INJECTED_STYLE_REMOVAL_BUFFER_MS = 250;
 
-
   // PRIVATE UTILITY FUNCTIONS
   //
 
   Rekapi.prototype._contextInitHook.cssAnimate = function () {
     this.css = new CSSRenderer(this);
   };
-
 
   /*!
    * @return {string}
@@ -45,7 +42,6 @@ rekapiModules.push(function (context) {
     return '';
   }
 
-
   var styleID = 0;
   /*!
    * @param {string} css The css content that the <style> element should have.
@@ -60,7 +56,6 @@ rekapiModules.push(function (context) {
 
     return style;
   }
-
 
   /*!
    * Fixes a really bizarre issue that only seems to affect Presto/Opera.  In
@@ -86,7 +81,6 @@ rekapiModules.push(function (context) {
 
     dummyDiv = null;
   }
-
 
   // CSS RENDERER OBJECT
   //
@@ -160,7 +154,6 @@ rekapiModules.push(function (context) {
   };
   var CSSRenderer = Rekapi.CSSRenderer;
 
-
   /**
    * Whether or not the browser supports CSS `@keyframe` animations.
    *
@@ -169,7 +162,6 @@ rekapiModules.push(function (context) {
   CSSRenderer.prototype.canAnimateWithCSS = function () {
     return !!getVendorPrefix();
   };
-
 
   /**
    * Prerender and cache CSS so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#play`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
@@ -185,7 +177,6 @@ rekapiModules.push(function (context) {
       ,'iterations': opt_iterations
     });
   };
-
 
   /**
    * Play the Rekapi animation as a `@keyframe` animation.
@@ -216,7 +207,6 @@ rekapiModules.push(function (context) {
     fireEvent(this.rekapi, 'play', _);
   };
 
-
   /**
    * Stop a CSS animation.  This also removes any `<style>` elements that were dynamically injected into the DOM.  This method sets inline styles on Actor elements to stay either in their target or current position.
    *
@@ -244,7 +234,6 @@ rekapiModules.push(function (context) {
       fireEvent(this.rekapi, 'stop', _);
     }
   };
-
 
   /**
    * Whether or not a CSS animation is running.

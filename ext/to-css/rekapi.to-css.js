@@ -5,7 +5,6 @@ rekapiModules.push(function (context) {
   var Rekapi = context.Rekapi;
   var _ = Rekapi._;
 
-
   // CONSTANTS
   //
 
@@ -44,7 +43,6 @@ rekapiModules.push(function (context) {
     ,easeInOutCirc: '.785,.135,.15,.86'
   };
 
-
   // TEMPLATES
   //
 
@@ -68,7 +66,6 @@ rekapiModules.push(function (context) {
     ,'%s'
     ,'}'
   ].join('\n');
-
 
   // PROTOTYPE EXTENSIONS
   //
@@ -128,7 +125,6 @@ rekapiModules.push(function (context) {
     return animationCSS.join('\n');
   };
 
-
   /*!
    * Exports the CSS `@keyframes` for an individual Actor.
    * @param {Object} opts Same as opts for Rekapi.prototype.toCSS.
@@ -153,7 +149,6 @@ rekapiModules.push(function (context) {
     return actorCSS.join('\n');
   };
 
-
   // UTILITY FUNCTIONS
   //
 
@@ -171,7 +166,6 @@ rekapiModules.push(function (context) {
     return composedStr;
   };
 
-
   /*!
    * http://stackoverflow.com/a/3886106
    *
@@ -180,7 +174,6 @@ rekapiModules.push(function (context) {
   function isInt (number) {
     return number % 1 === 0;
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -222,7 +215,6 @@ rekapiModules.push(function (context) {
     return boilerplatedKeyframes;
   }
 
-
   /*!
    * @param {string} toKeyframes Generated keyframes to wrap in boilerplates
    * @param {string} animName
@@ -245,7 +237,6 @@ rekapiModules.push(function (context) {
     return renderedKeyframes.join('\n');
   }
 
-
   /*!
    * @param {string} keyframes
    * @param {vendor} vendor
@@ -262,7 +253,6 @@ rekapiModules.push(function (context) {
 
     return prefixedKeyframes;
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -293,7 +283,6 @@ rekapiModules.push(function (context) {
 
     return boilerplatedClass;
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -326,7 +315,6 @@ rekapiModules.push(function (context) {
     return generatedProperties.join('\n');
   }
 
-
   /*!
    * @param {Rekapi.Actor} actor
    * @param {string} animName
@@ -354,7 +342,6 @@ rekapiModules.push(function (context) {
     return animationName;
   }
 
-
   /*!
    * @param {Rekapi.Actor} actor
    * @param {string} animName
@@ -365,7 +352,6 @@ rekapiModules.push(function (context) {
         ,[prefix, actor.getEnd() - actor.getStart()]);
   }
 
-
   /*!
    * @param {Rekapi.Actor} actor
    * @param {number|string} delay
@@ -375,7 +361,6 @@ rekapiModules.push(function (context) {
     return printf('  %sanimation-delay: %sms;', [prefix, actor.getStart()]);
   }
 
-
   /*!
    * @param {string} prefix
    * @return {string}
@@ -384,7 +369,6 @@ rekapiModules.push(function (context) {
     return printf('  %sanimation-fill-mode: forwards;', [prefix]);
   }
 
-
   /*!
    * @param {string} prefix
    * @return {string}
@@ -392,7 +376,6 @@ rekapiModules.push(function (context) {
   function generateAnimationTimingFunctionProperty (prefix) {
     return printf('  %sanimation-timing-function: linear;', [prefix]);
   }
-
 
   /*!
    * @param {Rekapi} rekapi
@@ -415,7 +398,6 @@ rekapiModules.push(function (context) {
     return printf(ruleTemplate, [prefix, iterationCount]);
   }
 
-
   /*!
    * @param {string} prefix
    * @return {string}
@@ -423,7 +405,6 @@ rekapiModules.push(function (context) {
   function generateAnimationCenteringRule (prefix) {
     return printf('  %stransform-origin: 0 0;', [prefix]);
   }
-
 
   // OPTIMIZED GENERATOR FUNCTIONS
   //
@@ -458,7 +439,6 @@ rekapiModules.push(function (context) {
     return canOptimize;
   }
 
-
   /*!
    * @param {Rekapi.Actor} actor
    * @return {boolean}
@@ -466,7 +446,6 @@ rekapiModules.push(function (context) {
   function canOptimizeAnyKeyframeProperties (actor) {
     return _.any(actor._keyframeProperties, canOptimizeKeyframeProperty);
   }
-
 
   /*!
    * @param {Rekapi.KeyframeProperty} property
@@ -500,7 +479,6 @@ rekapiModules.push(function (context) {
 
     return accumulator.join('\n');
   }
-
 
   // GENERAL-USE GENERATOR FUNCTIONS
   //
@@ -586,7 +564,6 @@ rekapiModules.push(function (context) {
     return accumulator.join('\n');
   }
 
-
   /*!
    * @param {Rekapi.Actor} actor
    * @param {number} steps
@@ -596,7 +573,6 @@ rekapiModules.push(function (context) {
     return generateActorTrackSegment(
         actor, steps + 1, 100 / steps, 0, 0).join('\n');
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -613,7 +589,6 @@ rekapiModules.push(function (context) {
       return fakeFirstProp.join('\n');
     }
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -632,7 +607,6 @@ rekapiModules.push(function (context) {
     }
   }
 
-
   /*!
    * @param {Rekapi.KeyframeProperty} property
    * @param {number} actorStart
@@ -642,7 +616,6 @@ rekapiModules.push(function (context) {
   function calculateStepPercent (property, actorStart, actorLength) {
     return ((property.millisecond - actorStart) / actorLength) * 100;
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -677,7 +650,6 @@ rekapiModules.push(function (context) {
 
     return accumulator;
   }
-
 
   /*!
    * @param {Rekapi.Actor} actor
