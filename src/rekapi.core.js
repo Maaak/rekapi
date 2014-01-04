@@ -49,10 +49,6 @@ var rekapiCore = function (root, _, Tweenable) {
 
   'use strict';
 
-  // GLOBAL is read from for various environment properties
-  // http://stackoverflow.com/questions/3277182/how-to-get-the-global-object-in-javascript
-  var Fn = Function, GLOBAL = new Fn('return this')();
-
   // CONSTANTS
   //
   var UPDATE_TIME = 1000 / 60;
@@ -163,7 +159,7 @@ var rekapiCore = function (root, _, Tweenable) {
     // Need to check for .call presence to get around an IE limitation.
     // See annotation for cancelLoop for more info.
     if (rekapi._scheduleUpdate.call) {
-      rekapi._loopId = rekapi._scheduleUpdate.call(GLOBAL,
+      rekapi._loopId = rekapi._scheduleUpdate.call(global,
           updateFn, UPDATE_TIME);
     } else {
       rekapi._loopId = setTimeout(updateFn, UPDATE_TIME);
@@ -177,13 +173,13 @@ var rekapiCore = function (root, _, Tweenable) {
   function getUpdateMethod () {
     // requestAnimationFrame() shim by Paul Irish (modified for Rekapi)
     // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    return GLOBAL.requestAnimationFrame  ||
-      GLOBAL.webkitRequestAnimationFrame ||
-      GLOBAL.oRequestAnimationFrame      ||
-      GLOBAL.msRequestAnimationFrame     ||
-      (GLOBAL.mozCancelRequestAnimationFrame
-        && GLOBAL.mozRequestAnimationFrame) ||
-      GLOBAL.setTimeout;
+    return global.requestAnimationFrame  ||
+      global.webkitRequestAnimationFrame ||
+      global.oRequestAnimationFrame      ||
+      global.msRequestAnimationFrame     ||
+      (global.mozCancelRequestAnimationFrame
+        && global.mozRequestAnimationFrame) ||
+      global.setTimeout;
   }
 
 
@@ -191,12 +187,12 @@ var rekapiCore = function (root, _, Tweenable) {
    * @return {Function}
    */
   function getCancelMethod () {
-    return GLOBAL.cancelAnimationFrame  ||
-      GLOBAL.webkitCancelAnimationFrame ||
-      GLOBAL.oCancelAnimationFrame      ||
-      GLOBAL.msCancelAnimationFrame     ||
-      GLOBAL.mozCancelRequestAnimationFrame ||
-      GLOBAL.clearTimeout;
+    return global.cancelAnimationFrame  ||
+      global.webkitCancelAnimationFrame ||
+      global.oCancelAnimationFrame      ||
+      global.msCancelAnimationFrame     ||
+      global.mozCancelRequestAnimationFrame ||
+      global.clearTimeout;
   }
 
 
@@ -209,7 +205,7 @@ var rekapiCore = function (root, _, Tweenable) {
    */
   function cancelLoop (rekapi) {
     if (rekapi._cancelUpdate.call) {
-      rekapi._cancelUpdate.call(GLOBAL, rekapi._loopId);
+      rekapi._cancelUpdate.call(global, rekapi._loopId);
     } else {
       clearTimeout(rekapi._loopId);
     }
