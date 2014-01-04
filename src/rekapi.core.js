@@ -70,9 +70,10 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * Determines is the animation is complete or not.
+   * Determines if the animation is complete or not.
    * @param {Rekapi} rekapi
    * @param {number} currentLoopIteration
+   * @return {boolean}
    */
   function isAnimationComplete (rekapi, currentLoopIteration) {
     return currentLoopIteration >= rekapi._timesToIterate
@@ -80,7 +81,7 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * Stops the animation if the animation is complete.
+   * Stops the animation if it is complete.
    * @param {Rekapi} rekapi
    * @param {number} currentLoopIteration
    */
@@ -92,8 +93,8 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * Calculate how far in the animation loop `rekapi` is, in milliseconds, based
-   * on the current time.  Also overflows into a new loop if necessary.
+   * Calculate how far in the animation loop `rekapi` is, in milliseconds,
+   * based on the current time.  Also overflows into a new loop if necessary.
    * @param {Rekapi} rekapi
    * @return {number}
    */
@@ -110,11 +111,11 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * Calculate the position and state for a given millisecond.
-   * Also updates the state internally and accounts for how many loop
+   * Calculate the timeline position and state for a given millisecond.
+   * Updates the `rekapi` state internally and accounts for how many loop
    * iterations the animation runs for.
    * @param {Rekapi} rekapi
-   * @param {number} forMillisecond The millisecond to update
+   * @param {number} forMillisecond
    */
   function updateToMillisecond (rekapi, forMillisecond) {
     var currentIteration = determineCurrentLoopIteration(rekapi, forMillisecond);
@@ -125,8 +126,8 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * Calculate how far in the animation loop `rekapi` is, in milliseconds, and
-   * update based on that time.
+   * Calculate how far into the animation loop `rekapi` is, in milliseconds,
+   * and update based on that time.
    * @param {Rekapi} rekapi
    */
   function updateToCurrentMillisecond (rekapi) {
@@ -134,8 +135,8 @@ var rekapiCore = function (root, _, Tweenable) {
   }
 
   /*!
-   * This is the heartbeat of an animation.  Updates the state and then calls
-   * itself continuously.
+   * This is the heartbeat of an animation.  This updates `rekapi`'s state and
+   * then calls itself continuously.
    * @param {Rekapi} rekapi
    */
   function tick (rekapi) {
