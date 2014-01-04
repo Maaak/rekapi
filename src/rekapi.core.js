@@ -140,18 +140,13 @@ var rekapiCore = function (root, _, Tweenable) {
    * @param {Rekapi} rekapi
    */
   function tick (rekapi) {
-    var updateFn = function () {
-      tick(rekapi);
-      updateToCurrentMillisecond(rekapi);
-    };
-
     // Need to check for .call presence to get around an IE limitation.
     // See annotation for cancelLoop for more info.
     if (rekapi._scheduleUpdate.call) {
       rekapi._loopId = rekapi._scheduleUpdate.call(global,
-          updateFn, UPDATE_TIME);
+          rekapi._updateFn, UPDATE_TIME);
     } else {
-      rekapi._loopId = setTimeout(updateFn, UPDATE_TIME);
+      rekapi._loopId = setTimeout(rekapi._updateFn, UPDATE_TIME);
     }
   }
 
@@ -254,6 +249,11 @@ var rekapiCore = function (root, _, Tweenable) {
 
     this._scheduleUpdate = getUpdateMethod();
     this._cancelUpdate = getCancelMethod();
+
+    this._updateFn = _.bind(function () {
+      tick(this);
+      updateToCurrentMillisecond(this);
+    }, this);
 
     _.each(this._contextInitHook, function (fn) {
       fn.call(this);
