@@ -140,8 +140,8 @@ var rekapiCore = function (root, _, Tweenable) {
    * @param {Rekapi} rekapi
    */
   function tick (rekapi) {
-    // Need to check for .call presence to get around an IE limitation.
-    // See annotation for cancelLoop for more info.
+    // Need to check for .call presence to get around an IE limitation.  See
+    // annotation for cancelLoop for more info.
     if (rekapi._scheduleUpdate.call) {
       rekapi._loopId = rekapi._scheduleUpdate.call(global,
           rekapi._updateFn, UPDATE_TIME);
@@ -191,6 +191,8 @@ var rekapiCore = function (root, _, Tweenable) {
       clearTimeout(rekapi._loopId);
     }
   }
+
+  // CORE-SPECIFIC VARS AND FUNCTIONS
 
   var now = Tweenable.now;
 

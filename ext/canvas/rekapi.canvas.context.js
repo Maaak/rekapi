@@ -130,13 +130,12 @@ rekapiModules.push(function (context) {
    *
    *   1. It subclasses `Rekapi.Actor` as `Rekapi.CanvasActor`.
    *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `canvas`, at initialization time.  So:
-   *   3. It maintains a layer list that defines the render order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
-   *
    * ```
    * // With the Rekapi Canvas renderer loaded
    * var rekapi = new Rekapi({ context: document.createElement('canvas') });
    * rekapi.canvas instanceof Rekapi.CanvasRenderer; // true
    * ```
+   *   3. It maintains a layer list that defines the render order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
    *
    * __Note:__ This `Rekapi.CanvasRenderer` constructor is called for you automatically - there is no need to call it explicitly.
    *
