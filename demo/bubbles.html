@@ -50,11 +50,11 @@
     }
 
     function getBubbleX () {
-      return Math.random() * rekapi.canvas.width();
+      return Math.random() * rekapi.renderer.width();
     }
 
     function getBubbleY () {
-      return Math.random() * rekapi.canvas.height();
+      return Math.random() * rekapi.renderer.height();
     }
 
     function getSize () {
@@ -100,8 +100,8 @@
         rekapi.addActor(bubbles[i]);
 
         bubbles[i].keyframe(time, {
-          'x': rekapi.canvas.width() / 2
-          ,'y': rekapi.canvas.height() + 50
+          'x': rekapi.renderer.width() / 2
+          ,'y': rekapi.renderer.height() + 50
           ,'radius': 0
           ,'color': getColor()
         }, {
@@ -157,8 +157,8 @@
         ,rekapi = new Rekapi(canvas)
         ,bubbles = [];
 
-    rekapi.canvas.height(500);
-    rekapi.canvas.width(500);
+    rekapi.renderer.height(500);
+    rekapi.renderer.width(500);
 
     rekapi.on('animationComplete', generateSequence)
 

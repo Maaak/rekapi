@@ -47,8 +47,8 @@ $(function () {
   var prerenderedPath;
   function generatePathPrerender (x1, y1, x2, y2, easeX, easeY) {
     prerenderedPath = document.createElement('canvas');
-    prerenderedPath.width = rekapi.canvas.width();
-    prerenderedPath.height = rekapi.canvas.height();
+    prerenderedPath.width = rekapi.renderer.width();
+    prerenderedPath.height = rekapi.renderer.height();
     var ctx = prerenderedPath.ctx = prerenderedPath.getContext('2d');
     var points = generatePathPoints.apply(this, arguments);
 
@@ -126,8 +126,8 @@ $(function () {
   var canvas = $('canvas')[0];
   var rekapi = new Rekapi(canvas);
 
-  rekapi.canvas.height(400);
-  rekapi.canvas.width(500);
+  rekapi.renderer.height(400);
+  rekapi.renderer.width(500);
 
   var circle = new Rekapi.CanvasActor({
     'render': function (canvas_context, state) {
@@ -177,7 +177,7 @@ $(function () {
     circle.modifyKeyframe(timeToModify, getCrosshairCoords(crosshairs[pos]));
 
     rekapi
-      .canvas.clear()
+      .renderer.clear()
       .update();
 
     updatePath();
@@ -216,7 +216,7 @@ $(function () {
     circle.modifyKeyframe(animationDuration, {}, easingObj)
     updatePath();
     rekapi
-      .canvas.clear()
+      .renderer.clear()
       .update();
   });
 

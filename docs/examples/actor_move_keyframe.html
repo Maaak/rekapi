@@ -12,8 +12,8 @@
       var canvas = document.getElementsByTagName('canvas')[0];
       var rekapi = new Rekapi(canvas);
 
-      rekapi.canvas.height(300);
-      rekapi.canvas.width(400);
+      rekapi.renderer.height(300);
+      rekapi.renderer.width(400);
 
       var actor = new Rekapi.CanvasActor({
         render: function (canvas_context, state) {

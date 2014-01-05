@@ -30,8 +30,8 @@ Instead of a configuration object, `Rekapi` now expects the rendering context as
 
 ````
 var rekapi = new Rekapi(document.createElement('canvas'));
-rekapi.canvas.height(300);
-rekapi.canvas.width(300);
+rekapi.renderer.height(300);
+rekapi.renderer.width(300);
 ````
 
 ## The `Rekapi.KeyframeProperty` constructor signature has changed
@@ -75,8 +75,8 @@ Some of the Canvas extension methods have also been cleaned up to avoid
 redundancy.  Assuming the `kapi` instance from above, here's all of the
 methods:
 
-  * `kapi.canvas.height()`
-  * `kapi.canvas.width()`
+  * `kapi.renderer.height()`
+  * `kapi.renderer.width()`
   * `kapi.canvas.clear()`
   * `kapi.canvas.context()`
   * `kapi.canvas.moveActorToLayer()`
