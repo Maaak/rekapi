@@ -17,12 +17,14 @@ rekapiModules.push(function (context) {
    * @return {number}
    */
   function dimension (context, heightOrWidth, opt_newSize) {
+    var canvas = context.canvas;
+
     if (typeof opt_newSize !== 'undefined') {
-      context[heightOrWidth] = opt_newSize;
-      context.style[heightOrWidth] = opt_newSize + 'px';
+      canvas[heightOrWidth] = opt_newSize;
+      canvas.style[heightOrWidth] = opt_newSize + 'px';
     }
 
-    return context[heightOrWidth];
+    return canvas[heightOrWidth];
   }
 
   /*!
@@ -56,7 +58,7 @@ rekapiModules.push(function (context) {
     var i;
     for (i = 0; i < len; i++) {
       currentActor = rekapi.canvas._canvasActors[renderOrder[i]];
-      canvas_context = currentActor.context();
+      canvas_context = currentActor.context;
       currentActor.render(canvas_context, currentActor.get());
     }
     fireEvent(rekapi, 'afterRender', _);
@@ -96,6 +98,10 @@ rekapiModules.push(function (context) {
       return;
     }
 
+    // Overwrite this.context to reference the canvas drawing context directly.
+    // The original element is still accessible via this.context.canvas.
+    this.context = this.context.getContext('2d');
+
     this.canvas = new CanvasRenderer(this);
 
     _.extend(this._events, {
@@ -119,7 +125,7 @@ rekapiModules.push(function (context) {
    *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `canvas`, at initialization time.  So:
    * ```
    * // With the Rekapi Canvas renderer loaded
-   * var rekapi = new Rekapi({ context: document.createElement('canvas') });
+   * var rekapi = new Rekapi(document.createElement('canvas'));
    * rekapi.canvas instanceof Rekapi.CanvasRenderer; // true
    * ```
    *   3. It maintains a layer list that defines the render order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
@@ -169,21 +175,9 @@ rekapiModules.push(function (context) {
    * @return {Rekapi}
    */
   CanvasRenderer.prototype.clear = function () {
-    // TODO: Is this check necessary?
-    if (this.rekapi.context.getContext) {
-      this.context().clearRect(
-          0, 0, this.width(), this.height());
-    }
+    this.rekapi.context.clearRect(0, 0, this.width(), this.height());
 
     return this.rekapi;
-  };
-
-  /**
-   * Retrieve the 2d context of the `<canvas>` that is set as the `Rekapi` instance's rendering context.  This is needed for all rendering operations.  It is also provided to a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)'s `render` method, so you mostly won't need to call it directly.  See the [MDN](https://developer.mozilla.org/en/Drawing_Graphics_with_Canvas) for info on the Canvas context APIs.
-   * @return {CanvasRenderingContext2D}
-   */
-  CanvasRenderer.prototype.context = function () {
-    return this.rekapi.context.getContext('2d');
   };
 
   /**

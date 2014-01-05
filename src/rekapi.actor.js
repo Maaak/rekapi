@@ -201,15 +201,12 @@ rekapiModules.push(function (context) {
       ,'_timelinePropertyCacheIndex': []
       ,'_keyframeProperties': {}
       ,'id': _.uniqueId()
+      ,'context': opt_config.context // This may be undefined
       ,'setup': opt_config.setup || noop
       ,'update': opt_config.update || noop
       ,'teardown': opt_config.teardown || noop
       ,'data': {}
     });
-
-    if (opt_config.context) {
-      this.context(opt_config.context);
-    }
 
     return this;
   };
@@ -223,21 +220,6 @@ rekapiModules.push(function (context) {
   Actor.prototype = new ActorMethods();
   // But the magic doesn't stop here!  `Actor`'s constructor steals the
   // `Tweenable` constructor.
-
-  /**
-   * Get and optionally set the `Actor`'s context.
-   *
-   * __[Example](../../../../docs/examples/actor_context.html)__
-   * @param {Object} opt_context
-   * @return {Object}
-   */
-  Actor.prototype.context = function (opt_context) {
-    if (opt_context) {
-      this._context = opt_context;
-    }
-
-    return this._context;
-  };
 
   /**
    * Create a keyframe for the `Actor`.  `millisecond` defines where in the animation to place the keyframe, in milliseconds (assumes that `0` is when the animation began).  The animation length will automatically "grow" to accommodate any keyframe position.

@@ -280,8 +280,8 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi.prototype.addActor = function (actor) {
     // You can't add an actor more than once.
     if (!_.contains(this._actors, actor)) {
-      if (!actor.context()) {
-        actor.context(this.context);
+      if (typeof actor.context === 'undefined') {
+        actor.context = this.context;
       }
 
       actor.rekapi = this;
@@ -494,7 +494,7 @@ var rekapiCore = function (root, _, Tweenable) {
     _.each(this._actors, function (actor) {
       actor.updateState(opt_millisecond);
       if (typeof actor.update === 'function') {
-        actor.update(actor.context(), actor.get());
+        actor.update(actor.context, actor.get());
       }
     });
     this._lastUpdatedMillisecond = opt_millisecond;
