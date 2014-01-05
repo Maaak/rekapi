@@ -9,6 +9,6 @@
     "requirejs": "~2.1.4",
     "jquery": "~1.9.1",
     "ace-builds": "~1.0.0",
-    "rekapi-controls": "~0.3.8"
+    "rekapi-controls": "~0.3.13"
   }
 }
