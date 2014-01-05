@@ -93,7 +93,7 @@ rekapiModules.push(function (context) {
    * instance.  Also augments the Rekapi instance with canvas-specific
    * functions.
    */
-  Rekapi.prototype._contextInitHook.canvas = function () {
+  Rekapi._contextInitHook.canvas = function () {
     if (typeof this.context.getContext === 'undefined') {
       return;
     }

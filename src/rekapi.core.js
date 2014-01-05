@@ -252,7 +252,7 @@ var rekapiCore = function (root, _, Tweenable) {
       updateToCurrentMillisecond(this);
     }, this);
 
-    _.each(this._contextInitHook, function (fn) {
+    _.each(Rekapi._contextInitHook, function (fn) {
       fn.call(this);
     }, this);
 
@@ -268,7 +268,7 @@ var rekapiCore = function (root, _, Tweenable) {
    * @type {Object.<function>} Contains the context init function to be called
    * in the Rekapi constructor.
    */
-  Rekapi.prototype._contextInitHook = {};
+  Rekapi._contextInitHook = {};
 
   /**
    * Add a `Rekapi.Actor` to the animation.
