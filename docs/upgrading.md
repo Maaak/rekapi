@@ -28,6 +28,10 @@ rekapi === actor.rekapi; // <-- actor.rekapi used to be actor.kapi
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
 
+## `context` is no longer a method
+
+`context` is now stored as an "own" property for all objects that previously had a `context` method.  For canvas animations, the public `context` property, which is supplied via the `Rekapi` constuctor, is changed internally at setup time to reference its 2D drawing context.
+
 # Upgrading to Rekapi 0.13.0
 
 `Kapi.Actor.prototype.data` is now just property, not a getter/setter method.
