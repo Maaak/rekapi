@@ -10,15 +10,13 @@ rekapiModules.push(function (context) {
 
   /*!
    * Gets (and optionally sets) height or width on a canvas.
-   * @param {HTMLCanvas} context
+   * @param {HTMLCanvas} canvas
    * @param {string} heightOrWidth The dimension (either "height" or "width")
    * to get or set.
    * @param {number} opt_newSize The new value to set for `dimension`.
    * @return {number}
    */
-  function dimension (context, heightOrWidth, opt_newSize) {
-    var canvas = context.canvas;
-
+  function dimension (canvas, heightOrWidth, opt_newSize) {
     if (typeof opt_newSize !== 'undefined') {
       canvas[heightOrWidth] = opt_newSize;
       canvas.style[heightOrWidth] = opt_newSize + 'px';
@@ -157,7 +155,7 @@ rekapiModules.push(function (context) {
    * @return {number}
    */
   CanvasRenderer.prototype.height = function (opt_height) {
-    return dimension(this.rekapi.context, 'height', opt_height);
+    return dimension(this.rekapi.context.canvas, 'height', opt_height);
   };
 
   /**
@@ -167,7 +165,7 @@ rekapiModules.push(function (context) {
    * @return {number}
    */
   CanvasRenderer.prototype.width = function (opt_width) {
-    return dimension(this.rekapi.context, 'width', opt_width);
+    return dimension(this.rekapi.context.canvas, 'width', opt_width);
   };
 
   /**
