@@ -15,11 +15,11 @@
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
-    return new Rekapi({
-      'context': document.getElementById('sandbox')
-      ,'height': 300
-      ,'width': 300
-    });
+    var rekapi = new Rekapi(document.getElementById('sandbox'));
+    rekapi.canvas.height(300);
+    rekapi.canvas.width(300);
+
+    return rekapi;
   }
 
   function  setupTestActor (forRekapi) {

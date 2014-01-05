@@ -30,9 +30,7 @@ rekapiModules.push(function (context) {
    * @param {Rekapi}
    */
   function beforeRender (rekapi) {
-    if (rekapi.config.clearOnUpdate) {
-      rekapi.canvas.clear();
-    }
+    rekapi.canvas.clear();
   }
 
   /*!
@@ -94,27 +92,16 @@ rekapiModules.push(function (context) {
    * functions.
    */
   Rekapi.prototype._contextInitHook.canvas = function () {
-    if (!this.context.getContext) {
+    if (typeof this.context.getContext === 'undefined') {
       return;
     }
 
     this.canvas = new CanvasRenderer(this);
-    this.config.clearOnUpdate = true;
 
     _.extend(this._events, {
       'beforeRender': []
       ,'afterRender': []
     });
-
-    // Set the dimensions on the <canvas> element based on Rekapi constructor
-    // parameters
-    _.each(['Height', 'Width'], function (dimension) {
-      var dimensionLower = dimension.toLowerCase();
-      if (this.config[dimensionLower]) {
-        this.canvas[dimensionLower](this.config[dimensionLower]);
-        delete this.config[dimension];
-      }
-    }, this);
 
     this.on('afterUpdate', render);
     this.on('addActor', addActor);

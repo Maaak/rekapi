@@ -203,17 +203,14 @@ var rekapiCore = function (root, _, Tweenable) {
   };
 
   /**
-   * Rekapi constructor.  Valid values for `opt_config` are:
-   *
-   * - __context__ (_Object_): The context that the animation will run in.  Can be any type of `Object`; gets used by the renderer and inherited by the `Rekapi.Actor`s as they are added to the animation.  This isn't always needed, it usually just applies to `<canvas>` animations.  See the documentation on the [`<canvas>` extension](../ext/canvas/rekapi.canvas.context.js.html) for more info.
+   * Rekapi constructor.
    *
    * __[Example](../../../../docs/examples/rekapi.html)__
-   * @param {Object} opt_config
+   * @param {Object} opt_context The context that the animation will run in.  If provided, this can be any type of `Object`.  It gets used by the renderer and inherited by the `Rekapi.Actor`s as they are added to the animation.  This is only needed if Rekapi is being used to render to the screen, such as in a canvas or DOM animation.
    * @constructor
    */
-  function Rekapi (opt_config) {
-    this.config = opt_config || {};
-    this.context = this.config.context || {};
+  function Rekapi (opt_context) {
+    this.context = opt_context || {};
     this._actors = {};
     this._playState = playState.STOPPED;
 
@@ -246,8 +243,6 @@ var rekapiCore = function (root, _, Tweenable) {
 
     // The last millisecond position that was updated
     this._lastUpdatedMillisecond = 0;
-
-    _.extend(this.config, opt_config);
 
     this._scheduleUpdate = getUpdateMethod();
     this._cancelUpdate = getCancelMethod();
