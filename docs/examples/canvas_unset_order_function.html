@@ -63,12 +63,12 @@
 
       // Larger circles are rendered first.  Once actor2 grows larger than
       // actor1, it will be rendered on top.
-      rekapi.canvas.setOrderFunction(function (actor) {
+      rekapi.renderer.setOrderFunction(function (actor) {
         return actor.get().radius;
       });
 
       // Allow actors to be rendered in default order.
-      rekapi.canvas.unsetOrderFunction();
+      rekapi.renderer.unsetOrderFunction();
 
       rekapi.play();
 

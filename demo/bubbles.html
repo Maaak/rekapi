@@ -162,7 +162,7 @@
 
     rekapi.on('animationComplete', generateSequence)
 
-    rekapi.canvas.setOrderFunction(function (actor) {
+    rekapi.renderer.setOrderFunction(function (actor) {
       return actor.get().radius;
     });
 

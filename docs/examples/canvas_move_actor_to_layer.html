@@ -67,9 +67,9 @@
       var actor2IsOnTop = true;
       setInterval(function () {
         if (actor2IsOnTop) {
-          rekapi.canvas.moveActorToLayer(actor2, 0);
+          rekapi.renderer.moveActorToLayer(actor2, 0);
         } else {
-          rekapi.canvas.moveActorToLayer(actor2, 1);
+          rekapi.renderer.moveActorToLayer(actor2, 1);
         }
         actor2IsOnTop = !actor2IsOnTop;
       }, 500);
