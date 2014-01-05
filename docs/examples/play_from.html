@@ -38,8 +38,10 @@
         .keyframe(0,    { x: 50,  y: 50 })
         .keyframe(1000, { x: 200, y: 150 });
 
-      // Play twice from millisecond 500 and then stop.
-      rekapi.playFrom(500, 2);
+      setTimeout(function () {
+        // Play twice from millisecond 500 and then stop.
+        rekapi.playFrom(500, 2);
+      }, 750);
     </script>
   </body>
 </html>
