@@ -31,6 +31,7 @@ rekapiModules.push(function (context) {
   /*!
    * @param {Object} opt_context
    * @return {Object}
+   * @override
    */
   CanvasActor.prototype.context = function (opt_context) {
     if (opt_context) {

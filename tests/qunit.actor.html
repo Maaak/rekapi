@@ -740,8 +740,7 @@
 
     test('Actor inherits the Rekapi instance\'s context by default',
         function () {
-      var rekapiContext = {};
-      var testRekapi = new Rekapi({context: rekapiContext});
+      var testRekapi = new Rekapi();
       var testActor = setupTestActor(testRekapi);
 
       ok(testActor.context() === testRekapi.context,
@@ -751,9 +750,8 @@
 
     test('Actor can override the inherited context from the Rekapi instance',
         function () {
-      var rekapiContext = {};
       var actorContext = {};
-      var testRekapi = new Rekapi({context: rekapiContext});
+      var testRekapi = new Rekapi();
       var testActor = setupTestActor(testRekapi);
 
       testActor.context(actorContext);
