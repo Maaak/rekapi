@@ -656,7 +656,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
    * @return {Rekapi.Actor}
    */
   Actor.prototype._addKeyframeProperty = function (keyframeProperty) {
-    keyframeProperty.ownerActor = this;
+    keyframeProperty.actor = this;
     this._keyframeProperties[keyframeProperty.id] = keyframeProperty;
 
     var name = keyframeProperty.name;

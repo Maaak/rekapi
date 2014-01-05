@@ -270,7 +270,7 @@
 
       actor._addKeyframeProperty(keyframeProperty);
 
-      equal(keyframeProperty.ownerActor, actor
+      equal(keyframeProperty.actor, actor
           ,'The KeyframeProperty has an internal reference to the Actor.');
       equal(actor._keyframeProperties[keyframeProperty.id], keyframeProperty
           ,'The Actor has an internal reference to the KeyframeProperty.');
