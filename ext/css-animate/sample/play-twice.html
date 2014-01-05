@@ -25,14 +25,14 @@
   <body>
     <div id="actor-1"></div>
     <script>
-      var rekapi = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
       rekapi.addActor(actor);
 
       actor.keyframe(0,    { transform: 'translateX(0px)'   });
       actor.keyframe(1000, { transform: 'translateX(250px)' }, 'easeOutQuad');
 
-      rekapi.css.play(2);
+      rekapi.renderer.play(2);
     </script>
   </body>
 </html>

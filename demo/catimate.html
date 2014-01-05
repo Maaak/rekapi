@@ -31,7 +31,7 @@
 
     // Dependencies (Underscore and Shifty) are automatically loaded.
     require(['rekapi'], function(Rekapi) {
-      var rekapi = new Rekapi()
+      var rekapi = new Rekapi(document.body)
           ,cat
           ,time = 0;
 
@@ -62,8 +62,8 @@
 
       catImg.style.display = 'block';
 
-      if (rekapi.css.canAnimateWithCSS()) {
-        rekapi.css.play();
+      if (rekapi.renderer.canAnimateWithCSS()) {
+        rekapi.renderer.play();
       } else {
         rekapi.play();
       }

@@ -37,7 +37,7 @@
     <div id="container"></div>
     <script>
       var container = document.getElementById('container');
-      var rekapi = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var gridSize = 6;
 
       _.range(gridSize).forEach(function (xNum, x) {
@@ -61,21 +61,21 @@
         });
       });
 
-      rekapi.css.prerender();
+      rekapi.renderer.prerender();
 
       document.getElementById('btn-js').addEventListener('click', function () {
-        rekapi.css.stop();
+        rekapi.renderer.stop();
         rekapi.play();
       });
 
       document.getElementById('btn-css').addEventListener('click', function () {
         rekapi.stop();
-        rekapi.css.play();
+        rekapi.renderer.play();
       });
 
       document.getElementById('btn-stop').addEventListener('click', function () {
         rekapi.stop();
-        rekapi.css.stop();
+        rekapi.renderer.stop();
       });
     </script>
   </body>

@@ -53,6 +53,22 @@ var rekapi = new Rekapi(document.createElement('canvas'));
 rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
 ````
 
+## `Rekapi.CSSRenderer` instance is now called `renderer` and has different requirements
+
+As you may suspect, this means that a Rekapi animation can no longer animate both DOM and Canvas actors.  This choice was made to simplify the API for common use cases.  The renderer to use for an animation is determined by the context that was provided to the Rekapi constructor.  CSS 3 animations require a non-canvas element as the context.  For simplicity, you can just provide the `<body>`:
+
+````javascript
+var rekapi = new Rekapi(document.body);
+
+// ...
+
+if (rekapi.renderer.canAnimateWithCSS()) {
+  rekapi.renderer.play();
+} else {
+  rekapi.play();
+}
+````
+
 ## `draw` is now `render`
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.

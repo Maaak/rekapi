@@ -21,7 +21,14 @@ rekapiModules.push(function (context) {
    * @param {Rekapi} rekapi
    */
   Rekapi._rendererInitHook.cssAnimate = function (rekapi) {
-    rekapi.css = new CSSRenderer(rekapi);
+    var context = rekapi.context;
+
+    // Node.nodeType 1 is an ELEMENT_NODE.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
+    if (context.nodeType === 1 &&
+        context.nodeName.toLowerCase() !== 'canvas') {
+      rekapi.renderer = new CSSRenderer(rekapi);
+    }
   };
 
   /*!
@@ -109,7 +116,7 @@ rekapiModules.push(function (context) {
    * An advantage of this module is that CSS animations are not always available, but JavaScript animations are.  Keyframes are defined the same way, but you can choose what method of animation is appropriate at runtime:
    *
    * ```
-   *  var rekapi = new Rekapi();
+   *  var rekapi = new Rekapi(document.body);
    *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
    *
    *  rekapi.addActor(actor);
@@ -117,8 +124,8 @@ rekapiModules.push(function (context) {
    *  actor.keyframe(1000, { left: '250px' }, 'easeOutQuad');
    *
    *  // Feature detect for @keyframe support
-   *  if (rekapi.css.canAnimateWithCSS()) {
-   *    rekapi.css.play();
+   *  if (rekapi.renderer.canAnimateWithCSS()) {
+   *    rekapi.renderer.play();
    *  } else {
    *    rekapi.play();
    *  }
