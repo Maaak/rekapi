@@ -30,7 +30,7 @@ rekapiModules.push(function (context) {
    * @param {Rekapi}
    */
   function beforeRender (rekapi) {
-    rekapi.canvas.clear();
+    rekapi.renderer.clear();
   }
 
   /*!
@@ -40,22 +40,22 @@ rekapiModules.push(function (context) {
    */
   function render (rekapi) {
     fireEvent(rekapi, 'beforeRender', _);
-    var len = rekapi.canvas._renderOrder.length;
+    var len = rekapi.renderer._renderOrder.length;
     var renderOrder;
 
-    if (rekapi.canvas._renderOrderSorter) {
+    if (rekapi.renderer._renderOrderSorter) {
       var orderedActors =
-          _.sortBy(rekapi.canvas._canvasActors, rekapi.canvas._renderOrderSorter);
+          _.sortBy(rekapi.renderer._canvasActors, rekapi.renderer._renderOrderSorter);
       renderOrder = _.pluck(orderedActors, 'id');
     } else {
-      renderOrder = rekapi.canvas._renderOrder;
+      renderOrder = rekapi.renderer._renderOrder;
     }
 
     var currentActor, canvas_context;
 
     var i;
     for (i = 0; i < len; i++) {
-      currentActor = rekapi.canvas._canvasActors[renderOrder[i]];
+      currentActor = rekapi.renderer._canvasActors[renderOrder[i]];
       canvas_context = currentActor.context;
       currentActor.render(canvas_context, currentActor.get());
     }
@@ -70,8 +70,8 @@ rekapiModules.push(function (context) {
    */
   function addActor (rekapi, actor) {
     if (actor instanceof Rekapi.CanvasActor) {
-      rekapi.canvas._renderOrder.push(actor.id);
-      rekapi.canvas._canvasActors[actor.id] = actor;
+      rekapi.renderer._renderOrder.push(actor.id);
+      rekapi.renderer._canvasActors[actor.id] = actor;
     }
   }
 
@@ -81,8 +81,8 @@ rekapiModules.push(function (context) {
    */
   function removeActor (rekapi, actor) {
     if (actor instanceof Rekapi.CanvasActor) {
-      rekapi.canvas._renderOrder = _.without(rekapi.canvas._renderOrder, actor.id);
-      delete rekapi.canvas._canvasActors[actor.id];
+      rekapi.renderer._renderOrder = _.without(rekapi.renderer._renderOrder, actor.id);
+      delete rekapi.renderer._canvasActors[actor.id];
     }
   }
 
@@ -101,7 +101,7 @@ rekapiModules.push(function (context) {
     // The original element is still accessible via rekapi.context.canvas.
     rekapi.context = rekapi.context.getContext('2d');
 
-    rekapi.canvas = new CanvasRenderer(rekapi);
+    rekapi.renderer = new CanvasRenderer(rekapi);
 
     _.extend(rekapi._events, {
       'beforeRender': []
@@ -121,11 +121,11 @@ rekapiModules.push(function (context) {
    * You can use Rekapi to render to an HTML5 `<canvas>`.  The Canvas renderer does a few things:
    *
    *   1. It subclasses `Rekapi.Actor` as `Rekapi.CanvasActor`.
-   *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `canvas`, at initialization time.  So:
+   *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `renderer`, at initialization time.  So:
    * ```
    * // With the Rekapi Canvas renderer loaded
    * var rekapi = new Rekapi(document.createElement('canvas'));
-   * rekapi.canvas instanceof Rekapi.CanvasRenderer; // true
+   * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
    * ```
    *   3. It maintains a layer list that defines the render order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
    *
@@ -202,7 +202,7 @@ rekapiModules.push(function (context) {
    * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframeprops.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
    *
    * ```
-   * rekapi.canvas.setOrderFunction(function (actor) {
+   * rekapi.renderer.setOrderFunction(function (actor) {
    *   return actor.get().radius;
    * });
    * ```

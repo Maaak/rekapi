@@ -32,6 +32,6 @@ rekapiModules.push(function (context) {
    * @return {Rekapi.Actor|undefined}
    */
   CanvasActor.prototype.moveToLayer = function (layer) {
-    return this.rekapi.canvas.moveActorToLayer(this, layer);
+    return this.rekapi.renderer.moveActorToLayer(this, layer);
   };
 });
