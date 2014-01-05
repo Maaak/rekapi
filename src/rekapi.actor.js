@@ -657,14 +657,13 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
     return this.removeKeyframe(0);
   };
 
-  /**
+  /*!
    * Calculate and set the `Actor`'s position at `millisecond` in the animation.
    *
-   * __[Example](../../../../docs/examples/actor_update_state.html)__
    * @param {number} millisecond
    * @return {Rekapi.Actor}
    */
-  Actor.prototype.updateState = function (millisecond) {
+  Actor.prototype._updateState = function (millisecond) {
     var startMs = this.getStart();
     var endMs = this.getEnd();
 

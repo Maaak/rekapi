@@ -636,7 +636,7 @@ rekapiModules.push(function (context) {
 
     for (i = 0; i < increments; i++) {
       adjustedPercent = fromPercent + (i * incrementSize);
-      actor.updateState(
+      actor._updateState(
           ((adjustedPercent / 100) * actorLength) + actorStart);
       stepPrefix = +adjustedPercent.toFixed(2) + '% ';
 

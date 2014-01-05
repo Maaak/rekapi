@@ -34,6 +34,10 @@ rekapi.canvas.height(300);
 rekapi.canvas.width(300);
 ````
 
+## `Rekapi.Actor.prototype.updateState` is now private
+
+This function wasn't useful as a public API, so it has been made private by convention.  It is still accessible as `Rekapi.Actor.prototype._updateState`, but it is suggested that you update the state of the `Rekapi` instance instead.
+
 ## `draw` is now `render`
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.

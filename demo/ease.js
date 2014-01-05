@@ -174,9 +174,7 @@ $(function () {
     var pos = target.data('pos');
     var timeToModify = pos === 'from' ? 0 : animationDuration;
 
-    circle
-      .modifyKeyframe(timeToModify, getCrosshairCoords(crosshairs[pos]))
-      .updateState(rekapi._lastUpdatedMillisecond);
+    circle.modifyKeyframe(timeToModify, getCrosshairCoords(crosshairs[pos]));
 
     rekapi
       .canvas.clear()
