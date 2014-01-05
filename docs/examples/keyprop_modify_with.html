@@ -9,7 +9,7 @@
   <body>
     <script>
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(actor, 500, 'x', 10, 'linear');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'linear');
       console.log(keyprop.millisecond, keyprop.value, keyprop.easing);
 
       keyprop.modifyWith({ 'millisecond': 750 });

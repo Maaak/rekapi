@@ -12,17 +12,14 @@ rekapiModules.push(function (context) {
    * Represents an individual component of a `Rekapi.Actor`'s keyframe state.  In many cases you won't need to deal with this directly, `Rekapi.Actor` abstracts a lot of what this Object does away for you.
    *
    * __[Example](../../../../docs/examples/keyprop.html)__
-   * @param {Rekapi.Actor} ownerActor The Actor to which this KeyframeProperty is associated.
    * @param {number} millisecond Where in the animation this KeyframeProperty lives.
    * @param {string} name The property's name, such as "x" or "opacity."
    * @param {number|string} value The value of `name`.  This is the value to animate to.
    * @param {string=} opt_easing The easing at which to animate to `value`.  Defaults to linear.
    * @constructor
    */
-  Rekapi.KeyframeProperty = function (
-      ownerActor, millisecond, name, value, opt_easing) {
+  Rekapi.KeyframeProperty = function (millisecond, name, value, opt_easing) {
     this.id = _.uniqueId('keyframeProperty_');
-    this.ownerActor = ownerActor;
     this.millisecond = millisecond;
     this.name = name;
     this.value = value;

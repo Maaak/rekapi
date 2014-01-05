@@ -260,6 +260,24 @@
     });
 
 
+    module('_addKeyframeProperty');
+
+
+    test('Adding a KeyframeProperty creates a link between the property and the actor.',
+        function () {
+      var actor = new Rekapi.Actor();
+      var keyframeProperty = new Rekapi.KeyframeProperty(0, 'x', 50);
+
+      actor._addKeyframeProperty(keyframeProperty);
+
+      equal(keyframeProperty.ownerActor, actor
+          ,'The KeyframeProperty has an internal reference to the Actor.');
+      equal(actor._keyframeProperties[keyframeProperty.id], keyframeProperty
+          ,'The Actor has an internal reference to the KeyframeProperty.');
+    });
+
+
+
     module('removeKeyframe');
 
 

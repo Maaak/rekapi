@@ -34,6 +34,10 @@ rekapi.canvas.height(300);
 rekapi.canvas.width(300);
 ````
 
+## The `Rekapi.KeyframeProperty` constructor signature has changed
+
+`Rekapi.KeyframeProperty` no longer accepts the owner actor via the constructor.  The link between the two objects is established by the new method, `Rekapi.Actor.prototype._addKeyframeProperty`.
+
 ## `Rekapi.Actor.prototype.updateState` is now private
 
 This function wasn't useful as a public API, so it has been made private by convention.  It is still accessible as `Rekapi.Actor.prototype._updateState`, but it is suggested that you update the state of the `Rekapi` instance instead.

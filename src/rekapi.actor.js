@@ -298,16 +298,9 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     _.each(properties, function (value, name) {
       var newKeyframeProperty = new Rekapi.KeyframeProperty(
-          this, millisecond, name, value, opt_easing[name]);
+          millisecond, name, value, opt_easing[name]);
 
-      this._keyframeProperties[newKeyframeProperty.id] = newKeyframeProperty;
-
-      if (!this._propertyTracks[name]) {
-        this._propertyTracks[name] = [];
-      }
-
-      this._propertyTracks[name].push(newKeyframeProperty);
-      sortPropertyTracks(this);
+      this._addKeyframeProperty(newKeyframeProperty);
     }, this);
 
     if (this.rekapi) {
@@ -655,6 +648,29 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
 
     this._keyframeProperties = {};
     return this.removeKeyframe(0);
+  };
+
+  /*!
+   * Associate a `Rekapi.KeyframeProperty` to this actor.  Augments the `Rekapi.KeyframeProperty` to maintain a link between the two objects.
+   * @param {Rekapi.KeyframeProperty} keyframeProperty
+   * @return {Rekapi.Actor}
+   */
+  Actor.prototype._addKeyframeProperty = function (keyframeProperty) {
+    keyframeProperty.ownerActor = this;
+    this._keyframeProperties[keyframeProperty.id] = keyframeProperty;
+
+    var name = keyframeProperty.name;
+    var propertyTracks = this._propertyTracks;
+
+    if (typeof this._propertyTracks[name] === 'undefined') {
+      propertyTracks[name] = [keyframeProperty];
+    } else {
+      propertyTracks[name].push(keyframeProperty);
+    }
+
+    sortPropertyTracks(this);
+
+    return this;
   };
 
   /*!

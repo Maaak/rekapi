@@ -38,10 +38,8 @@
     test('Can create a KeyframeProperty', function () {
 
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(
-          actor, 500, 'x', 10, 'easeInQuad');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'easeInQuad');
 
-      equal(keyprop.ownerActor, actor, 'ownerActor was set');
       equal(keyprop.millisecond, 500, 'millisecond was set');
       equal(keyprop.name, 'x', 'name was set');
       equal(keyprop.value, 10, 'value was set');
@@ -55,8 +53,7 @@
     test('Can modify a KeyframeProperty', function () {
 
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(
-          actor, 500, 'x', 10, 'easeInQuad');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'easeInQuad');
 
       keyprop.modifyWith({
         'millisecond': 1500
@@ -76,10 +73,8 @@
     test('Can link one KeyframeProperty to another', function () {
 
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(
-          actor, 500, 'x', 10, 'easeInQuad');
-      var linkedKeyprop = new Rekapi.KeyframeProperty(
-          actor, 1000, 'x', 20, 'swingTo');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'easeInQuad');
+      var linkedKeyprop = new Rekapi.KeyframeProperty(1000, 'x', 20, 'swingTo');
 
       keyprop.linkToNext(linkedKeyprop);
 
@@ -95,10 +90,8 @@
         function () {
 
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(
-          actor, 500, 'x', 10, 'linear');
-      var linkedKeyprop = new Rekapi.KeyframeProperty(
-          actor, 1000, 'x', 20, 'linear');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'linear');
+      var linkedKeyprop = new Rekapi.KeyframeProperty(1000, 'x', 20, 'linear');
 
       keyprop.linkToNext(linkedKeyprop);
       var midpoint = keyprop.getValueAt(750);

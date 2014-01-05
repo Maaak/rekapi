@@ -9,8 +9,8 @@
   <body>
     <script>
       var actor = new Rekapi.Actor();
-      var keyprop = new Rekapi.KeyframeProperty(actor, 500, 'x', 10, 'linear');
-      var nextKeyprop = new Rekapi.KeyframeProperty(actor, 1500, 'x', 20, 'linear');
+      var keyprop = new Rekapi.KeyframeProperty(500, 'x', 10, 'linear');
+      var nextKeyprop = new Rekapi.KeyframeProperty(1500, 'x', 20, 'linear');
       keyprop.linkToNext(nextKeyprop);
       console.log(keyprop);
     </script>
