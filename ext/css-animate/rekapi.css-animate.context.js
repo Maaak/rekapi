@@ -17,8 +17,11 @@ rekapiModules.push(function (context) {
   // PRIVATE UTILITY FUNCTIONS
   //
 
-  Rekapi._contextInitHook.cssAnimate = function () {
-    this.css = new CSSRenderer(this);
+  /*!
+   * @param {Rekapi} rekapi
+   */
+  Rekapi._contextInitHook.cssAnimate = function (rekapi) {
+    rekapi.css = new CSSRenderer(rekapi);
   };
 
   /*!

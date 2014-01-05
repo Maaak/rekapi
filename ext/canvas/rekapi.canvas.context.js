@@ -92,27 +92,28 @@ rekapiModules.push(function (context) {
    * Sets up an instance of CanvasRenderer and attaches it to a `Rekapi`
    * instance.  Also augments the Rekapi instance with canvas-specific
    * functions.
+   * @param {Rekapi} rekapi
    */
-  Rekapi._contextInitHook.canvas = function () {
-    if (typeof this.context.getContext === 'undefined') {
+  Rekapi._contextInitHook.canvas = function (rekapi) {
+    if (typeof rekapi.context.getContext === 'undefined') {
       return;
     }
 
-    // Overwrite this.context to reference the canvas drawing context directly.
-    // The original element is still accessible via this.context.canvas.
-    this.context = this.context.getContext('2d');
+    // Overwrite rekapi.context to reference the canvas drawing context directly.
+    // The original element is still accessible via rekapi.context.canvas.
+    rekapi.context = rekapi.context.getContext('2d');
 
-    this.canvas = new CanvasRenderer(this);
+    rekapi.canvas = new CanvasRenderer(rekapi);
 
-    _.extend(this._events, {
+    _.extend(rekapi._events, {
       'beforeRender': []
       ,'afterRender': []
     });
 
-    this.on('afterUpdate', render);
-    this.on('addActor', addActor);
-    this.on('removeActor', removeActor);
-    this.on('beforeRender', beforeRender);
+    rekapi.on('afterUpdate', render);
+    rekapi.on('addActor', addActor);
+    rekapi.on('removeActor', removeActor);
+    rekapi.on('beforeRender', beforeRender);
   };
 
   // CANVAS RENDERER OBJECT

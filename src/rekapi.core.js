@@ -252,8 +252,8 @@ var rekapiCore = function (root, _, Tweenable) {
       updateToCurrentMillisecond(this);
     }, this);
 
-    _.each(Rekapi._contextInitHook, function (fn) {
-      fn.call(this);
+    _.each(Rekapi._contextInitHook, function (contextInitHook) {
+      contextInitHook(this);
     }, this);
 
     return this;
