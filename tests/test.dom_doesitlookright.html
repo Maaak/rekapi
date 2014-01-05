@@ -25,11 +25,7 @@
         ,actor;
 
     sandbox = document.getElementById('sandbox');
-    rekapi = new Rekapi({
-      'context': sandbox
-      ,'height': 300
-      ,'width': 300
-    });
+    rekapi = new Rekapi(sandbox);
 
     return rekapi;
   }

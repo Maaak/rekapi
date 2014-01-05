@@ -24,6 +24,16 @@ rekapi.add(actor);
 rekapi === actor.rekapi; // <-- actor.rekapi used to be actor.kapi
 ````
 
+## The `Rekapi` constructor signature has changed
+
+Instead of a configuration object, `Rekapi` now expects the rendering context as the first and only parameter.  If you were providing `height` and `width` for canvas animations previously, you will now have to call those methods directly:
+
+````
+var rekapi = new Rekapi(document.createElement('canvas'));
+rekapi.canvas.height(300);
+rekapi.canvas.width(300);
+````
+
 ## `draw` is now `render`
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
