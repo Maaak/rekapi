@@ -743,7 +743,7 @@
       var testRekapi = new Rekapi();
       var testActor = setupTestActor(testRekapi);
 
-      ok(testActor.context() === testRekapi.context,
+      ok(testActor.context === testRekapi.context,
         'Actor has the same context as the Rekapi instance');
     });
 
@@ -754,11 +754,11 @@
       var testRekapi = new Rekapi();
       var testActor = setupTestActor(testRekapi);
 
-      testActor.context(actorContext);
+      testActor.context = actorContext;
 
-      ok(testActor.context() !== testRekapi.context,
+      ok(testActor.context !== testRekapi.context,
         'Actor has a different context from the Rekapi instance');
-      ok(testActor.context() === actorContext,
+      ok(testActor.context === actorContext,
         'Actor has retained the context that was explicitly set');
     });
 

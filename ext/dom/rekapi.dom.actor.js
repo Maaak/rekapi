@@ -132,13 +132,13 @@ rekapiModules.push(function (context) {
    */
   Rekapi.DOMActor = function (element, opt_config) {
     Rekapi.Actor.call(this, opt_config);
-    this._context = element;
+    this.context = element;
     var className = this.getCSSName();
 
     // Add the class if it's not already there.
     // Using className instead of classList to make IE happy.
-    if (!this._context.className.match(className)) {
-      this._context.className += ' ' + className;
+    if (!this.context.className.match(className)) {
+      this.context.className += ' ' + className;
     }
 
     this._transformOrder = transformFunctions.slice(0);
@@ -232,9 +232,9 @@ rekapiModules.push(function (context) {
 
   // TODO:  Make this a private method.
   DOMActor.prototype.teardown = function (context, state) {
-    var classList = this._context.className.match(/\S+/g);
+    var classList = this.context.className.match(/\S+/g);
     var sanitizedClassList = _.without(classList, this.getCSSName());
-    this._context.className = sanitizedClassList;
+    this.context.className = sanitizedClassList;
   };
 
   /**

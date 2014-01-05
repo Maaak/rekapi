@@ -1053,7 +1053,7 @@
       var testCanvasEl = document.createElement('canvas');
       var domActor = new Rekapi.DOMActor(testActorEl);
       var canvasActor = new Rekapi.CanvasActor();
-      canvasActor.context(testCanvasEl);
+      canvasActor.context = testCanvasEl;
       rekapi.addActor(domActor);
       rekapi.addActor(canvasActor);
 

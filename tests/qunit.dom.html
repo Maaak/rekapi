@@ -50,7 +50,7 @@
       testRekapi.update(500);
 
       var expectedValue = 'translateX(200px) translateY(200px) rotate(90deg)';
-      equal(testActor._context.style.transform, expectedValue,
+      equal(testActor.context.style.transform, expectedValue,
         "The actor's DOM element has the correct transform style");
     });
 
@@ -79,10 +79,10 @@
       testRekapi.update(1000);
 
       var expectedValue = 'translateX(50px) translateY(50px) rotate(125deg)';
-      equal(testActor._context.style.transform, expectedValue,
+      equal(testActor.context.style.transform, expectedValue,
         "The actor's DOM element has the correct transform style");
 
-      equal(testActor._context.style.height, '25px',
+      equal(testActor.context.style.height, '25px',
         'Other non-transform properties are also updated');
     });
 
@@ -126,7 +126,7 @@
       testRekapi.update(1000);
 
       var expectedValue = 'rotate(125deg) translateY(50px) translateX(50px)';
-      equal(testActor._context.style.transform, expectedValue,
+      equal(testActor.context.style.transform, expectedValue,
         'Independent transform parameters are re-ordered as expected');
     });
 

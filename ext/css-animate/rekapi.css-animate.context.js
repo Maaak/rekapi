@@ -71,7 +71,7 @@ rekapiModules.push(function (context) {
 
     _.each(rekapi.getAllActors(), function (actor) {
       if (actor instanceof Rekapi.DOMActor) {
-        var actorEl = actor._context;
+        var actorEl = actor.context;
         var actorElParent = actorEl.parentElement;
 
         actorElParent.replaceChild(dummyDiv, actorEl);
