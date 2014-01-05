@@ -92,7 +92,7 @@ rekapiModules.push(function (context) {
    * functions.
    * @param {Rekapi} rekapi
    */
-  Rekapi._contextInitHook.canvas = function (rekapi) {
+  Rekapi._rendererInitHook.canvas = function (rekapi) {
     if (typeof rekapi.context.getContext === 'undefined') {
       return;
     }

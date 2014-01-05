@@ -20,7 +20,7 @@ rekapiModules.push(function (context) {
   /*!
    * @param {Rekapi} rekapi
    */
-  Rekapi._contextInitHook.cssAnimate = function (rekapi) {
+  Rekapi._rendererInitHook.cssAnimate = function (rekapi) {
     rekapi.css = new CSSRenderer(rekapi);
   };
 
