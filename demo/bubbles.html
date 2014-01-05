@@ -154,12 +154,11 @@
     }
 
     var canvas = document.getElementsByTagName('canvas')[0]
-        ,rekapi = new Rekapi({
-          'context': canvas
-          ,'height': 500
-          ,'width': 500
-        })
+        ,rekapi = new Rekapi(canvas)
         ,bubbles = [];
+
+    rekapi.canvas.height(500);
+    rekapi.canvas.width(500);
 
     rekapi.on('animationComplete', generateSequence)
 

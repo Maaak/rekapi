@@ -124,32 +124,32 @@ $(function () {
   }
 
   var canvas = $('canvas')[0];
-  var rekapi = new Rekapi({
-      'context': canvas
-      ,'height': 400
-      ,'width': 500
-    })
-    ,circle = new Rekapi.CanvasActor({
-      'render': function (canvas_context, state) {
+  var rekapi = new Rekapi(canvas);
 
-        if (isPathShowing && prerenderedPath) {
-          canvas_context.drawImage(prerenderedPath, 0, 0);
-        }
+  rekapi.canvas.height(400);
+  rekapi.canvas.width(500);
 
-        canvas_context.beginPath();
-          canvas_context.arc(
-            state.x || 0,
-            state.y || 0,
-            state.radius || 50,
-            0,
-            Math.PI*2,
-            true);
-          canvas_context.fillStyle = state.color || '#444';
-          canvas_context.fill();
-          canvas_context.closePath();
-          return this;
-        }
-      });
+  var circle = new Rekapi.CanvasActor({
+    'render': function (canvas_context, state) {
+
+      if (isPathShowing && prerenderedPath) {
+        canvas_context.drawImage(prerenderedPath, 0, 0);
+      }
+
+      canvas_context.beginPath();
+        canvas_context.arc(
+          state.x || 0,
+          state.y || 0,
+          state.radius || 50,
+          0,
+          Math.PI*2,
+          true);
+        canvas_context.fillStyle = state.color || '#444';
+        canvas_context.fill();
+        canvas_context.closePath();
+        return this;
+      }
+    });
 
   var crosshairs = {
     'from': $('.crosshair.from')

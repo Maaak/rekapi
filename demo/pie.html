@@ -26,11 +26,10 @@
       };
 
     var canvas = document.getElementsByTagName('canvas')[0];
-    var rekapi = new Rekapi({
-        'context': canvas
-        ,'height': CANVAS_HEIGHT
-        ,'width': CANVAS_WIDTH
-      });
+    var rekapi = new Rekapi(canvas);
+
+    rekapi.canvas.height(CANVAS_HEIGHT);
+    rekapi.canvas.width(CANVAS_WIDTH);
 
     var actors = {};
 

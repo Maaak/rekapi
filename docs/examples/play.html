@@ -10,12 +10,10 @@
     <canvas></canvas>
     <script>
       var canvas = document.getElementsByTagName('canvas')[0];
+      var rekapi = new Rekapi(canvas);
 
-      var rekapi = new Rekapi({
-        'context': canvas,
-        'height': 300,
-        'width': 400
-      });
+      rekapi.canvas.height(300);
+      rekapi.canvas.width(400);
 
       var actor = new Rekapi.CanvasActor({
         render: function (canvas_context, state) {

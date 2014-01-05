@@ -61,13 +61,13 @@
       var JavaScriptMode = require("ace/mode/javascript").Mode;
       editor.getSession().setMode(new JavaScriptMode());
 
-      canvas = $('canvas')
-      ,rekapi = new Rekapi({
-          'context': canvas[0]
-          ,'height': 480
-          ,'width': 400
-        })
-      ,actor = new Rekapi.CanvasActor({
+      var canvas = $('canvas')
+      var rekapi = new Rekapi(canvas[0]);
+
+      rekapi.canvas.height(480);
+      rekapi.canvas.width(400);
+
+      var actor = new Rekapi.CanvasActor({
         'render': function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
