@@ -7,37 +7,11 @@
     <script src="../../dist/rekapi.js"></script>
   </head>
   <body>
-    <canvas></canvas>
     <script>
-      var canvas = document.getElementsByTagName('canvas')[0];
-      var rekapi = new Rekapi(canvas);
-
-      rekapi.canvas.height(300);
-      rekapi.canvas.width(400);
-
-      function getActorInstance () {
-        return new Rekapi.CanvasActor({
-          render: function (canvas_context, state) {
-            canvas_context.beginPath();
-              canvas_context.arc(
-                state.x || 0,
-                state.y || 0,
-                state.radius || 50,
-                0,
-                Math.PI*2,
-                true);
-              canvas_context.fillStyle = state.color || '#f0f';
-              canvas_context.fill();
-              canvas_context.closePath();
-
-              return this;
-          }
-        });
-      }
-
-      var actor1 = getActorInstance();
-      var actor2 = getActorInstance();
-      var actor3 = getActorInstance();
+      var rekapi = new Rekapi();
+      var actor1 = new Rekapi.Actor();
+      var actor2 = new Rekapi.Actor();
+      var actor3 = new Rekapi.Actor();
 
       console.log(rekapi.actorCount()); // 0
       rekapi.addActor(actor1);

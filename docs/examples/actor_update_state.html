@@ -38,9 +38,14 @@
         .keyframe(0,    { x: 50,  y: 50 })
         .keyframe(1000, { x: 100, y: 150 });
 
-      actor.updateState(500);
+      actor.updateState(500); // Force the internal state on the actor
       console.log(actor.get()); // Logs the Actor's state data
-      rekapi.update(); // Force the current state to be rendered
+
+      // Updating the actor's internal state doesn't cause anything to be
+      // rendered, only the Rekapi instance does that.  Calling rekapi.update()
+      // will again update each actor's internal state, thereby overwriting the
+      // result of the call to actor.updateState() above.
+      rekapi.update();
     </script>
   </body>
 </html>
