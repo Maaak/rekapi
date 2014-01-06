@@ -69,6 +69,10 @@ if (rekapi.renderer.canAnimateWithCSS()) {
 }
 ````
 
+### `Rekapi.CSSRenderer.prototype.play` is now called `Rekapi.CSSRenderer.prototype.animateWithCSS`
+
+This is done to avoid confusion with `Rekapi.prototype.play` and also be more consistent with `Rekapi.CSSRenderer.prototype.canAnimateWithCSS`.
+
 ## `draw` is now `render`
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.

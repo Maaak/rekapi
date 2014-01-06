@@ -125,7 +125,7 @@ rekapiModules.push(function (context) {
    *
    *  // Feature detect for @keyframe support
    *  if (rekapi.renderer.canAnimateWithCSS()) {
-   *    rekapi.renderer.play();
+   *    rekapi.renderer.animateWithCSS();
    *  } else {
    *    rekapi.play();
    *  }
@@ -174,7 +174,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Prerender and cache CSS so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#play`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
+   * Prerender and cache CSS so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
    *
    * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
    * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  The higher this number, the smoother the CSS animation will be, but the longer it will take to prerender.  The default value is 30, and you should not need to go higher than 60.
@@ -194,7 +194,7 @@ rekapiModules.push(function (context) {
    * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
    * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  The higher this number, the smoother the CSS animation will be, but the longer it will take to prerender.  The default value is 30, and you should not need to go higher than 60.
    */
-  CSSRenderer.prototype.play = function (opt_iterations, opt_fps) {
+  CSSRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
     if (this.isPlaying()) {
       this.stop();
     }
