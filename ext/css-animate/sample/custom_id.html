@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>rekapi.toCSS();</title>
+    <title>cssRenderer.toCSS();</title>
     <script>
       var global = window;
     </script>
@@ -48,7 +48,7 @@
         });
 
      console.log(rekapi);
-     var css = rekapi.renderer.toCSS({
+     var css = rekapi.renderer.toString({
        'vendors': ['webkit', 'mozilla']
        ,'name': 'myAwesomeAnimation'
      });
@@ -57,8 +57,8 @@
      style.innerHTML = css;
      document.head.appendChild(style);
 
-     // Specifying a custom `name` property in `toCSS` creates a class that
-     // doesn't implicitly match the class that was added by the
+     // Specifying a custom `name` property in `renderer.toString` creates a
+     // class that doesn't implicitly match the class that was added by the
      // `Rekapi.DOMActor` constructor, so add it here.
      actorDiv.classList.add('myAwesomeAnimation');
 

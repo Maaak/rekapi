@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>rekapi.toCSS();</title>
+    <title>cssRenderer.toString();</title>
     <script>
       var global = window;
     </script>
@@ -67,7 +67,7 @@
           child.classList.add('actor');
         }
 
-        var css = rekapi.renderer.toCSS({
+        var css = rekapi.renderer.toString({
           'vendors': ['webkit', 'mozilla']
         });
         var style = document.createElement('style');

@@ -1058,7 +1058,7 @@
       rekapi.addActor(domActor);
       rekapi.addActor(canvasActor);
 
-      var css = rekapi.renderer.toCSS();
+      var css = rekapi.renderer.toString();
       var singleLineCss = css.split('\n').join('')
 
       ok(!!singleLineCss.match('actor-' + domActor.id)

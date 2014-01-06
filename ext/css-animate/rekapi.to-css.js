@@ -112,7 +112,7 @@ rekapiModules.push(function (context) {
    * @param {Object} opts
    * @return {string}
    */
-  Rekapi.CSSRenderer.prototype.toCSS = function (opts) {
+  Rekapi.CSSRenderer.prototype.toString = function (opts) {
     opts = opts || {};
     var animationCSS = [];
 
