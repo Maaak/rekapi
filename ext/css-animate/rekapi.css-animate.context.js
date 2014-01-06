@@ -111,8 +111,6 @@ rekapiModules.push(function (context) {
    *   - Prerending animations can take a non-trivial amount of time, so you may have to be clever with how to spend the cycles to do it.
    *   - Currently, no `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
    *
-   * This module requires both the [`toCSS`](/dist/doc/ext/to-css/rekapi.to-css.js.html) and [`Rekapi.DOMActor`](/dist/doc/ext/dom/rekapi.dom.actor.js.html) modules (they are included in the standard Rekapi distribution).  Functionally, `CSSRenderer` works by prerendering a CSS animation and injecting it into the DOM.  You'll never have to call the `CSSRenderer` constructor explicitly, that is done for you when a Rekapi instance is initialized.
-   *
    * An advantage of this module is that CSS animations are not always available, but JavaScript animations are.  Keyframes are defined the same way, but you can choose what method of animation is appropriate at runtime:
    *
    * ```
@@ -137,10 +135,6 @@ rekapiModules.push(function (context) {
    * @constructor
    */
   Rekapi.CSSRenderer = function (rekapi) {
-    if (!Rekapi.DOMActor && !Rekapi.prototype.toCSS) {
-      throw 'CSSRenderer requires the DOMActor and toCSS modules.';
-    }
-
     this.rekapi = rekapi;
 
     // @private {number}
