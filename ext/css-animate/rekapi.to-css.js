@@ -112,13 +112,13 @@ rekapiModules.push(function (context) {
    * @param {Object} opts
    * @return {string}
    */
-  Rekapi.prototype.toCSS = function (opts) {
+  Rekapi.CSSRenderer.prototype.toCSS = function (opts) {
     opts = opts || {};
     var animationCSS = [];
 
-    _.each(this.getAllActors(), function (actor) {
+    _.each(this.rekapi.getAllActors(), function (actor) {
       if (actor instanceof Rekapi.DOMActor) {
-        animationCSS.push(actor.toCSS(opts));
+        animationCSS.push(getActorCSS(actor, opts));
       }
     });
 
@@ -126,28 +126,29 @@ rekapiModules.push(function (context) {
   };
 
   /*!
-   * Exports the CSS `@keyframes` for an individual Actor.
+   * Creates the CSS `@keyframes` for an individual actor.
+   * @param {Rekapi.Actor} actor
    * @param {Object} opts Same as opts for Rekapi.prototype.toCSS.
    * @return {string}
    */
-  Rekapi.Actor.prototype.toCSS = function (opts) {
+  function getActorCSS (actor, opts) {
     opts = opts || {};
     var actorCSS = [];
-    var animName = opts.name || this.getCSSName();
+    var animName = opts.name || actor.getCSSName();
     var fps = opts.fps || DEFAULT_FPS;
-    var steps = Math.ceil((this.rekapi.animationLength() / 1000) * fps);
-    var combineProperties = !canOptimizeAnyKeyframeProperties(this);
+    var steps = Math.ceil((actor.rekapi.animationLength() / 1000) * fps);
+    var combineProperties = !canOptimizeAnyKeyframeProperties(actor);
     var actorClass = generateCSSClass(
-        this, animName, combineProperties, opts.vendors, opts.iterations,
+        actor, animName, combineProperties, opts.vendors, opts.iterations,
         opts.isCentered);
     var boilerplatedKeyframes = generateBoilerplatedKeyframes(
-        this, animName, steps, combineProperties, opts.vendors);
+        actor, animName, steps, combineProperties, opts.vendors);
 
     actorCSS.push(actorClass);
     actorCSS.push(boilerplatedKeyframes);
 
     return actorCSS.join('\n');
-  };
+  }
 
   // UTILITY FUNCTIONS
   //
@@ -712,6 +713,7 @@ rekapiModules.push(function (context) {
       ,'canOptimizeKeyframeProperty': canOptimizeKeyframeProperty
       ,'canOptimizeAnyKeyframeProperties': canOptimizeAnyKeyframeProperties
       ,'generateOptimizedKeyframeSegment': generateOptimizedKeyframeSegment
+      ,'getActorCSS': getActorCSS
     };
   }
 

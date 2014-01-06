@@ -175,7 +175,7 @@ rekapiModules.push(function (context) {
    * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
    */
   CSSRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
-    return this._cachedCSS = this.rekapi.toCSS({
+    return this._cachedCSS = this.toCSS({
       'vendors': [getVendorPrefix()]
       ,'fps': opt_fps
       ,'iterations': opt_iterations

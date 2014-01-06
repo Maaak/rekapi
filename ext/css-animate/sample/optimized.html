@@ -11,6 +11,7 @@
     <script src="../../../src/rekapi.actor.js"></script>
     <script src="../../../src/rekapi.keyframeprops.js"></script>
     <script src="../../../ext/dom/rekapi.dom.actor.js"></script>
+    <script src="../rekapi.css-animate.context.js"></script>
     <script src="../rekapi.to-css.js"></script>
     <script src="../../../src/rekapi.init.js"></script>
     <style type="text/css">
@@ -30,24 +31,22 @@
     </div>
     <script>
 
-      var animation = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var actorDiv = document.getElementById('actor-1');
       var actor = new Rekapi.DOMActor(actorDiv);
-      animation.addActor(actor);
+      rekapi.addActor(actor);
 
       actor
         .keyframe(500, {
-          'transform': 'translateX(0px) translateY(0px)'
-          ,'background': '#f00'
+          'transform': 'translateX(0px)'
         }).keyframe(3000, {
-          'transform': 'translateX(400px) translateY(400px)'
-          ,'background': '#00f'
+          'transform': 'translateX(400px)'
         }, {
-          'transform': 'easeInOutQuart swingTo'
+          'transform': 'easeInOutQuart'
         });
 
-     console.log(animation);
-     var css = animation.toCSS({
+     console.log(rekapi);
+     var css = rekapi.renderer.toCSS({
        'vendors': ['webkit', 'mozilla']
        ,'name': 'myAwesomeAnimation'
      });

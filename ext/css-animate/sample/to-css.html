@@ -5,14 +5,15 @@
     <script>
       var global = window;
     </script>
-    <script src="../../bower_components/underscore/underscore.js"></script>
-    <script src="../../bower_components/shifty/dist/shifty.js"></script>
-    <script src="../../src/rekapi.core.js"></script>
-    <script src="../../src/rekapi.actor.js"></script>
-    <script src="../../src/rekapi.keyframeprops.js"></script>
-    <script src="../../ext/dom/rekapi.dom.actor.js"></script>
-    <script src="rekapi.to-css.js"></script>
-    <script src="../../src/rekapi.init.js"></script>
+    <script src="../../../bower_components/underscore/underscore.js"></script>
+    <script src="../../../bower_components/shifty/dist/shifty.js"></script>
+    <script src="../../../src/rekapi.core.js"></script>
+    <script src="../../../src/rekapi.actor.js"></script>
+    <script src="../../../src/rekapi.keyframeprops.js"></script>
+    <script src="../../../ext/dom/rekapi.dom.actor.js"></script>
+    <script src="../rekapi.css-animate.context.js"></script>
+    <script src="../rekapi.to-css.js"></script>
+    <script src="../../../src/rekapi.init.js"></script>
     <style type="text/css">
       .container {
         position: relative;
@@ -30,10 +31,10 @@
     </div>
     <script>
 
-      var animation = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var actorDiv = document.getElementById('actor-1');
       var actor = new Rekapi.DOMActor(actorDiv);
-      animation.addActor(actor);
+      rekapi.addActor(actor);
 
       actor
         .keyframe(500, {
@@ -48,9 +49,9 @@
 
      actor.modifyKeyframeProperty('background', 0, { millisecond: 1000 });
      actor.modifyKeyframeProperty('background', 1, { millisecond: 1500 });
-     console.log(animation);
+     console.log(rekapi);
 
-     var css = animation.toCSS({
+     var css = rekapi.renderer.toCSS({
        'vendors': ['webkit', 'mozilla']
      });
 
