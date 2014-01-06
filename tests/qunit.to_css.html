@@ -14,6 +14,7 @@
   <script src="../ext/dom/rekapi.dom.actor.js"></script>
   <script src="../ext/canvas/rekapi.canvas.context.js"></script>
   <script src="../ext/canvas/rekapi.canvas.actor.js"></script>
+  <script src="../ext/css-animate/rekapi.css-animate.context.js"></script>
   <script src="../ext/css-animate/rekapi.to-css.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
@@ -1048,7 +1049,7 @@
 
 
     test('CSS is only generated for DOMActors', function () {
-      var rekapi = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var testActorEl = document.createElement('div');
       var testCanvasEl = document.createElement('canvas');
       var domActor = new Rekapi.DOMActor(testActorEl);
@@ -1057,7 +1058,7 @@
       rekapi.addActor(domActor);
       rekapi.addActor(canvasActor);
 
-      var css = rekapi.toCSS();
+      var css = rekapi.renderer.toCSS();
       var singleLineCss = css.split('\n').join('')
 
       ok(!!singleLineCss.match('actor-' + domActor.id)
