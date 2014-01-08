@@ -18,6 +18,29 @@ rekapiModules.push(function (context) {
   //
 
   /*!
+   * @param {string} formatter
+   * @param {[string]} args
+   * @return {string}
+   */
+  var printf = function (formatter, args) {
+    var composedStr = formatter;
+    _.each(args, function (arg) {
+      composedStr = composedStr.replace('%s', arg);
+    });
+
+    return composedStr;
+  };
+
+  /*!
+   * http://stackoverflow.com/a/3886106
+   *
+   * @param {number} number
+   */
+  function isInt (number) {
+    return number % 1 === 0;
+  }
+
+  /*!
    * @param {Rekapi} rekapi
    */
   Rekapi._rendererInitHook.cssAnimate = function (rekapi) {
@@ -393,31 +416,8 @@ rekapiModules.push(function (context) {
     return actorCSS.join('\n');
   }
 
-  // UTILITY FUNCTIONS
+  // toString-SPECIFIC PRIVATE UTILITY FUNCTIONS
   //
-
-  /*!
-   * @param {string} formatter
-   * @param {[string]} args
-   * @return {string}
-   */
-  var printf = Rekapi.util.printf = function (formatter, args) {
-    var composedStr = formatter;
-    _.each(args, function (arg) {
-      composedStr = composedStr.replace('%s', arg);
-    });
-
-    return composedStr;
-  };
-
-  /*!
-   * http://stackoverflow.com/a/3886106
-   *
-   * @param {number} number
-   */
-  function isInt (number) {
-    return number % 1 === 0;
-  }
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -650,7 +650,7 @@ rekapiModules.push(function (context) {
     return printf('  %stransform-origin: 0 0;', [prefix]);
   }
 
-  // OPTIMIZED GENERATOR FUNCTIONS
+  // OPTIMIZED OUTPUT GENERATOR FUNCTIONS
   //
 
   /*!
@@ -724,7 +724,7 @@ rekapiModules.push(function (context) {
     return accumulator.join('\n');
   }
 
-  // GENERAL-USE GENERATOR FUNCTIONS
+  // UN-OPTIMIZED OUTPUT GENERATOR FUNCTIONS
   //
 
   /*!
@@ -931,6 +931,8 @@ rekapiModules.push(function (context) {
     return serializedProps.join('');
   }
 
+  // Exposes helper functions for unit testing.  Gets compiled away in build
+  // process.
   if (REKAPI_DEBUG) {
     Rekapi._private.cssRenderer = {
       'TRANSFORM_TOKEN': TRANSFORM_TOKEN
