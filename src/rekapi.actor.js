@@ -226,7 +226,7 @@ rekapiModules.push(function (context) {
    *
    * `properties` should contain all of the properties that define the keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, color strings, CSS properties).
    *
-   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s are managed for you by the `Actor` APIs.
+   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Actor` APIs.
    *
    * ## Easing
    *
@@ -313,7 +313,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
+   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
@@ -328,7 +328,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframeprops.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
+   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
    *
    * __[Example](../../../../docs/examples/actor_modify_keyframe_property.html)__
    * @param {string} property The name of the property to modify
@@ -551,7 +551,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Augment the `value` or `easing` of the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond.  Any [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s omitted in `stateModification` or `opt_easing` are not modified.  Here's how you might use it:
+   * Augment the `value` or `easing` of the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s at a given millisecond.  Any [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s omitted in `stateModification` or `opt_easing` are not modified.  Here's how you might use it:
    *
    * ```javascript
    * actor.keyframe(0, {
@@ -600,7 +600,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond in the animation.
+   * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s at a given millisecond in the animation.
    *
    * __[Example](../../../../docs/examples/actor_remove_keyframe.html)__
    * @param {number} millisecond The location on the timeline of the keyframe to remove.
@@ -729,7 +729,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   Actor.prototype._afterKeyframePropertyInterpolate = noop;
 
   /**
-   * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s.
+   * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s.
    *
    * __[Example](../../../../docs/examples/actor_export_timeline.html)__
    * @return {Object}
