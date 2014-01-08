@@ -1,4 +1,4 @@
-/*! Rekapi - v0.16.4 - 2014-01-05 - http://rekapi.com */
+/*! Rekapi - v0.16.4 - 2014-01-07 - http://rekapi.com */
 /*!
  * Rekapi - Rewritten Kapi.
  * https://github.com/jeremyckahn/rekapi
@@ -849,7 +849,7 @@ rekapiModules.push(function (context) {
    *
    * `properties` should contain all of the properties that define the keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, color strings, CSS properties).
    *
-   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s are managed for you by the `Actor` APIs.
+   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Actor` APIs.
    *
    * ## Easing
    *
@@ -936,7 +936,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
+   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
@@ -951,7 +951,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframeprops.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
+   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
    *
    * __[Example](../../../../docs/examples/actor_modify_keyframe_property.html)__
    * @param {string} property The name of the property to modify
@@ -1174,7 +1174,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Augment the `value` or `easing` of the [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond.  Any [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s omitted in `stateModification` or `opt_easing` are not modified.  Here's how you might use it:
+   * Augment the `value` or `easing` of the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s at a given millisecond.  Any [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s omitted in `stateModification` or `opt_easing` are not modified.  Here's how you might use it:
    *
    * ```javascript
    * actor.keyframe(0, {
@@ -1223,7 +1223,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s at a given millisecond in the animation.
+   * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s at a given millisecond in the animation.
    *
    * __[Example](../../../../docs/examples/actor_remove_keyframe.html)__
    * @param {number} millisecond The location on the timeline of the keyframe to remove.
@@ -1352,7 +1352,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   Actor.prototype._afterKeyframePropertyInterpolate = noop;
 
   /**
-   * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframeprops.js.html)s.
+   * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s.
    *
    * __[Example](../../../../docs/examples/actor_export_timeline.html)__
    * @return {Object}
@@ -1699,7 +1699,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframeprops.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
+   * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframe-property.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
    *
    * ```
    * rekapi.renderer.setOrderFunction(function (actor) {
@@ -1756,7 +1756,7 @@ rekapiModules.push(function (context) {
   CanvasActor.prototype = new CanvasActorMethods();
 
   /**
-   * Move this `Rekapi.CanvasActor` to a different layer in the `Rekapi` instance that it belongs to.  This returns `undefined` if the operation was unsuccessful.  This is just a wrapper for [moveActorToLayer](rekapi.canvas.context.js.html#moveActorToLayer).
+   * Move this `Rekapi.CanvasActor` to a different layer in the `Rekapi` instance that it belongs to.  This returns `undefined` if the operation was unsuccessful.  This is just a wrapper for [moveActorToLayer](rekapi.canvas.renderer.js.html#moveActorToLayer).
    * @param {number} layer
    * @return {Rekapi.Actor|undefined}
    */
@@ -2005,7 +2005,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * This can be useful when used with [toCSS](../to-css/rekapi.to-css.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * This can be useful when used with [CSSRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
    * @return {string}
    */
   DOMActor.prototype.getCSSName = function () {
@@ -2040,6 +2040,275 @@ rekapiModules.push(function (context) {
 
   var Rekapi = context.Rekapi;
   var _ = Rekapi._;
+  var now = Rekapi.Tweenable.now;
+
+  // CONSTANTS
+  //
+
+  // The timer to remove an injected style isn't likely to match the actual
+  // length of the CSS animation, so give it some extra time to complete so it
+  // doesn't cut off the end.
+  var INJECTED_STYLE_REMOVAL_BUFFER_MS = 250;
+
+  // PRIVATE UTILITY FUNCTIONS
+  //
+
+  /*!
+   * @param {string} formatter
+   * @param {[string]} args
+   * @return {string}
+   */
+  var printf = function (formatter, args) {
+    var composedStr = formatter;
+    _.each(args, function (arg) {
+      composedStr = composedStr.replace('%s', arg);
+    });
+
+    return composedStr;
+  };
+
+  /*!
+   * http://stackoverflow.com/a/3886106
+   *
+   * @param {number} number
+   */
+  function isInt (number) {
+    return number % 1 === 0;
+  }
+
+  /*!
+   * @param {Rekapi} rekapi
+   */
+  Rekapi._rendererInitHook.cssAnimate = function (rekapi) {
+    var context = rekapi.context;
+
+    // Node.nodeType 1 is an ELEMENT_NODE.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
+    if (context.nodeType === 1 &&
+        context.nodeName.toLowerCase() !== 'canvas') {
+      rekapi.renderer = new CSSRenderer(rekapi);
+    }
+  };
+
+  /*!
+   * @return {string}
+   */
+  function getVendorPrefix () {
+    var style = document.body.style;
+
+    if ('-webkit-animation' in style) {
+      return 'webkit';
+    } else if ('-moz-animation' in style) {
+      return 'mozilla';
+    } else if ('-ms-animation' in style) {
+      return 'microsoft';
+    } else if ('-o-animation' in style) {
+      return 'opera';
+    } else if ('animation' in style) {
+      return 'w3';
+    }
+
+    return '';
+  }
+
+  var styleID = 0;
+  /*!
+   * @param {string} css The css content that the <style> element should have.
+   * @return {HTMLStyleElement} The unique ID of the injected <style> element.
+   */
+  function injectStyle (css) {
+    var style = document.createElement('style');
+    var id = 'rekapi-' + styleID++;
+    style.id = id;
+    style.innerHTML = css;
+    document.head.appendChild(style);
+
+    return style;
+  }
+
+  /*!
+   * Fixes a really bizarre issue that only seems to affect Presto/Opera.  In
+   * some situations, DOM nodes will not detect dynamically injected <style>
+   * elements.  Explicitly re-inserting DOM nodes seems to fix the issue.  Not
+   * sure what causes this issue.  Not sure why this fixes it.  Not sure if
+   * this affects Blink-based Opera browsers.
+   *
+   * @param {Rekapi} rekapi
+   */
+  function forceStyleInjection (rekapi) {
+    var dummyDiv = document.createElement('div');
+
+    _.each(rekapi.getAllActors(), function (actor) {
+      if (actor instanceof Rekapi.DOMActor) {
+        var actorEl = actor.context;
+        var actorElParent = actorEl.parentElement;
+
+        actorElParent.replaceChild(dummyDiv, actorEl);
+        actorElParent.replaceChild(actorEl, dummyDiv);
+      }
+    });
+
+    dummyDiv = null;
+  }
+
+  // CSS RENDERER OBJECT
+  //
+
+  /**
+   * The `CSSRenderer` module allows you to run a Rekapi animation as a CSS `@keyframe` animation.  Standard Rekapi animations are powered by JavaScript, but in many cases using CSS `@keyframes` is more performant.  `CSSRenderer` depends on [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
+   *
+   * This method of animation is call "CSS Prerendering."  [See this article for more information](http://jeremyckahn.github.io/blog/2013/07/28/60-fps-or-bust-dynamically-prerendering-css-animations/).
+   *
+   * Advantages of playing an animation with CSS `@keyframes` instead of JavaScript:
+   *
+   *   - Smoother animations in modern browsers (particularly noticeable in Webkit and mobile browsers).
+   *   - The JavaScript thread is freed from performing animation updates, making it available for other logic.
+   *
+   * Disadvantages of CSS `@keyframes`:
+   *
+   *   - No start/stop/goto control - once the animation runs, it runs from start to finish.
+   *   - Prerending animations can take a noticeable amount of time, so you may have to be clever with how to spend the cycles to do it.
+   *   - No `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
+   *
+   * `CSSRenderer` can gracefully fall back to a JavaScript animation if CSS animations are not supported by the browser.  Both approaches use the same Rekapi API, but you can choose what method of animation is appropriate at run time:
+   *
+   * ```
+   *  var rekapi = new Rekapi(document.body);
+   *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
+   *
+   *  rekapi.addActor(actor);
+   *  actor.keyframe(0,    { left: '0px'   });
+   *  actor.keyframe(1000, { left: '250px' }, 'easeOutQuad');
+   *
+   *  // Feature detect for @keyframe support
+   *  if (rekapi.renderer.canAnimateWithCSS()) {
+   *    rekapi.renderer.animateWithCSS();
+   *  } else {
+   *    rekapi.play();
+   *  }
+   * ```
+   *
+   * __[Example](/ext/css/sample/play-many-actors.html)__
+   *
+   * @param {Rekapi} rekapi
+   * @constructor
+   */
+  Rekapi.CSSRenderer = function (rekapi) {
+    this.rekapi = rekapi;
+
+    // @private {number}
+    this._playTimestamp = null;
+
+    // @private {string}
+    this._cachedCSS = null;
+
+    // The HTMLStyleElement that gets injected into the DOM.
+    // @private {HTMLStyleElement)
+    this._styleElement = null;
+
+    // @private {number}
+    this._stopSetTimeoutHandle = null;
+
+    rekapi.on('timelineModified', _.bind(function () {
+      this._cachedCSS = null;
+    }, this));
+
+    return this;
+  };
+  var CSSRenderer = Rekapi.CSSRenderer;
+
+  /**
+   * Whether or not the browser supports CSS `@keyframe` animations.
+   *
+   * @return {boolean}
+   */
+  CSSRenderer.prototype.canAnimateWithCSS = function () {
+    return !!getVendorPrefix();
+  };
+
+  /**
+   * Play the Rekapi animation as a `@keyframe` animation.
+   *
+   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
+   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
+   */
+  CSSRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
+    if (this.isPlaying()) {
+      this.stop();
+    }
+
+    var css = this._cachedCSS || this.prerender.apply(this, arguments);
+    this._styleElement = injectStyle(css);
+    this._playTimestamp = now();
+
+    if (navigator.userAgent.match(/Presto/)) {
+      forceStyleInjection(this.rekapi);
+    }
+
+    if (opt_iterations) {
+      var animationLength = (opt_iterations * this.rekapi.animationLength());
+      this._stopSetTimeoutHandle = setTimeout(
+          _.bind(this.stop, this, true),
+          animationLength + INJECTED_STYLE_REMOVAL_BUFFER_MS);
+    }
+
+    fireEvent(this.rekapi, 'play', _);
+  };
+
+  /**
+   * Prerender and cache the CSS animation so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
+   *
+   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
+   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
+   * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
+   */
+  CSSRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
+    return this._cachedCSS = this.toString({
+      'vendors': [getVendorPrefix()]
+      ,'fps': opt_fps
+      ,'iterations': opt_iterations
+    });
+  };
+
+  /**
+   * Stop a CSS animation.  This also removes any `<style>` elements that were dynamically injected into the DOM.  This method sets inline styles on actor elements to stay either in their target or current position.
+   *
+   * @param {boolean} opt_goToEnd If true, skip to the end of the animation.  If false or omitted, set the actor elements to stay in their current position.
+   */
+  CSSRenderer.prototype.stop = function (opt_goToEnd) {
+    if (this.isPlaying()) {
+      clearTimeout(this._stopSetTimeoutHandle);
+
+      // Forces a style update in WebKit/Presto
+      this._styleElement.innerHTML = '';
+
+      document.head.removeChild(this._styleElement);
+      this._styleElement = null;
+
+      var updateTime;
+      if (opt_goToEnd) {
+        updateTime = this.rekapi.animationLength();
+      } else {
+        updateTime = (now() - this._playTimestamp)
+            % this.rekapi.animationLength();
+      }
+
+      this.rekapi.update(updateTime);
+      fireEvent(this.rekapi, 'stop', _);
+    }
+  };
+
+  /**
+   * Whether or not a CSS animation is running.
+   *
+   * @return {boolean}
+   */
+  CSSRenderer.prototype.isPlaying = function () {
+    return !!this._styleElement;
+  };
+
+  // CSSRenderer.prototype.toString CODE
+  //
 
   // CONSTANTS
   //
@@ -2047,7 +2316,7 @@ rekapiModules.push(function (context) {
   var DEFAULT_FPS = 30;
   var TRANSFORM_TOKEN = 'TRANSFORM';
   var VENDOR_TOKEN = 'VENDOR';
-  var VENDOR_PREFIXES = Rekapi.util.VENDOR_PREFIXES = {
+  var VENDOR_PREFIXES = {
     'microsoft': '-ms-'
     ,'mozilla': '-moz-'
     ,'opera': '-o-'
@@ -2103,58 +2372,34 @@ rekapiModules.push(function (context) {
     ,'}'
   ].join('\n');
 
-  // PROTOTYPE EXTENSIONS
-  //
-
   /**
-   * With `toCSS`, Rekapi can export your animations as CSS `@keyframes`.  `toCSS` depends on [`Rekapi.DOMActor`](../dom/rekapi.dom.actor.js.html).  This function only builds and returns a string of CSS, it has no other side effects.  To actually run a CSS `@keyframe` animation, see [`CSSRenderer`](/dist/doc/ext/css-animate/rekapi.css-animate.context.js.html#CSSRenderer) (which wraps this function).
-   *
-   * ## Exporting
-   *
-   * To create a CSS string:
-   *
-   * ```
-   * var container = document.getElementById('container');
-   * var animation = new Rekapi(container);
-   *
-   * var css = animation.toCSS();
-   * ```
-   *
-   * Remember, all `toCSS` does is render a string.  The most useful thing to do with this string is to stick it into a `<style>` element somewhere on your page.  Continuing from  above:
-   *
-   * ```
-   * var style = document.createElement('style');
-   * style.innerHTML = css;
-   * document.head.appendChild(style);
-   * ```
-   *
-   * Please be aware that [`CSSRenderer`](/dist/doc/ext/css-animate/rekapi.css-animate.context.js.html#CSSRenderer) makes this process much simpler.
+   * Converts Rekapi animations to CSS `@keyframes`.
    *
    * ## `opts`
    *
-   * You can specify some parameters for your CSS animation.  They are all optional. Just supply them in the `opts` parameter when calling `toCSS`:
+   * You can specify some parameters for your CSS animation.  They are all optional:
    *
-   *  - __vendors__ _(Array)_: Defaults to `['w3']`.  The browser vendors you want this CSS to support. Valid values are:
+   *  - __vendors__ _(Array)_: Defaults to `['w3']`.  The browser vendors you want to support. Valid values are:
    *    - `'microsoft'`
    *    - `'mozilla'`
    *    - `'opera'`
    *    - `'w3'`
    *    - `'webkit'`
-   *  - __fps__ _(number)_: Defaults to 30.  Defines the "resolution" of an exported animation.  CSS `@keyframes` are comprised of a series of explicitly defined keyframe steps, and more steps will allow for a more complex animation.  More steps will also result in a larger CSS string, and more time needed to generate the string.  There's no reason to go beyond 60, as the human eye cannot perceive motion smoother than that.
-   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  If omitted, the value is the same as the CSS class that was added when the DOM element was used to initialize its `Rekapi.DOMActor`.
+   *  - __fps__ _(number)_: Defaults to 30.  Defines the "resolution" of a generated animation.  CSS `@keyframes` are comprised of a series of explicitly defined keyframe steps, and more steps will allow for a more complex animation.  More steps will also result in a larger CSS string, and more time needed to generate the string.
+   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  If omitted, the value is the same as the CSS class that was added when the DOM element was used to initialize its [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
    *  - __isCentered__ _(boolean)_: If `true`, the generated CSS will contain `transform-origin: 0 0;`, which centers the DOM element along the path of motion.  If `false` or omitted, no `transform-origin` rule is specified and the element is aligned to the path of motion with its top-left corner.
    *  - __iterations__ _(number)_: How many times the generated animation should repeat.  If omitted, the animation will loop indefinitely.
    *
    * @param {Object} opts
    * @return {string}
    */
-  Rekapi.prototype.toCSS = function (opts) {
+  Rekapi.CSSRenderer.prototype.toString = function (opts) {
     opts = opts || {};
     var animationCSS = [];
 
-    _.each(this.getAllActors(), function (actor) {
+    _.each(this.rekapi.getAllActors(), function (actor) {
       if (actor instanceof Rekapi.DOMActor) {
-        animationCSS.push(actor.toCSS(opts));
+        animationCSS.push(getActorCSS(actor, opts));
       }
     });
 
@@ -2162,54 +2407,32 @@ rekapiModules.push(function (context) {
   };
 
   /*!
-   * Exports the CSS `@keyframes` for an individual Actor.
+   * Creates the CSS `@keyframes` for an individual actor.
+   * @param {Rekapi.Actor} actor
    * @param {Object} opts Same as opts for Rekapi.prototype.toCSS.
    * @return {string}
    */
-  Rekapi.Actor.prototype.toCSS = function (opts) {
+  function getActorCSS (actor, opts) {
     opts = opts || {};
     var actorCSS = [];
-    var animName = opts.name || this.getCSSName();
+    var animName = opts.name || actor.getCSSName();
     var fps = opts.fps || DEFAULT_FPS;
-    var steps = Math.ceil((this.rekapi.animationLength() / 1000) * fps);
-    var combineProperties = !canOptimizeAnyKeyframeProperties(this);
+    var steps = Math.ceil((actor.rekapi.animationLength() / 1000) * fps);
+    var combineProperties = !canOptimizeAnyKeyframeProperties(actor);
     var actorClass = generateCSSClass(
-        this, animName, combineProperties, opts.vendors, opts.iterations,
+        actor, animName, combineProperties, opts.vendors, opts.iterations,
         opts.isCentered);
     var boilerplatedKeyframes = generateBoilerplatedKeyframes(
-        this, animName, steps, combineProperties, opts.vendors);
+        actor, animName, steps, combineProperties, opts.vendors);
 
     actorCSS.push(actorClass);
     actorCSS.push(boilerplatedKeyframes);
 
     return actorCSS.join('\n');
-  };
-
-  // UTILITY FUNCTIONS
-  //
-
-  /*!
-   * @param {string} formatter
-   * @param {[string]} args
-   * @return {string}
-   */
-  var printf = Rekapi.util.printf = function (formatter, args) {
-    var composedStr = formatter;
-    _.each(args, function (arg) {
-      composedStr = composedStr.replace('%s', arg);
-    });
-
-    return composedStr;
-  };
-
-  /*!
-   * http://stackoverflow.com/a/3886106
-   *
-   * @param {number} number
-   */
-  function isInt (number) {
-    return number % 1 === 0;
   }
+
+  // toString-SPECIFIC PRIVATE UTILITY FUNCTIONS
+  //
 
   /*!
    * @param {Rekapi.Actor} actor
@@ -2442,7 +2665,7 @@ rekapiModules.push(function (context) {
     return printf('  %stransform-origin: 0 0;', [prefix]);
   }
 
-  // OPTIMIZED GENERATOR FUNCTIONS
+  // OPTIMIZED OUTPUT GENERATOR FUNCTIONS
   //
 
   /*!
@@ -2516,7 +2739,7 @@ rekapiModules.push(function (context) {
     return accumulator.join('\n');
   }
 
-  // GENERAL-USE GENERATOR FUNCTIONS
+  // UN-OPTIMIZED OUTPUT GENERATOR FUNCTIONS
   //
 
   /*!
@@ -2723,8 +2946,10 @@ rekapiModules.push(function (context) {
     return serializedProps.join('');
   }
 
+  // Exposes helper functions for unit testing.  Gets compiled away in build
+  // process.
   if (REKAPI_DEBUG) {
-    Rekapi._private.toCSS = {
+    Rekapi._private.cssRenderer = {
       'TRANSFORM_TOKEN': TRANSFORM_TOKEN
       ,'VENDOR_TOKEN': VENDOR_TOKEN
       ,'applyVendorBoilerplates': applyVendorBoilerplates
@@ -2748,267 +2973,9 @@ rekapiModules.push(function (context) {
       ,'canOptimizeKeyframeProperty': canOptimizeKeyframeProperty
       ,'canOptimizeAnyKeyframeProperties': canOptimizeAnyKeyframeProperties
       ,'generateOptimizedKeyframeSegment': generateOptimizedKeyframeSegment
+      ,'getActorCSS': getActorCSS
     };
   }
-
-});
-
-rekapiModules.push(function (context) {
-
-  'use strict';
-
-  var Rekapi = context.Rekapi;
-  var _ = Rekapi._;
-  var now = Rekapi.Tweenable.now;
-
-  // CONSTANTS
-  //
-
-  // The timer to remove an injected style isn't likely to match the actual
-  // length of the CSS animation, so give it some extra time to complete so it
-  // doesn't cut off the end.
-  var INJECTED_STYLE_REMOVAL_BUFFER_MS = 250;
-
-  // PRIVATE UTILITY FUNCTIONS
-  //
-
-  /*!
-   * @param {Rekapi} rekapi
-   */
-  Rekapi._rendererInitHook.cssAnimate = function (rekapi) {
-    var context = rekapi.context;
-
-    // Node.nodeType 1 is an ELEMENT_NODE.
-    // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
-    if (context.nodeType === 1 &&
-        context.nodeName.toLowerCase() !== 'canvas') {
-      rekapi.renderer = new CSSRenderer(rekapi);
-    }
-  };
-
-  /*!
-   * @return {string}
-   */
-  function getVendorPrefix () {
-    var style = document.body.style;
-
-    if ('-webkit-animation' in style) {
-      return 'webkit';
-    } else if ('-moz-animation' in style) {
-      return 'mozilla';
-    } else if ('-ms-animation' in style) {
-      return 'microsoft';
-    } else if ('-o-animation' in style) {
-      return 'opera';
-    } else if ('animation' in style) {
-      return 'w3';
-    }
-
-    return '';
-  }
-
-  var styleID = 0;
-  /*!
-   * @param {string} css The css content that the <style> element should have.
-   * @return {HTMLStyleElement} The unique ID of the injected <style> element.
-   */
-  function injectStyle (css) {
-    var style = document.createElement('style');
-    var id = 'rekapi-' + styleID++;
-    style.id = id;
-    style.innerHTML = css;
-    document.head.appendChild(style);
-
-    return style;
-  }
-
-  /*!
-   * Fixes a really bizarre issue that only seems to affect Presto/Opera.  In
-   * some situations, DOM nodes will not detect dynamically injected <style>
-   * elements.  Explicitly re-inserting DOM nodes seems to fix the issue.  Not
-   * sure what causes this issue.  Not sure why this fixes it.  Not sure if
-   * this affects Blink-based Opera browsers.
-   *
-   * @param {Rekapi} rekapi
-   */
-  function forceStyleInjection (rekapi) {
-    var dummyDiv = document.createElement('div');
-
-    _.each(rekapi.getAllActors(), function (actor) {
-      if (actor instanceof Rekapi.DOMActor) {
-        var actorEl = actor.context;
-        var actorElParent = actorEl.parentElement;
-
-        actorElParent.replaceChild(dummyDiv, actorEl);
-        actorElParent.replaceChild(actorEl, dummyDiv);
-      }
-    });
-
-    dummyDiv = null;
-  }
-
-  // CSS RENDERER OBJECT
-  //
-
-  /**
-   * The `CSSRenderer` module allows you to run a Rekapi animation as a CSS `@keyframe` animation.  Standard Rekapi animations are powered by JavaScript, but in many cases using CSS `@keyframes` is smoother.
-   *
-   * __Note!__ This is an experimental feature.  If you encounter any issues, please report them with the [Rekapi issue tracker](https://github.com/jeremyckahn/rekapi/issues?page=1&state=open).
-   *
-   * Advantages of playing an animation with CSS `@keyframes` instead of JavaScript:
-   *
-   *   - Smoother animations in modern browsers (particularly noticeable in Webkit and mobile browsers).
-   *   - The JavaScript thread is freed from performing animation updates, resulting in more resources for other logic.
-   *
-   * Disadvantages of CSS `@keyframes`:
-   *
-   *   - No start/stop/goto control - once the animation runs, it runs from start to finish.
-   *   - Prerending animations can take a non-trivial amount of time, so you may have to be clever with how to spend the cycles to do it.
-   *   - Currently, no `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
-   *
-   * This module requires both the [`toCSS`](/dist/doc/ext/to-css/rekapi.to-css.js.html) and [`Rekapi.DOMActor`](/dist/doc/ext/dom/rekapi.dom.actor.js.html) modules (they are included in the standard Rekapi distribution).  Functionally, `CSSRenderer` works by prerendering a CSS animation and injecting it into the DOM.  You'll never have to call the `CSSRenderer` constructor explicitly, that is done for you when a Rekapi instance is initialized.
-   *
-   * An advantage of this module is that CSS animations are not always available, but JavaScript animations are.  Keyframes are defined the same way, but you can choose what method of animation is appropriate at runtime:
-   *
-   * ```
-   *  var rekapi = new Rekapi(document.body);
-   *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
-   *
-   *  rekapi.addActor(actor);
-   *  actor.keyframe(0,    { left: '0px'   });
-   *  actor.keyframe(1000, { left: '250px' }, 'easeOutQuad');
-   *
-   *  // Feature detect for @keyframe support
-   *  if (rekapi.renderer.canAnimateWithCSS()) {
-   *    rekapi.renderer.animateWithCSS();
-   *  } else {
-   *    rekapi.play();
-   *  }
-   * ```
-   *
-   * __[Example](/ext/css-animate/sample/play-many-actors.html)__
-   *
-   * @param {Rekapi} rekapi
-   * @constructor
-   */
-  Rekapi.CSSRenderer = function (rekapi) {
-    if (!Rekapi.DOMActor && !Rekapi.prototype.toCSS) {
-      throw 'CSSRenderer requires the DOMActor and toCSS modules.';
-    }
-
-    this.rekapi = rekapi;
-
-    // @private {number}
-    this._playTimestamp = null;
-
-    // @private {string}
-    this._cachedCSS = null;
-
-    // The HTMLStyleElement that gets injected into the DOM.
-    // @private {HTMLStyleElement)
-    this._styleElement = null;
-
-    // @private {number}
-    this._stopSetTimeoutHandle = null;
-
-    rekapi.on('timelineModified', _.bind(function () {
-      this._cachedCSS = null;
-    }, this));
-
-    return this;
-  };
-  var CSSRenderer = Rekapi.CSSRenderer;
-
-  /**
-   * Whether or not the browser supports CSS `@keyframe` animations.
-   *
-   * @return {boolean}
-   */
-  CSSRenderer.prototype.canAnimateWithCSS = function () {
-    return !!getVendorPrefix();
-  };
-
-  /**
-   * Prerender and cache CSS so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
-   *
-   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
-   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  The higher this number, the smoother the CSS animation will be, but the longer it will take to prerender.  The default value is 30, and you should not need to go higher than 60.
-   * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
-   */
-  CSSRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
-    return this._cachedCSS = this.rekapi.toCSS({
-      'vendors': [getVendorPrefix()]
-      ,'fps': opt_fps
-      ,'iterations': opt_iterations
-    });
-  };
-
-  /**
-   * Play the Rekapi animation as a `@keyframe` animation.
-   *
-   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
-   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  The higher this number, the smoother the CSS animation will be, but the longer it will take to prerender.  The default value is 30, and you should not need to go higher than 60.
-   */
-  CSSRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
-    if (this.isPlaying()) {
-      this.stop();
-    }
-
-    var css = this._cachedCSS || this.prerender.apply(this, arguments);
-    this._styleElement = injectStyle(css);
-    this._playTimestamp = now();
-
-    if (navigator.userAgent.match(/Presto/)) {
-      forceStyleInjection(this.rekapi);
-    }
-
-    if (opt_iterations) {
-      var animationLength = (opt_iterations * this.rekapi.animationLength());
-      this._stopSetTimeoutHandle = setTimeout(
-          _.bind(this.stop, this, true),
-          animationLength + INJECTED_STYLE_REMOVAL_BUFFER_MS);
-    }
-
-    fireEvent(this.rekapi, 'play', _);
-  };
-
-  /**
-   * Stop a CSS animation.  This also removes any `<style>` elements that were dynamically injected into the DOM.  This method sets inline styles on Actor elements to stay either in their target or current position.
-   *
-   * @param {boolean} opt_goToEnd If true, set the elements to their target position (in other words, skip to the end of the animation).  If false or omitted, set the Actor elements to stay in their current position.
-   */
-  CSSRenderer.prototype.stop = function (opt_goToEnd) {
-    if (this.isPlaying()) {
-      clearTimeout(this._stopSetTimeoutHandle);
-
-      // Forces a style update in WebKit/Presto
-      this._styleElement.innerHTML = '';
-
-      document.head.removeChild(this._styleElement);
-      this._styleElement = null;
-
-      var updateTime;
-      if (opt_goToEnd) {
-        updateTime = this.rekapi.animationLength();
-      } else {
-        updateTime = (now() - this._playTimestamp)
-            % this.rekapi.animationLength();
-      }
-
-      this.rekapi.update(updateTime);
-      fireEvent(this.rekapi, 'stop', _);
-    }
-  };
-
-  /**
-   * Whether or not a CSS animation is running.
-   *
-   * @return {boolean}
-   */
-  CSSRenderer.prototype.isPlaying = function () {
-    return !!this._styleElement;
-  };
-
 });
 
 var rekapi = function (global, deps) {
