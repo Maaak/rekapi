@@ -238,7 +238,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * This can be useful when used with [CSSRenderer#toString](../css-animate/rekapi.css-animate.context.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * This can be useful when used with [CSSRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
    * @return {string}
    */
   DOMActor.prototype.getCSSName = function () {
