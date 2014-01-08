@@ -689,7 +689,7 @@ rekapiModules.push(function (context) {
   }
 
   if (REKAPI_DEBUG) {
-    Rekapi._private.toCSS = {
+    Rekapi._private.cssRenderer = {
       'TRANSFORM_TOKEN': TRANSFORM_TOKEN
       ,'VENDOR_TOKEN': VENDOR_TOKEN
       ,'applyVendorBoilerplates': applyVendorBoilerplates
