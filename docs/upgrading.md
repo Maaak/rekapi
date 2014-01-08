@@ -73,6 +73,15 @@ if (rekapi.renderer.canAnimateWithCSS()) {
 
 This is done to avoid confusion with `Rekapi.prototype.play` and also be more consistent with `Rekapi.CSSRenderer.prototype.canAnimateWithCSS`.
 
+### `Rekapi.prototype.toCSS` is now `Rekapi.CSSRenderer.prototype.toString`
+
+These modules have been combined.  To generate the CSS string directly:
+
+````javascript
+var rekapi = new Rekapi(document.body);
+rekapi.renderer.toString();
+````
+
 ## `draw` is now `render`
 
 `Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
