@@ -203,10 +203,14 @@ var rekapiCore = function (root, _, Tweenable) {
   };
 
   /**
-   * Rekapi constructor.
+   * The Rekapi constructor.  The type of object provided as `opt_context` will determine how to render the animation.  If a plain object (`{}`) or nothing is given for `opt_context`, this animation will not render anything.  You can work with the animation the same as any other, but there is no visual representation.  Providing a reference to a `HTMLCanvasElement` will create a canvas animation, and providing a reference to any other type of DOM element will create an animation that can be rendered as either a DOM or CSS `@keyframe` animation.
+   *
+   * The appropriate renderer is accessible as `renderer`.
+   *
+   * A reference to `opt_context` is accessible as `context`.
    *
    * __[Example](../../../../docs/examples/rekapi.html)__
-   * @param {Object} opt_context The context that the animation will run in.  If provided, this can be any type of `Object`.  It gets used by the renderer and inherited by the `Rekapi.Actor`s as they are added to the animation.  This is only needed if Rekapi is being used to render to the screen, such as in a canvas or DOM animation.
+   * @param {Object|HTMLCanvasElement|HTMLElement=} opt_context
    * @constructor
    */
   function Rekapi (opt_context) {
