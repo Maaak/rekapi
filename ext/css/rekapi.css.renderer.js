@@ -188,7 +188,7 @@ rekapiModules.push(function (context) {
   function onAddActor (rekapi, actor) {
     var actorElement = actor.context;
 
-    if (!actorElement instanceof HTMLElement) {
+    if (!(actorElement instanceof HTMLElement)) {
       return;
     }
 

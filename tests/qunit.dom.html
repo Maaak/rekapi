@@ -11,6 +11,7 @@
   <script src="../src/rekapi.core.js"></script>
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
+  <script src="../ext/css/rekapi.css.renderer.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
@@ -93,19 +94,20 @@
       testRekapi = setupTestRekapi();
       testActor = setupTestActor(testRekapi);
 
-      var setWrongFunctions = _.bind(testActor.setTransformOrder, testActor,
-        ['foo', 'bar', 'rotate']);
+      var setWrongFunctions = function () {
+        testRekapi.renderer.setActorTransformOrder(testActor, ['foo', 'bar', 'rotate']);
+      }
 
       raises(setWrongFunctions,
         'Throws error if passed an unknown/unsupported transform function');
 
       var testOrder1 = ['rotate', 'translateY', 'translateX'];
-      testActor.setTransformOrder(testOrder1);
+      testRekapi.renderer.setActorTransformOrder(testActor, testOrder1)
       deepEqual(testActor._transformOrder, testOrder1,
           'The internal _transformOrder array has the correct value');
 
       var testOrder2 = ['rotate', 'translateX', 'rotate'];
-      testActor.setTransformOrder(testOrder2);
+      testRekapi.renderer.setActorTransformOrder(testActor, testOrder2)
       deepEqual(testActor._transformOrder, ['rotate', 'translateX'],
           'Duplicate values passed to setTransformOrder are ignored');
 
@@ -121,7 +123,8 @@
           ,'rotate': '150deg'
         });
 
-      testActor.setTransformOrder(['rotate', 'translateY', 'translateX']);
+      testRekapi.renderer.setActorTransformOrder(
+          testActor, ['rotate', 'translateY', 'translateX']);
       testRekapi.update(1000);
 
       var expectedValue = 'rotate(125deg) translateY(50px) translateX(50px)';

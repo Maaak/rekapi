@@ -1049,7 +1049,7 @@
       var rekapi = new Rekapi(document.body);
       var testActorEl = document.createElement('div');
       var domActor = new Rekapi.Actor({ context: testActorEl });
-      var nonDOMActor = new Rekapi.Actor();
+      var nonDOMActor = new Rekapi.Actor({ context: {} });
       rekapi.addActor(domActor);
       rekapi.addActor(nonDOMActor);
 
