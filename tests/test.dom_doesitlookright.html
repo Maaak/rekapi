@@ -16,7 +16,7 @@
   <script src="../src/rekapi.core.js"></script>
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
-  <script src="../ext/dom/rekapi.dom.actor.js"></script>
+  <script src="../ext/css/rekapi.css.renderer.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
@@ -37,7 +37,7 @@
     element = document.getElementById('actor');
     element.removeAttribute('style');
     element.style.position = 'absolute';
-    actor = new Rekapi.DOMActor(element);
+    actor = new Rekapi.Actor({ context: element });
     forRekapi.addActor(actor);
     return actor;
   }

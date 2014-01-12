@@ -5,6 +5,21 @@ rekapiModules.push(function (context) {
   var Rekapi = context.Rekapi;
   var _ = Rekapi._;
   var now = Rekapi.Tweenable.now;
+  var vendorTransforms = [
+    'transform'
+    ,'webkitTransform'
+    ,'MozTransform'
+    ,'oTransform'
+    ,'msTransform'];
+  var transformFunctions = [
+    'translateX',
+    'translateY',
+    'scale',
+    'scaleX',
+    'scaleY',
+    'rotate',
+    'skewX',
+    'skewY'];
 
   // CONSTANTS
   //
@@ -115,6 +130,164 @@ rekapiModules.push(function (context) {
     dummyDiv = null;
   }
 
+  /*!
+   * @param {HTMLElement} element
+   * @param {string} styleName
+   * @param {string|number} styleValue
+   */
+  function setStyle (element, styleName, styleValue) {
+    element.style[styleName] = styleValue;
+  }
+
+  /*!
+   * @param {string} name A transform function name
+   * @return {boolean}
+   */
+  function isTransformFunction (name) {
+    return _.contains(transformFunctions, name);
+  }
+
+  /*!
+   * Builds a concatenated string of given transform property values in order.
+   *
+   * @param {Array.<string>} orderedFunctions Array of ordered transform
+   *     function names
+   * @param {Object} transformProperties Transform properties to build together
+   * @return {string}
+   */
+  function buildTransformValue (orderedFunctions, transformProperties) {
+    var transformComponents = [];
+
+    _.each(orderedFunctions, function(functionName) {
+      if (transformProperties[functionName]) {
+        transformComponents.push(functionName + '(' +
+          transformProperties[functionName] + ')');
+      }
+    });
+
+    return transformComponents.join(' ');
+  }
+
+  /*!
+   * Sets value for all vendor prefixed transform properties on an element
+   *
+   * @param {HTMLElement} element The actor's DOM element
+   * @param {string} transformValue The transform style value
+   */
+  function setTransformStyles (element, transformValue) {
+    _.each(vendorTransforms, function(prefixedTransform) {
+      setStyle(element, prefixedTransform, transformValue);
+    });
+  }
+
+
+  /*!
+   * @param {Rekapi} rekapi
+   * @param {Rekapi.Actor} actor
+   */
+  function onAddActor (rekapi, actor) {
+    var actorElement = actor.context;
+
+    if (!actorElement instanceof HTMLElement) {
+      return;
+    }
+
+    var className = CSSRenderer.getActorCSSName(actor);
+
+    // Add the class if it's not already there.
+    // Using className instead of classList to make IE happy.
+    if (!actorElement.className.match(className)) {
+      actorElement.className += ' ' + className;
+    }
+
+    actor._transformOrder = transformFunctions.slice(0);
+    actor._beforeKeyframePropertyInterpolate = actorBeforeInterpolate;
+    actor._afterKeyframePropertyInterpolate = actorAfterInterpolate;
+    actor.render = _.bind(actorRender, actor, actor);
+    actor.teardown = _.bind(actorTeardown, actor, actor);
+  }
+
+  /*!
+   * transform properties like translate3d and rotate3d break the cardinality
+   * of multi-ease easing strings, because the "3" gets treated like a
+   * tweenable value.  Transform "3d(" to "__THREED__" to prevent this, and
+   * transform it back in _afterKeyframePropertyInterpolate.
+   *
+   * @param {Rekapi.KeyframeProperty} keyframeProperty
+   */
+  function actorBeforeInterpolate (keyframeProperty) {
+    if (keyframeProperty.name !== 'transform') {
+      return;
+    }
+
+    var value = keyframeProperty.value;
+    var nextProp = keyframeProperty.nextProperty;
+
+    if (nextProp && value.match(/3d\(/g)) {
+      keyframeProperty.value = value.replace(/3d\(/g, '__THREED__');
+      nextProp.value = nextProp.value.replace(/3d\(/g, '__THREED__');
+    }
+  }
+
+  /*!
+   * @param {Rekapi.KeyframeProperty} keyframeProperty
+   * @param {Object} interpolatedObject
+   */
+  function actorAfterInterpolate (keyframeProperty, interpolatedObject) {
+    if (keyframeProperty.name !== 'transform') {
+      return;
+    }
+
+    var value = keyframeProperty.value;
+    var nextProp = keyframeProperty.nextProperty;
+
+    if (nextProp && value.match(/__THREED__/g)) {
+      keyframeProperty.value = value.replace(/__THREED__/g, '3d(');
+      nextProp.value = nextProp.value.replace(/__THREED__/g, '3d(');
+      var keyPropName = keyframeProperty.name;
+      interpolatedObject[keyPropName] =
+          interpolatedObject[keyPropName].replace(/__THREED__/g, '3d(');
+    }
+  }
+
+  /*!
+   * @param {Rekapi.Actor} actor
+   * @param {HTMLElement} element
+   * @param {Object} state
+   */
+  function actorRender (actor, element, state) {
+    var propertyNames = _.keys(state);
+    // TODO:  Optimize the following code so that propertyNames is not looped
+    // over twice.
+    var transformFunctionNames = _.filter(propertyNames, isTransformFunction);
+    var otherPropertyNames = _.reject(propertyNames, isTransformFunction);
+    var otherProperties = _.pick(state, otherPropertyNames);
+
+    if (transformFunctionNames.length) {
+      var transformProperties = _.pick(state, transformFunctionNames);
+      var builtStyle = buildTransformValue(actor._transformOrder,
+          transformProperties);
+      setTransformStyles(element, builtStyle);
+    } else if (state.transform) {
+      setTransformStyles(element, state.transform);
+    }
+
+    _.each(otherProperties, function (styleValue, styleName) {
+      setStyle(element, styleName, styleValue);
+    });
+  }
+
+  /*!
+   * @param {Rekapi.Actor} actor
+   */
+  function actorTeardown (actor) {
+    var element = actor.context;
+    var classList = element.className.match(/\S+/g);
+    var sanitizedClassList =
+        _.without(classList, CSSRenderer.getActorCSSName(actor));
+    element.className = sanitizedClassList;
+  }
+
   // CSS RENDERER OBJECT
   //
 
@@ -177,9 +350,41 @@ rekapiModules.push(function (context) {
       this._cachedCSS = null;
     }, this));
 
+    rekapi.on('addActor', onAddActor);
+
     return this;
   };
   var CSSRenderer = Rekapi.CSSRenderer;
+
+  /**
+   * This can be useful when used with [CSSRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * @param {Rekapi.Actor} actor
+   * @return {string}
+   */
+  CSSRenderer.getActorCSSName = function (actor) {
+    return 'actor-' + actor.id;
+  };
+
+  /**
+   * Overrides the default transform function order.
+   *
+   * @param {Rekapi.Actor} actor
+   * @param {Array} orderedFunctions The Array of transform function names
+   * @return {Rekapi.DOMActor}
+   */
+  CSSRenderer.prototype.setActorTransformOrder = function (actor, orderedFunctions) {
+    // TODO: Document this better...
+    var unknownFunctions = _.reject(orderedFunctions, isTransformFunction);
+
+    if (unknownFunctions.length) {
+      throw 'Unknown or unsupported transform functions: ' +
+        unknownFunctions.join(', ');
+    }
+    // Ignore duplicate transform function names in the array
+    actor._transformOrder = _.uniq(orderedFunctions);
+
+    return this;
+  };
 
   /**
    * Whether or not the browser supports CSS `@keyframe` animations.
@@ -379,7 +584,7 @@ rekapiModules.push(function (context) {
   function getActorCSS (actor, opts) {
     opts = opts || {};
     var actorCSS = [];
-    var animName = opts.name || actor.getCSSName();
+    var animName = opts.name || CSSRenderer.getActorCSSName(actor);
     var fps = opts.fps || DEFAULT_FPS;
     var steps = Math.ceil((actor.rekapi.animationLength() / 1000) * fps);
     var combineProperties = !canOptimizeAnyKeyframeProperties(actor);
