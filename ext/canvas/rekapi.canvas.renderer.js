@@ -69,10 +69,8 @@ rekapiModules.push(function (context) {
    * @param {Rekapi.Actor} actor
    */
   function addActor (rekapi, actor) {
-    if (actor instanceof Rekapi.CanvasActor) {
-      rekapi.renderer._renderOrder.push(actor.id);
-      rekapi.renderer._canvasActors[actor.id] = actor;
-    }
+    rekapi.renderer._renderOrder.push(actor.id);
+    rekapi.renderer._canvasActors[actor.id] = actor;
   }
 
   /*!
@@ -80,10 +78,8 @@ rekapiModules.push(function (context) {
    * @param {Rekapi.Actor} actor
    */
   function removeActor (rekapi, actor) {
-    if (actor instanceof Rekapi.CanvasActor) {
-      rekapi.renderer._renderOrder = _.without(rekapi.renderer._renderOrder, actor.id);
-      delete rekapi.renderer._canvasActors[actor.id];
-    }
+    rekapi.renderer._renderOrder = _.without(rekapi.renderer._renderOrder, actor.id);
+    delete rekapi.renderer._canvasActors[actor.id];
   }
 
   /*!

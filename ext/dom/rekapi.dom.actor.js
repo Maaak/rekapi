@@ -145,7 +145,7 @@ rekapiModules.push(function (context) {
 
     // Remove the instance's update method to allow the DOMActor.prototype
     // methods to be accessible.
-    delete this.update;
+    delete this.render;
     delete this.teardown;
 
     return this;
@@ -161,7 +161,7 @@ rekapiModules.push(function (context) {
    * @param {Object} state
    * @override
    */
-  DOMActor.prototype.update = function (context, state) {
+  DOMActor.prototype.render = function (context, state) {
     var propertyNames = _.keys(state);
     // TODO:  Optimize the following code so that propertyNames is not looped
     // over twice.

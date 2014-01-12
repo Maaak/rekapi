@@ -11,7 +11,6 @@
   <script src="../src/rekapi.core.js"></script>
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
-  <script src="../ext/canvas/rekapi.canvas.actor.js"></script>
   <script src="../ext/canvas/rekapi.canvas.renderer.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
@@ -23,7 +22,7 @@
   }
 
   function  setupTestActor (forRekapi) {
-    var actor = new Rekapi.CanvasActor();
+    var actor = new Rekapi.Actor();
     forRekapi.addActor(actor);
     return actor;
   }
@@ -58,42 +57,6 @@
     });
 
 
-    test('Only CanvasActors are added to the renderOrder array', function () {
-      var testRekapi
-          ,testCanvasActor1
-          ,testCanvasActor2
-          ,testActor;
-
-      testRekapi = setupTestRekapi();
-      testCanvasActor1 = setupTestActor(testRekapi);
-      testCanvasActor2 = setupTestActor(testRekapi);
-      testActor = new Rekapi.Actor();
-      testRekapi.addActor(testActor);
-
-      equal(testRekapi.renderer._renderOrder.length, 2,
-          'There are only two canvas actors in the renderOrder array');
-      equal(testRekapi.renderer._renderOrder.indexOf(testActor.id), -1,
-          'testActor is not present inside the renderOrder array');
-
-      testCanvasActor1.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
-      testCanvasActor2.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
-      testActor.keyframe(0, { 'x': 1 }).keyframe(1000, { 'x': 2 });
-
-      testCanvasActor1.render = function(context, state) {
-        ok(state != undefined);
-      };
-      testCanvasActor2.render = function(context, state) {
-        ok(state != undefined);
-      };
-      // This is only for testing. Regular actors don't have a `render` method.
-      testActor.render = function() {
-        throw new Error('render() should not be called on non-canvas actors');
-      };
-
-      testRekapi.update(500);
-    });
-
-
     test('Actors can be moved to the beginning of the render list', function () {
       var testRekapi
           ,testActor1
@@ -124,27 +87,6 @@
       testActor1 = setupTestActor(testRekapi);
       testActor2 = setupTestActor(testRekapi);
       testRekapi.renderer.moveActorToLayer(testActor1, 1);
-
-      equal(testRekapi.renderer._renderOrder[0], testActor2.id,
-          'Second actor was moved to the first position.');
-
-      equal(testRekapi.renderer._renderOrder[1], testActor1.id,
-          'First actor was moved to the second position.');
-
-      equal(testRekapi.actorCount(), 2,
-          'Render list size did not change.');
-    });
-
-
-    test('Actors can move themselves.', function () {
-      var testRekapi
-          ,testActor1
-          ,testActor2;
-
-      testRekapi = setupTestRekapi();
-      testActor1 = setupTestActor(testRekapi);
-      testActor2 = setupTestActor(testRekapi);
-      testActor1.moveToLayer(1);
 
       equal(testRekapi.renderer._renderOrder[0], testActor2.id,
           'Second actor was moved to the first position.');

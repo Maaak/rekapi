@@ -15,7 +15,7 @@
       rekapi.renderer.height(300);
       rekapi.renderer.width(400);
 
-      var actor1 = new Rekapi.CanvasActor({
+      var actor1 = new Rekapi.Actor({
         render: function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(
@@ -33,7 +33,7 @@
         }
       });
 
-      var actor2 = new Rekapi.CanvasActor({
+      var actor2 = new Rekapi.Actor({
         render: function (canvas_context, state) {
           canvas_context.beginPath();
             canvas_context.arc(

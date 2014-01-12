@@ -16,7 +16,7 @@
   require(['rekapi', 'shifty', 'underscore'], function(Rekapi, Tweenable) {
 
     function makeBubble () {
-      return new Rekapi.CanvasActor({
+      return new Rekapi.Actor({
         'render': function (canvas_context, state) {
           canvas_context.beginPath();
           canvas_context.arc(

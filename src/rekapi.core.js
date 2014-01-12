@@ -497,8 +497,8 @@ var rekapiCore = function (root, _, Tweenable) {
     fireEvent(this, 'beforeUpdate', _);
     _.each(this._actors, function (actor) {
       actor._updateState(opt_millisecond);
-      if (typeof actor.update === 'function') {
-        actor.update(actor.context, actor.get());
+      if (typeof actor.render === 'function') {
+        actor.render(actor.context, actor.get());
       }
     });
     this._lastUpdatedMillisecond = opt_millisecond;

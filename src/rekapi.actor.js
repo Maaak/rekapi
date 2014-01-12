@@ -203,7 +203,7 @@ rekapiModules.push(function (context) {
       ,'id': _.uniqueId()
       ,'context': opt_config.context // This may be undefined
       ,'setup': opt_config.setup || noop
-      ,'update': opt_config.update || noop
+      ,'render': opt_config.render || noop
       ,'teardown': opt_config.teardown || noop
       ,'data': {}
     });

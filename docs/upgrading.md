@@ -82,9 +82,13 @@ var rekapi = new Rekapi(document.body);
 rekapi.renderer.toString();
 ````
 
-## `draw` is now `render`
+## `Rekapi.CanvasActor` is gone
 
-`Rekapi.CanvasActor` now expects a function called `render` instead of `draw`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
+Just use regular `Rekapi.Actor`s in your animations, the API is unchanged otherwise.
+
+## `draw` is gone, all Actors now use `render`
+
+The `Rekapi.Actor` constructor now expects a function called `render` instead of `draw` or `update`.  `draw` is no longer recognized by Rekapi.  Both functions work identically, it is just a name change.  The related events `beforeDraw` and `afterDraw` are now `beforeRender` and `afterRender`, respectively.
 
 ## `context` is no longer a method
 

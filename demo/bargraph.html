@@ -16,7 +16,7 @@
   require(['rekapi', 'underscore'], function(Rekapi) {
 
     function makeBarActor (val) {
-      return new Rekapi.CanvasActor({
+      return new Rekapi.Actor({
         'setup': function () {
           this.data = {
             'val': val

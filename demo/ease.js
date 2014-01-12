@@ -129,7 +129,7 @@ $(function () {
   rekapi.renderer.height(400);
   rekapi.renderer.width(500);
 
-  var circle = new Rekapi.CanvasActor({
+  var circle = new Rekapi.Actor({
     'render': function (canvas_context, state) {
 
       if (isPathShowing && prerenderedPath) {

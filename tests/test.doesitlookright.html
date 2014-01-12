@@ -11,7 +11,6 @@
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
   <script src="../ext/canvas/rekapi.canvas.renderer.js"></script>
-  <script src="../ext/canvas/rekapi.canvas.actor.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
@@ -25,7 +24,7 @@
   function  setupTestActor (forRekapi) {
     var actor;
 
-    actor = new Rekapi.CanvasActor({
+    actor = new Rekapi.Actor({
       'render': function (canvas_context, state) {
         if (isNaN(state.x)) {
           return;
