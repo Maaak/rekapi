@@ -11,17 +11,16 @@
   <script src="../src/rekapi.core.js"></script>
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
-  <script src="../ext/dom/rekapi.dom.actor.js"></script>
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
-    var rekapi = new Rekapi();
+    var rekapi = new Rekapi(document.body);
 
     return rekapi;
   }
 
   function  setupTestActor (forRekapi) {
-    var actor = new Rekapi.DOMActor(document.createElement('div'));
+    var actor = new Rekapi.Actor({ context: document.createElement('div') });
     forRekapi.addActor(actor);
     return actor;
   }

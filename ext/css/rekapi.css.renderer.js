@@ -118,7 +118,7 @@ rekapiModules.push(function (context) {
     var dummyDiv = document.createElement('div');
 
     _.each(rekapi.getAllActors(), function (actor) {
-      if (actor instanceof Rekapi.DOMActor) {
+      if (actor.context instanceof HTMLElement) {
         var actorEl = actor.context;
         var actorElParent = actorEl.parentElement;
 
@@ -567,7 +567,7 @@ rekapiModules.push(function (context) {
     var animationCSS = [];
 
     _.each(this.rekapi.getAllActors(), function (actor) {
-      if (actor instanceof Rekapi.DOMActor) {
+      if (actor.context instanceof HTMLElement) {
         animationCSS.push(getActorCSS(actor, opts));
       }
     });

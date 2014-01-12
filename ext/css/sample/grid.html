@@ -10,7 +10,6 @@
     <script src="../../../src/rekapi.core.js"></script>
     <script src="../../../src/rekapi.actor.js"></script>
     <script src="../../../src/rekapi.keyframe-property.js"></script>
-    <script src="../../../ext/dom/rekapi.dom.actor.js"></script>
     <script src="../rekapi.css.renderer.js"></script>
     <script src="../../../src/rekapi.init.js"></script>
     <style type="text/css">
@@ -52,7 +51,7 @@
           child = document.createElement('li');
           children.push(child);
           container.appendChild(child);
-          actor = new Rekapi.DOMActor(child);
+          actor = new Rekapi.Actor({ context: child });
           rekapi.addActor(actor);
           actor
             .keyframe(0, {

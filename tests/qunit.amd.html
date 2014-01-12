@@ -170,23 +170,6 @@
       });
     });
 
-    asyncTest("Can instantiate a DOMActor", function() {
-      requireConfig();
-
-      require(['rekapi'], function(Rekapi) {
-        var actor, el;
-
-        ok(Rekapi.DOMActor !== undefined);
-
-        if (Rekapi.DOMActor) {
-          el = document.createElement("div");
-          actor = new Rekapi.DOMActor(el);
-          ok(actor !== undefined);
-        }
-        start();
-      });
-    });
-
   });
 </script>
 </head>

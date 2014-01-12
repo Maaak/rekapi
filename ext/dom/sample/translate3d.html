@@ -10,7 +10,7 @@
     <script src="../../../src/rekapi.core.js"></script>
     <script src="../../../src/rekapi.actor.js"></script>
     <script src="../../../src/rekapi.keyframe-property.js"></script>
-    <script src="../rekapi.dom.actor.js"></script>
+    <script src="../../css/rekapi.css.renderer.js"></script>
     <script src="../../../src/rekapi.init.js"></script>
     <style type="text/css">
       .actor {
@@ -23,9 +23,9 @@
   <body>
     <div class="actor"></div>
     <script>
-      var rekapi = new Rekapi();
+      var rekapi = new Rekapi(document.body);
       var actorEl = document.querySelector('.actor');
-      var actor = new Rekapi.DOMActor(actorEl);
+      var actor = new Rekapi.Actor({ context: actorEl });
       rekapi.addActor(actor);
 
       actor

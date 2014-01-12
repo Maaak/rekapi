@@ -10,7 +10,6 @@
     <script src="../../../src/rekapi.core.js"></script>
     <script src="../../../src/rekapi.actor.js"></script>
     <script src="../../../src/rekapi.keyframe-property.js"></script>
-    <script src="../../../ext/dom/rekapi.dom.actor.js"></script>
     <script src="../rekapi.css.renderer.js"></script>
     <script src="../../../src/rekapi.init.js"></script>
     <style type="text/css">
@@ -32,7 +31,7 @@
 
       var rekapi = new Rekapi(document.body);
       var actorDiv = document.getElementById('actor-1');
-      var actor = new Rekapi.DOMActor(actorDiv);
+      var actor = new Rekapi.Actor({ context: actorDiv });
       rekapi.addActor(actor);
 
       actor
@@ -58,7 +57,7 @@
 
      // Specifying a custom `name` property in `renderer.toString` creates a
      // class that doesn't implicitly match the class that was added by the
-     // `Rekapi.DOMActor` constructor, so add it here.
+     // `Rekapi#addActor`, so add it here.
      actorDiv.classList.add('myAwesomeAnimation');
 
     </script>

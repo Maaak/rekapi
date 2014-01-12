@@ -11,7 +11,6 @@
   <script src="../src/rekapi.core.js"></script>
   <script src="../src/rekapi.actor.js"></script>
   <script src="../src/rekapi.keyframe-property.js"></script>
-  <script src="../ext/dom/rekapi.dom.actor.js"></script>
   <script src="../ext/canvas/rekapi.canvas.renderer.js"></script>
   <script src="../ext/css/rekapi.css.renderer.js"></script>
   <script src="../src/rekapi.init.js"></script>
@@ -1046,23 +1045,21 @@
     module('Rekapi.CSSRenderer.prototype.cssRenderer');
 
 
-    test('CSS is only generated for DOMActors', function () {
+    test('CSS is only generated for DOM actors', function () {
       var rekapi = new Rekapi(document.body);
       var testActorEl = document.createElement('div');
-      var testCanvasEl = document.createElement('canvas');
-      var domActor = new Rekapi.DOMActor(testActorEl);
-      var canvasActor = new Rekapi.CanvasActor();
-      canvasActor.context = testCanvasEl;
+      var domActor = new Rekapi.Actor({ context: testActorEl });
+      var nonDOMActor = new Rekapi.Actor();
       rekapi.addActor(domActor);
-      rekapi.addActor(canvasActor);
+      rekapi.addActor(nonDOMActor);
 
       var css = rekapi.renderer.toString();
       var singleLineCss = css.split('\n').join('')
 
       ok(!!singleLineCss.match('actor-' + domActor.id)
-          ,'CSS for DOMActor was generated');
-      ok(!singleLineCss.match('actor-' + canvasActor.id)
-          ,'CSS for CanvasActor was not generated');
+          ,'CSS for DOM actor was generated');
+      ok(!singleLineCss.match('actor-' + nonDOMActor.id)
+          ,'CSS for non-DOM actor was not generated');
     });
 
   } ());

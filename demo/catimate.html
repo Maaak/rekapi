@@ -36,7 +36,7 @@
           ,time = 0;
 
       var catImg = document.getElementById('actor');
-      cat = new Rekapi.DOMActor(catImg);
+      cat = new Rekapi.Actor({ context: catImg });
       rekapi.addActor(cat);
 
       cat
