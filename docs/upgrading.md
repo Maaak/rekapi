@@ -34,9 +34,32 @@ rekapi.renderer.height(300);
 rekapi.renderer.width(300);
 ````
 
+## There are no more subclasses of `Rekapi.Actor`
+
+`Rekapi.CanvasActor` and `Rekapi.DOMActor` are gone, there is only `Rekapi.Actor` now.  Context-specific actor methods have been moved to their respective renderers.  The signature and name of many of these methods have changed slightly, please refer to the docs of each individual renderer.
+
 ## The `Rekapi.KeyframeProperty` constructor signature has changed
 
 `Rekapi.KeyframeProperty` no longer accepts the owner actor via the constructor.  The link between the two objects is established by the new method, `Rekapi.Actor.prototype._addKeyframeProperty`.
+
+## `Rekapi.addActor` can now instantiate a `Rekapi.Actor`
+
+Before, you had to create a `Rekapi.Actor` before calling `addActor`:
+
+````javascript
+var rekapi = new Rekapi();
+var actor = new Actor();
+rekapi.addActor(actor);
+````
+
+Now you can do this:
+
+````javascript
+var rekapi = new Rekapi();
+var actor = rekapi.addActor();
+````
+
+The old form is still supported.
 
 ## `Rekapi.Actor.prototype.updateState` is now private
 

@@ -67,8 +67,22 @@
       testActor1 = setupTestActor(testRekapi);
 
       equal(testRekapi.getActor(testActor1.id), testActor1,
-          'Can reference the Actor inside the Rekapi via the actor ID.');
+          'Can reference the Actor inside the Rekapi via the actor ID');
     });
+
+    test('Supplying an object instantiates an actor', function () {
+      var testRekapi = setupTestRekapi();
+      var actorContext = {};
+      var testActor = testRekapi.addActor({ context: actorContext });
+
+      ok(testActor instanceof Rekapi.Actor,
+          'addActor made an instance of Rekapi.Actor');
+      ok(actorContext === testActor.context,
+          'The instantiated actor has the correct context');
+    });
+
+
+    module('removeActor');
 
 
     test('Actors are removed successfully', function () {

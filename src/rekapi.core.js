@@ -275,28 +275,37 @@ var rekapiCore = function (root, _, Tweenable) {
   Rekapi._rendererInitHook = {};
 
   /**
-   * Add an actor to the animation.  Decorates the actor with a reference to this Rekapi instance as `rekapi`.
+   * Add an actor to the animation.  Decorates the actor with a reference to this Rekapi instance as `rekapi`.  If `actor` is just an Object, that Object is used to as the constructor parameters for new `Rekapi.Actor` instance that is created by this method.
    *
    * __[Example](../../../../docs/examples/add_actor.html)__
-   * @param {Rekapi.Actor} actor
-   * @return {Rekapi}
+   * @param {Rekapi.Actor|Object} actor
+   * @return {Rekapi.Actor} The actor that was added.
    */
   Rekapi.prototype.addActor = function (actor) {
-    // You can't add an actor more than once.
-    if (!_.contains(this._actors, actor)) {
-      if (typeof actor.context === 'undefined') {
-        actor.context = this.context;
-      }
+    var rekapiActor;
 
-      actor.rekapi = this;
-      this._actors[actor.id] = actor;
-      recalculateAnimationLength(this, _);
-      actor.setup();
-
-      fireEvent(this, 'addActor', _, actor);
+    if (actor instanceof Rekapi.Actor) {
+      rekapiActor = actor;
+    } else {
+      rekapiActor = new Rekapi.Actor(actor);
     }
 
-    return this;
+
+    // You can't add an actor more than once.
+    if (!_.contains(this._actors, rekapiActor)) {
+      if (typeof rekapiActor.context === 'undefined') {
+        rekapiActor.context = this.context;
+      }
+
+      rekapiActor.rekapi = this;
+      this._actors[rekapiActor.id] = rekapiActor;
+      recalculateAnimationLength(this, _);
+      rekapiActor.setup();
+
+      fireEvent(this, 'addActor', _, rekapiActor);
+    }
+
+    return rekapiActor;
   };
 
   /**
