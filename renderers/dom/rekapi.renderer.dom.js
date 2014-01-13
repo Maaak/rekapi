@@ -14,6 +14,7 @@ rekapiModules.push(function (context) {
   var transformFunctions = [
     'translateX',
     'translateY',
+    'translateZ',
     'scale',
     'scaleX',
     'scaleY',
@@ -366,11 +367,53 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Overrides the default transform function order.
+   * You can decouple transform components in order to animate each property with its own easing curve:
+   *
+   * ```
+   * actor
+   *   .keyframe(0, {
+   *     'translateX': '0px'
+   *     ,'translateY': '0px'
+   *     ,'rotate': '0deg'
+   *   })
+   *   .keyframe(1500, {
+   *     'translateX': '200px'
+   *     ,'translateY': '200px'
+   *     ,'rotate': '90deg'
+   *   }, {
+   *     'translateX': 'easeOutExpo'
+   *     ,'translateY': 'easeInSine'
+   *     ,'rotate': 'elastic'
+   *   });
+   * ```
+   *
+   * Since CSS transform components are order-dependent, Rekapi must combine the transform components into a single string when it renders each frame.  This method lets you redefine that order.  The supported array values for `orderedFunctions` are:
+   *
+   * - `translateX`
+   * - `translateY`
+   * - `translateZ`
+   * - `scale`
+   * - `scaleX`
+   * - `scaleY`
+   * - `rotate`
+   * - `skewX`
+   * - `skewY`
+   *
+   * FYI: If you prefer a more standards-oriented approach, Rekapi also supports combining the transform components yourself:
+   *
+   * ```
+   * actor
+   *   .keyframe(0, {
+   *     'transform': 'translateX(0px) translateY(0px) rotate(0deg)'
+   *   })
+   *   .keyframe(1500, {
+   *     'transform': 'translateX(200px) translateY(200px) rotate(90deg)'
+   *   }, 'easeOutExpo easeInSine elastic');
+   * ```
    *
    * @param {Rekapi.Actor} actor
-   * @param {Array} orderedFunctions The Array of transform function names
-   * @return {Rekapi.DOMActor}
+   * @param {Array} orderedFunctions The array of transform function names
+   * @return {Rekapi.DOMRenderer}
    */
   DOMRenderer.prototype.setActorTransformOrder = function (actor, orderedFunctions) {
     // TODO: Document this better...
