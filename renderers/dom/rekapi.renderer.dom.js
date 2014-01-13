@@ -192,7 +192,7 @@ rekapiModules.push(function (context) {
       return;
     }
 
-    var className = DOMRenderer.getActorCSSName(actor);
+    var className = DOMRenderer.getActorClassName(actor);
 
     // Add the class if it's not already there.
     // Using className instead of classList to make IE happy.
@@ -284,7 +284,7 @@ rekapiModules.push(function (context) {
     var element = actor.context;
     var classList = element.className.match(/\S+/g);
     var sanitizedClassList =
-        _.without(classList, DOMRenderer.getActorCSSName(actor));
+        _.without(classList, DOMRenderer.getActorClassName(actor));
     element.className = sanitizedClassList;
   }
 
@@ -361,7 +361,7 @@ rekapiModules.push(function (context) {
    * @param {Rekapi.Actor} actor
    * @return {string}
    */
-  DOMRenderer.getActorCSSName = function (actor) {
+  DOMRenderer.getActorClassName = function (actor) {
     return 'actor-' + actor.id;
   };
 
@@ -584,7 +584,7 @@ rekapiModules.push(function (context) {
   function getActorCSS (actor, opts) {
     opts = opts || {};
     var actorCSS = [];
-    var animName = opts.name || DOMRenderer.getActorCSSName(actor);
+    var animName = opts.name || DOMRenderer.getActorClassName(actor);
     var fps = opts.fps || DEFAULT_FPS;
     var steps = Math.ceil((actor.rekapi.animationLength() / 1000) * fps);
     var combineProperties = !canOptimizeAnyKeyframeProperties(actor);
