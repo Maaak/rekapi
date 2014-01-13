@@ -325,7 +325,7 @@ rekapiModules.push(function (context) {
    *  }
    * ```
    *
-   * __[Example](/ext/css/sample/play-many-actors.html)__
+   * __[Example](/renderers/css/sample/play-many-actors.html)__
    *
    * @param {Rekapi} rekapi
    * @constructor

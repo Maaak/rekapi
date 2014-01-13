@@ -588,7 +588,7 @@ var rekapiCore = function (root, _, Tweenable) {
   };
 
   /**
-   * Import data that was created by [`exportTimeline`](#exportTimeline).  Sets up all necessary actors and keyframes.  Note that this method only creates `Rekapi.Actor` instances, not subclasses like [`Rekapi.DOMActor`](/dist/doc/ext/dom/rekapi.dom.actor.js.html#DOMActor) or [`Rekapi.CanvasActor`](/dist/doc/ext/canvas/rekapi.canvas.actor.js.html#CanvasActor).
+   * Import data that was created by [`exportTimeline`](#exportTimeline).  Sets up all necessary actors and keyframes.  Note that this method only creates `Rekapi.Actor` instances, not subclasses like [`Rekapi.DOMActor`](/dist/doc/renderers/dom/rekapi.dom.actor.js.html#DOMActor) or [`Rekapi.CanvasActor`](/dist/doc/renderers/canvas/rekapi.canvas.actor.js.html#CanvasActor).
    *
    * @param {Object} rekapiData Any object that has the same data format as the object generated from Rekapi#exportTimeline.
    */
