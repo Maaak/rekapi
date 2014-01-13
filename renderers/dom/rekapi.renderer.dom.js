@@ -357,7 +357,7 @@ rekapiModules.push(function (context) {
   var DOMRenderer = Rekapi.DOMRenderer;
 
   /**
-   * This can be useful when used with [DOMRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * This can be useful when used with [DOMRenderer#toString](../css-animate/rekapi.renderer.dom.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
    * @param {Rekapi.Actor} actor
    * @return {string}
    */
