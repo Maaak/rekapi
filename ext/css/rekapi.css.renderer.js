@@ -65,7 +65,7 @@ rekapiModules.push(function (context) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
     if (context.nodeType === 1 &&
         context.nodeName.toLowerCase() !== 'canvas') {
-      rekapi.renderer = new CSSRenderer(rekapi);
+      rekapi.renderer = new DOMRenderer(rekapi);
     }
   };
 
@@ -192,7 +192,7 @@ rekapiModules.push(function (context) {
       return;
     }
 
-    var className = CSSRenderer.getActorCSSName(actor);
+    var className = DOMRenderer.getActorCSSName(actor);
 
     // Add the class if it's not already there.
     // Using className instead of classList to make IE happy.
@@ -284,7 +284,7 @@ rekapiModules.push(function (context) {
     var element = actor.context;
     var classList = element.className.match(/\S+/g);
     var sanitizedClassList =
-        _.without(classList, CSSRenderer.getActorCSSName(actor));
+        _.without(classList, DOMRenderer.getActorCSSName(actor));
     element.className = sanitizedClassList;
   }
 
@@ -292,7 +292,7 @@ rekapiModules.push(function (context) {
   //
 
   /**
-   * The `CSSRenderer` module allows you to run a Rekapi animation as a CSS `@keyframe` animation.  Standard Rekapi animations are powered by JavaScript, but in many cases using CSS `@keyframes` is more performant.  `CSSRenderer` depends on [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
+   * The `DOMRenderer` module allows you to run a Rekapi animation as a CSS `@keyframe` animation.  Standard Rekapi animations are powered by JavaScript, but in many cases using CSS `@keyframes` is more performant.  `DOMRenderer` depends on [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
    *
    * This method of animation is call "CSS Prerendering."  [See this article for more information](http://jeremyckahn.github.io/blog/2013/07/28/60-fps-or-bust-dynamically-prerendering-css-animations/).
    *
@@ -307,7 +307,7 @@ rekapiModules.push(function (context) {
    *   - Prerending animations can take a noticeable amount of time, so you may have to be clever with how to spend the cycles to do it.
    *   - No `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
    *
-   * `CSSRenderer` can gracefully fall back to a JavaScript animation if CSS animations are not supported by the browser.  Both approaches use the same Rekapi API, but you can choose what method of animation is appropriate at run time:
+   * `DOMRenderer` can gracefully fall back to a JavaScript animation if CSS animations are not supported by the browser.  Both approaches use the same Rekapi API, but you can choose what method of animation is appropriate at run time:
    *
    * ```
    *  var rekapi = new Rekapi(document.body);
@@ -330,7 +330,7 @@ rekapiModules.push(function (context) {
    * @param {Rekapi} rekapi
    * @constructor
    */
-  Rekapi.CSSRenderer = function (rekapi) {
+  Rekapi.DOMRenderer = function (rekapi) {
     this.rekapi = rekapi;
 
     // @private {number}
@@ -354,14 +354,14 @@ rekapiModules.push(function (context) {
 
     return this;
   };
-  var CSSRenderer = Rekapi.CSSRenderer;
+  var DOMRenderer = Rekapi.DOMRenderer;
 
   /**
-   * This can be useful when used with [CSSRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * This can be useful when used with [DOMRenderer#toString](../css-animate/rekapi.css.renderer.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
    * @param {Rekapi.Actor} actor
    * @return {string}
    */
-  CSSRenderer.getActorCSSName = function (actor) {
+  DOMRenderer.getActorCSSName = function (actor) {
     return 'actor-' + actor.id;
   };
 
@@ -372,7 +372,7 @@ rekapiModules.push(function (context) {
    * @param {Array} orderedFunctions The Array of transform function names
    * @return {Rekapi.DOMActor}
    */
-  CSSRenderer.prototype.setActorTransformOrder = function (actor, orderedFunctions) {
+  DOMRenderer.prototype.setActorTransformOrder = function (actor, orderedFunctions) {
     // TODO: Document this better...
     var unknownFunctions = _.reject(orderedFunctions, isTransformFunction);
 
@@ -391,7 +391,7 @@ rekapiModules.push(function (context) {
    *
    * @return {boolean}
    */
-  CSSRenderer.prototype.canAnimateWithCSS = function () {
+  DOMRenderer.prototype.canAnimateWithCSS = function () {
     return !!getVendorPrefix();
   };
 
@@ -401,7 +401,7 @@ rekapiModules.push(function (context) {
    * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
    * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
    */
-  CSSRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
+  DOMRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
     if (this.isPlaying()) {
       this.stop();
     }
@@ -425,13 +425,13 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Prerender and cache the CSS animation so that it is ready to be used when it is needed in the future.  The function signature is identical to [`CSSRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
+   * Prerender and cache the CSS animation so that it is ready to be used when it is needed in the future.  The function signature is identical to [`DOMRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
    *
    * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
    * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
    * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
    */
-  CSSRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
+  DOMRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
     return this._cachedCSS = this.toString({
       'vendors': [getVendorPrefix()]
       ,'fps': opt_fps
@@ -444,7 +444,7 @@ rekapiModules.push(function (context) {
    *
    * @param {boolean} opt_goToEnd If true, skip to the end of the animation.  If false or omitted, set the actor elements to stay in their current position.
    */
-  CSSRenderer.prototype.stop = function (opt_goToEnd) {
+  DOMRenderer.prototype.stop = function (opt_goToEnd) {
     if (this.isPlaying()) {
       clearTimeout(this._stopSetTimeoutHandle);
 
@@ -472,11 +472,11 @@ rekapiModules.push(function (context) {
    *
    * @return {boolean}
    */
-  CSSRenderer.prototype.isPlaying = function () {
+  DOMRenderer.prototype.isPlaying = function () {
     return !!this._styleElement;
   };
 
-  // CSSRenderer.prototype.toString CODE
+  // DOMRenderer.prototype.toString CODE
   //
 
   // CONSTANTS
@@ -562,7 +562,7 @@ rekapiModules.push(function (context) {
    * @param {Object} opts
    * @return {string}
    */
-  Rekapi.CSSRenderer.prototype.toString = function (opts) {
+  Rekapi.DOMRenderer.prototype.toString = function (opts) {
     opts = opts || {};
     var animationCSS = [];
 
@@ -584,7 +584,7 @@ rekapiModules.push(function (context) {
   function getActorCSS (actor, opts) {
     opts = opts || {};
     var actorCSS = [];
-    var animName = opts.name || CSSRenderer.getActorCSSName(actor);
+    var animName = opts.name || DOMRenderer.getActorCSSName(actor);
     var fps = opts.fps || DEFAULT_FPS;
     var steps = Math.ceil((actor.rekapi.animationLength() / 1000) * fps);
     var combineProperties = !canOptimizeAnyKeyframeProperties(actor);

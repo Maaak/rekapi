@@ -76,7 +76,11 @@ var rekapi = new Rekapi(document.createElement('canvas'));
 rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
 ````
 
-## `Rekapi.CSSRenderer` instance is now called `renderer` and has different requirements
+## `Rekapi.CSSRenderer` is now called `Rekapi.DOMRenderer`
+
+All `Rekapi.DOMActor` functionality has been ported into `Rekapi.DOMRenderer`.
+
+## `Rekapi.DOMRenderer` instance is now called `renderer` and has different requirements
 
 As you may suspect, this means that a Rekapi animation can no longer animate both DOM and Canvas actors.  This choice was made to simplify the API for common use cases.  The renderer to use for an animation is determined by the context that was provided to the Rekapi constructor.  CSS 3 animations require a non-canvas element as the context.  For simplicity, you can just provide the `<body>`:
 
@@ -92,11 +96,11 @@ if (rekapi.renderer.canAnimateWithCSS()) {
 }
 ````
 
-### `Rekapi.CSSRenderer.prototype.play` is now called `Rekapi.CSSRenderer.prototype.animateWithCSS`
+### `Rekapi.DOMRenderer.prototype.play` is now called `Rekapi.DOMRenderer.prototype.animateWithCSS`
 
-This is done to avoid confusion with `Rekapi.prototype.play` and also be more consistent with `Rekapi.CSSRenderer.prototype.canAnimateWithCSS`.
+This is done to avoid confusion with `Rekapi.prototype.play` and also be more consistent with `Rekapi.DOMRenderer.prototype.canAnimateWithCSS`.
 
-### `Rekapi.prototype.toCSS` is now `Rekapi.CSSRenderer.prototype.toString`
+### `Rekapi.prototype.toCSS` is now `Rekapi.DOMRenderer.prototype.toString`
 
 These modules have been combined.  To generate the CSS string directly:
 
