@@ -29,7 +29,7 @@ module.exports = function(grunt) {
           'src/rekapi.core.js',
           'src/rekapi.actor.js',
           'src/rekapi.keyframe-property.js',
-          'renderers/canvas/rekapi.canvas.renderer.js',
+          'renderers/canvas/rekapi.renderer.canvas.js',
           'renderers/dom/rekapi.renderer.dom.js',
           'src/rekapi.init.js',
           'src/rekapi.outro.js'
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
           'src/rekapi.core.js',
           'src/rekapi.actor.js',
           'src/rekapi.keyframe-property.js',
-          'renderers/canvas/rekapi.canvas.renderer.js',
+          'renderers/canvas/rekapi.renderer.canvas.js',
           'renderers/dom/rekapi.renderer.dom.js',
           'src/rekapi.init.js',
           'src/rekapi.outro.js'
@@ -145,7 +145,7 @@ module.exports = function(grunt) {
           'src/rekapi.core.js',
           'src/rekapi.actor.js',
           'src/rekapi.keyframe-property.js',
-          'renderers/canvas/rekapi.canvas.renderer.js',
+          'renderers/canvas/rekapi.renderer.canvas.js',
           'renderers/dom/rekapi.renderer.dom.js'
         ],
         dest: 'dist/doc'
