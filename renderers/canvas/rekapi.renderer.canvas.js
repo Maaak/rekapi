@@ -111,7 +111,7 @@ rekapiModules.push(function (context) {
   //
 
   /**
-   * You can use Rekapi to render to an HTML5 `<canvas>`.  To do so, simply provide a `CanvasRenderingContext2D` instance to automatically set up the renderer:
+   * You can use Rekapi to render to an HTML5 `<canvas>`.  To do so, just provide a `CanvasRenderingContext2D` instance to automatically set up the renderer:
    *
    * ```
    * var context = document.createElement('canvas').getContext('2d');
@@ -119,17 +119,7 @@ rekapiModules.push(function (context) {
    * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
    * ```
    *
-   *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `renderer`, at initialization time.  So:
-   * ```
-   * // With the Rekapi Canvas renderer loaded
-   * var rekapi = new Rekapi(document.createElement('canvas'));
-   * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
-   * ```
-   *   3. It maintains a layer list that defines the render order for [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.
-   *
-   * __Note:__ This `Rekapi.CanvasRenderer` constructor is called for you automatically - there is no need to call it explicitly.
-   *
-   * The Canvas renderer adds some new events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)).
+   * `Rekapi.CanvasRenderer` adds some canvas-specifi events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)):
    *
    *  - __beforeRender__: Fires just before an actor is rendered to the screen.
    *  - __afterRender__: Fires just after an actor is rendered to the screen.
@@ -178,7 +168,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Move a [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html) around in the layer list.  Each layer has one [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html), and [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered in order of their layer.  Lower layers (starting with 0) are rendered earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
+   * Move an actor around in the layer list.  Each actor is rendered in order of its layer (layers and actors have a 1:1 relationship).  Lower layers (starting with 0) are rendered earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
    *
    * __[Example](../../../../docs/examples/canvas_move_actor_to_layer.html)__
    * @param {Rekapi.Actor} actor
