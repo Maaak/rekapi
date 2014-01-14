@@ -9,8 +9,7 @@
   <body>
     <canvas></canvas>
     <script>
-      var canvas = document.getElementsByTagName('canvas')[0];
-      var rekapi = new Rekapi(canvas);
+      var rekapi = new Rekapi(document.querySelector('canvas').getContext('2d'));
 
       rekapi.renderer.height(300);
       rekapi.renderer.width(400);

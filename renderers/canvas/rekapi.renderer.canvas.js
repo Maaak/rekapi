@@ -1,3 +1,4 @@
+/* global CanvasRenderingContext2D */
 rekapiModules.push(function (context) {
 
   'use strict';
@@ -89,13 +90,9 @@ rekapiModules.push(function (context) {
    * @param {Rekapi} rekapi
    */
   Rekapi._rendererInitHook.canvas = function (rekapi) {
-    if (typeof rekapi.context.getContext === 'undefined') {
+    if (!(rekapi.context instanceof CanvasRenderingContext2D)) {
       return;
     }
-
-    // Overwrite rekapi.context to reference the canvas drawing context directly.
-    // The original element is still accessible via rekapi.context.canvas.
-    rekapi.context = rekapi.context.getContext('2d');
 
     rekapi.renderer = new CanvasRenderer(rekapi);
 
@@ -114,9 +111,14 @@ rekapiModules.push(function (context) {
   //
 
   /**
-   * You can use Rekapi to render to an HTML5 `<canvas>`.  The Canvas renderer does a few things:
+   * You can use Rekapi to render to an HTML5 `<canvas>`.  To do so, simply provide a `CanvasRenderingContext2D` instance to automatically set up the renderer:
    *
-   *   1. It subclasses `Rekapi.Actor` as `Rekapi.CanvasActor`.
+   * ```
+   * var context = document.createElement('canvas').getContext('2d');
+   * var rekapi = new Rekapi(context);
+   * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
+   * ```
+   *
    *   2. If the  `Rekapi` constructor is given a `<canvas>` as a `context`, the Canvas renderer attaches an instance of `Rekapi.CanvasRenderer` to the `Rekapi` instance, named `renderer`, at initialization time.  So:
    * ```
    * // With the Rekapi Canvas renderer loaded

@@ -14,7 +14,7 @@
   <script src="../src/rekapi.init.js"></script>
   <script>
   function setupTestRekapi () {
-    var rekapi = new Rekapi(document.getElementById('sandbox'));
+    var rekapi = new Rekapi(document.querySelector('canvas').getContext('2d'));
     rekapi.renderer.height(300);
     rekapi.renderer.width(300);
 

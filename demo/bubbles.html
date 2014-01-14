@@ -153,8 +153,8 @@
       rekapi.play(1);
     }
 
-    var canvas = document.getElementsByTagName('canvas')[0]
-        ,rekapi = new Rekapi(canvas)
+    var context = document.querySelector('canvas').getContext('2d')
+        ,rekapi = new Rekapi(context)
         ,bubbles = [];
 
     rekapi.renderer.height(500);

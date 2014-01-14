@@ -55,8 +55,8 @@
       return getColor();
     }
 
-    var canvas = document.getElementsByTagName('canvas')[0]
-        ,rekapi = new Rekapi(canvas)
+    var context = document.querySelector('canvas').getContext('2d')
+        ,rekapi = new Rekapi(context)
         ,BASELINE = 350
         ,bars = [];
 

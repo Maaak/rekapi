@@ -61,8 +61,8 @@
       var JavaScriptMode = require("ace/mode/javascript").Mode;
       editor.getSession().setMode(new JavaScriptMode());
 
-      var canvas = $('canvas')
-      var rekapi = new Rekapi(canvas[0]);
+      var $canvas = $('canvas');
+      var rekapi = new Rekapi($canvas[0].getContext('2d'));
 
       rekapi.renderer.height(480);
       rekapi.renderer.width(400);
@@ -84,7 +84,7 @@
         }
       });
 
-      canvas.css('background', '#eee');
+      $canvas.css('background', '#eee');
       rekapi.addActor(actor);
       var update = $('#update')
           ,oldCode = editor.getSession().getValue();
@@ -104,10 +104,10 @@
           actor.removeAllKeyframeProperties();
           eval(oldCode);
           rekapi.play();
-          canvas.css('background', '#ff45b1');
+          $canvas.css('background', '#ff45b1');
 
           setTimeout(function () {
-            canvas.css('background', '#eee');
+            $canvas.css('background', '#eee');
           }, 1200);
         }
       });

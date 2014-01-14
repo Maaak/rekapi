@@ -65,6 +65,24 @@ The old form is still supported.
 
 This function wasn't useful as a public API, so it has been made private by convention.  It is still accessible as `Rekapi.Actor.prototype._updateState`, but it is suggested that you update the state of the `Rekapi` instance instead.
 
+## Canvas animations now require an instance of `CanvasRenderingContext2D` instead of a `<canvas>` element
+
+Old way:
+
+````javascript
+var canvas = document.querySelector('canvas');
+var rekapi = new Rekapi(canvas);
+````
+
+New way:
+
+````javascript
+var canvas = document.querySelector('canvas');
+var rekapi = new Rekapi(canvas.getContext('2d'));
+````
+
+This approach will allow for more advanced renderers in the future, such as WebGL.
+
 ## `Rekapi.CanvasRenderer` instance is now called `renderer`
 
 This was previously called `canvas`.  So:

@@ -123,8 +123,8 @@ $(function () {
     animationDuration = toMillisecond;
   }
 
-  var canvas = $('canvas')[0];
-  var rekapi = new Rekapi(canvas);
+  var canvas = document.querySelector('canvas');
+  var rekapi = new Rekapi(canvas.getContext('2d'));
 
   rekapi.renderer.height(400);
   rekapi.renderer.width(500);

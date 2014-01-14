@@ -16,7 +16,7 @@
   <script>
   function setupTestRekapi () {
     var canvas = document.createElement('canvas')
-        ,rekapi = new Rekapi(canvas);
+        ,rekapi = new Rekapi(canvas.getContext('2d'));
 
     return rekapi;
   }
