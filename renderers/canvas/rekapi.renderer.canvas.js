@@ -42,24 +42,24 @@ rekapiModules.push(function (context) {
   function render (rekapi) {
     fireEvent(rekapi, 'beforeRender', _);
     var renderer = rekapi.renderer;
+    var renderOrderSorter = renderer._renderOrderSorter;
     var len = renderer._renderOrder.length;
     var renderOrder;
 
-    if (renderer._renderOrderSorter) {
-      var orderedActors =
-          _.sortBy(renderer._canvasActors, renderer._renderOrderSorter);
+    if (renderOrderSorter) {
+      var orderedActors = _.sortBy(renderer._canvasActors, renderOrderSorter);
       renderOrder = _.pluck(orderedActors, 'id');
     } else {
       renderOrder = renderer._renderOrder;
     }
 
-    var currentActor, canvas_context;
+    var currentActor;
+    var canvasActors = renderer._canvasActors;
 
     var i;
     for (i = 0; i < len; i++) {
-      currentActor = renderer._canvasActors[renderOrder[i]];
-      canvas_context = currentActor.context;
-      currentActor.render(canvas_context, currentActor.get());
+      currentActor = canvasActors[renderOrder[i]];
+      currentActor.render(currentActor.context, currentActor.get());
     }
     fireEvent(rekapi, 'afterRender', _);
 
