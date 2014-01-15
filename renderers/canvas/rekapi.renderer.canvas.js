@@ -41,22 +41,23 @@ rekapiModules.push(function (context) {
    */
   function render (rekapi) {
     fireEvent(rekapi, 'beforeRender', _);
-    var len = rekapi.renderer._renderOrder.length;
+    var renderer = rekapi.renderer;
+    var len = renderer._renderOrder.length;
     var renderOrder;
 
-    if (rekapi.renderer._renderOrderSorter) {
+    if (renderer._renderOrderSorter) {
       var orderedActors =
-          _.sortBy(rekapi.renderer._canvasActors, rekapi.renderer._renderOrderSorter);
+          _.sortBy(renderer._canvasActors, renderer._renderOrderSorter);
       renderOrder = _.pluck(orderedActors, 'id');
     } else {
-      renderOrder = rekapi.renderer._renderOrder;
+      renderOrder = renderer._renderOrder;
     }
 
     var currentActor, canvas_context;
 
     var i;
     for (i = 0; i < len; i++) {
-      currentActor = rekapi.renderer._canvasActors[renderOrder[i]];
+      currentActor = renderer._canvasActors[renderOrder[i]];
       canvas_context = currentActor.context;
       currentActor.render(canvas_context, currentActor.get());
     }
@@ -119,10 +120,12 @@ rekapiModules.push(function (context) {
    * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
    * ```
    *
-   * `Rekapi.CanvasRenderer` adds some canvas-specifi events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)):
+   * `Rekapi.CanvasRenderer` adds some canvas-specific events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)):
    *
    *  - __beforeRender__: Fires just before an actor is rendered to the screen.
    *  - __afterRender__: Fires just after an actor is rendered to the screen.
+   *
+   *  __Note__: This is instantiated for you automatically as `renderer`, there is no reason to call it yourself for most use cases.
    *
    * @param {Rekapi} rekapi
    * @constructor
@@ -168,7 +171,9 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Move an actor around in the layer list.  Each actor is rendered in order of its layer (layers and actors have a 1:1 relationship).  Lower layers (starting with 0) are rendered earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
+   * Move an actor's layer.  Each actor is rendered in order of its layer (layers and actors have a 1:1 relationship).  The later an actor is added to an animation, the higher its layer.  Lower layers (starting with 0) are rendered earlier.
+   *
+   * If `layer` is higher than the total number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
    *
    * __[Example](../../../../docs/examples/canvas_move_actor_to_layer.html)__
    * @param {Rekapi.Actor} actor
@@ -187,7 +192,11 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframe-property.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
+   * Set a function that defines the render order of the actors.  This is called each frame before the actors are rendered.
+   *
+   * The following example assumes that all actors are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframe-property.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, thus giving a sense of perspective.
+   *
+   * If a render order function is specified, layer changes made [`moveActorToLayer`](#moveActorToLayer) will be ignored.
    *
    * ```
    * rekapi.renderer.setOrderFunction(function (actor) {
