@@ -1,4 +1,3 @@
-/* global CanvasRenderingContext2D */
 rekapiModules.push(function (context) {
 
   'use strict';
@@ -125,7 +124,7 @@ rekapiModules.push(function (context) {
    *  - __beforeRender__: Fires just before an actor is rendered to the screen.
    *  - __afterRender__: Fires just after an actor is rendered to the screen.
    *
-   *  __Note__: This is instantiated for you automatically as `renderer`, there is no reason to call it yourself for most use cases.
+   *  __Note__: `Rekapi.CanvasRenderer` is instantiated for you automatically as `renderer`, there is no reason to call it yourself for most use cases.
    *
    * @param {Rekapi} rekapi
    * @constructor
