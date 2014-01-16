@@ -83,6 +83,14 @@ var rekapi = new Rekapi(canvas.getContext('2d'));
 
 This approach will allow for more advanced renderers in the future, such as WebGL.
 
+## `Rekapi.Actor.prototype.modifyKeyframeProperty` and `getKeyframeProperty` now look for properties based on their timeline millisecond
+
+Previously, these methods used the zero-based track index to look for properties.
+
+## `Rekapi.Actor.prototype.getTrackLength` was dropped in favor of `getPropertiesInTrack`
+
+`getPropertiesInTrack` returns an `Array`, so you can just query the `length` property to get this value.
+
 ## `Rekapi.CanvasRenderer` instance is now called `renderer`
 
 This was previously called `canvas`.  So:
