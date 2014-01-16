@@ -335,14 +335,17 @@ rekapiModules.push(function (context) {
    * @return {Rekapi.Actor}
    */
   Actor.prototype.modifyKeyframeProperty = function (
-      property, index, newProperties) {
+      property, millisecond, newProperties) {
 
-    if (this._propertyTracks[property]
-        && this._propertyTracks[property][index]) {
-      this._propertyTracks[property][index].modifyWith(newProperties);
+    var propertyTrack = this._propertyTracks[property];
+    if (propertyTrack) {
+      var keyProp = _.findWhere(propertyTrack, { millisecond: millisecond });
+      if (keyProp) {
+        keyProp.modifyWith(newProperties);
+      }
+
+      cleanupAfterKeyframeModification(this);
     }
-
-    cleanupAfterKeyframeModification(this);
 
     return this;
   };
