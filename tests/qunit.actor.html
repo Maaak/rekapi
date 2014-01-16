@@ -576,8 +576,8 @@
         .keyframe(20, {x: 3});
 
       var movedKeyframe = testActor.moveKeyframe(20, 10);
-      var secondKeyframeX = testActor.getKeyframeProperty('x', 1);
-      var thirdKeyframeX = testActor.getKeyframeProperty('x', 2);
+      var secondKeyframeX = testActor.getKeyframeProperty('x', 10);
+      var thirdKeyframeX = testActor.getKeyframeProperty('x', 20);
 
       equal(movedKeyframe, false,
           'moveKeyframe indicated that keyframe was not moved');
@@ -1069,8 +1069,8 @@
           firstImportXKeyProp.millisecond, firstExportXKeyProp.millisecond,
           'First "X" keyframe millisecond is the same in both actors');
 
-      var secondImportXKeyProp = importActor.getKeyframeProperty('x', 1);
-      var secondExportXKeyProp = exportActor.getKeyframeProperty('x', 1);
+      var secondImportXKeyProp = importActor.getKeyframeProperty('x', 1000);
+      var secondExportXKeyProp = exportActor.getKeyframeProperty('x', 1000);
       equal(
           secondImportXKeyProp.value, secondExportXKeyProp.value,
           'First "X" keyframe value is the same in both actors');
@@ -1087,8 +1087,8 @@
           firstImportYKeyProp.millisecond, firstExportYKeyProp.millisecond,
           'First "Y" keyframe millisecond is the same in both actors');
 
-      var secondImportYKeyProp = importActor.getKeyframeProperty('y', 1);
-      var secondExportYKeyProp = exportActor.getKeyframeProperty('y', 1);
+      var secondImportYKeyProp = importActor.getKeyframeProperty('y', 1000);
+      var secondExportYKeyProp = exportActor.getKeyframeProperty('y', 1000);
       equal(
           secondImportYKeyProp.value, secondExportYKeyProp.value,
           'First "Y" keyframe value is the same in both actors');

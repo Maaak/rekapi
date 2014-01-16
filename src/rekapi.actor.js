@@ -315,13 +315,13 @@ rekapiModules.push(function (context) {
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
-   * @param {number} index The 0-based index of the KeyframeProperty in the actor's KeyframeProperty track.
+   * @param {number} index The millisecond of the property in the timeline.
    * @return {Rekapi.KeyframeProperty|undefined}
    */
-  Actor.prototype.getKeyframeProperty = function (property, index) {
-    if (this._propertyTracks[property]
-        && this._propertyTracks[property][index]) {
-      return this._propertyTracks[property][index];
+  Actor.prototype.getKeyframeProperty = function (property, millisecond) {
+    var propertyTrack = this._propertyTracks[property];
+    if (propertyTrack) {
+      return _.findWhere(propertyTrack, { millisecond: millisecond });
     }
   };
 
