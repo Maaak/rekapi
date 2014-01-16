@@ -311,7 +311,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an actor's [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if no properties were found.
+   * Get the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an actor's property track. Returns `undefined` if no properties were found.
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
@@ -347,7 +347,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Get a list of all the track names for an `Actor`.
+   * Get a list of all the track names for an actor.
    *
    * __[Example](../../../../docs/examples/actor_get_track_names.html)__
    * @return {Array.<string>}
@@ -372,11 +372,25 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Copy all of the properties that at one point in the timeline to another point. This is useful for many things, particularly for bringing a `Rekapi.Actor` back to its original position.
+   * Copy all of the properties from one point in the timeline to another point. This is useful for many things, particularly for animating an actor back to its original position.
+   *
+   * ```
+   * actor
+   *   .keyframe(0, {
+   *     x: 10,
+   *     y: 15
+   *   }).keyframe(1000, {
+   *     x: 50,
+   *     y: 75
+   *   });
+   *
+   * // Return the actor to its original position
+   * actor.copyFrom(2000, 0);
+   * ```
    *
    * __[Example](../../../../docs/examples/actor_copy_properties.html)__
-   * @param {number} copyTo The millisecond to copy KeyframeProperties to
-   * @param {number} copyFrom The millisecond to copy KeyframeProperties from
+   * @param {number} copyTo The millisecond to copy KeyframeProperties to.
+   * @param {number} copyFrom The millisecond to copy KeyframeProperties from.
    * @return {Rekapi.Actor}
    */
   Actor.prototype.copyProperties = function (copyTo, copyFrom) {
@@ -398,10 +412,10 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Extend the last state on this `Actor`'s timeline to create a animation wait. The state does not change during this time.
+   * Extend the last state on this actor's timeline to simulate a pause. The state does not change during this time.
    *
    * __[Example](../../../../docs/examples/actor_wait.html)__
-   * @param {number} until At what point in the animation the Actor should wait until (relative to the start of the animation)
+   * @param {number} until At what point in the animation the Actor should wait until (relative to the start of the animation).
    * @return {Rekapi.Actor}
    */
   Actor.prototype.wait = function (until) {
@@ -429,7 +443,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Get the millisecond of the first state of an `Actor` (when it first starts animating).  You can get the start time of a specific track with `opt_trackName`.
+   * Get the millisecond of the first animated state of an actor (for instance, if the actor's first keyframe is later than millisecond 0).  You can scope this and get the start time of a specific track with `opt_trackName`.
    *
    * __[Example](../../../../docs/examples/actor_get_start.html)__
    * @param {string} opt_trackName
@@ -456,7 +470,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Get the millisecond of the last state of an `Actor` (when it is done animating).  You can get the last state for a specific track with `opt_trackName`.
+   * Get the millisecond in the timeline of the last state of an `Actor` (when it is done animating).  You can scope this and get the last state for a specific track with `opt_trackName`.
    *
    * __[Example](../../../../docs/examples/actor_get_end.html)__
    * @param {string} opt_trackName
@@ -485,7 +499,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Get the length of time in milliseconds that an `Actor` animates for.  You can get the length of time that a specific track animates for with `opt_trackName`.
+   * Get the length of time in milliseconds that an actor animates for.  You can scope this and get the length of time that a specific track animates for with `opt_trackName`.
    *
    * __[Example](../../../../docs/examples/actor_get_length.html)__
    * @param {string} opt_trackName
@@ -496,7 +510,7 @@ rekapiModules.push(function (context) {
   };
 
   /*
-   * Determines if an actor has a keyframe set at a given millisecond.  Can optionally scope the lookup to a specific property name.
+   * Determines if an actor has any properties of a keyframe set at a given millisecond.  You can scope this and get the length of time that a specific track animates for with `opt_trackName`.
    *
    * @param {number} millisecond Point on the timeline to query.
    * @param {string} opt_trackName Optional name of a property track.
@@ -633,7 +647,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Remove all `KeyframeProperty`s set on the `Actor`.
+   * Remove all [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s set on the actor.
    *
    * __[Example](../../../../docs/examples/actor_remove_all_keyframe_properties.html)__
    * @return {Rekapi.Actor}
@@ -671,7 +685,7 @@ rekapiModules.push(function (context) {
   };
 
   /*!
-   * Calculate and set the `Actor`'s position at `millisecond` in the animation.
+   * Calculate and set the actor's position at `millisecond` in the animation.
    *
    * @param {number} millisecond
    * @return {Rekapi.Actor}
@@ -726,7 +740,7 @@ rekapiModules.push(function (context) {
   Actor.prototype._afterKeyframePropertyInterpolate = noop;
 
   /**
-   * Export a serializable `Object` of this `Actor`'s timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s.
+   * Export a serializable Object of this actor's timeline property tracks and [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s.
    *
    * __[Example](../../../../docs/examples/actor_export_timeline.html)__
    * @return {Object}
@@ -750,7 +764,7 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Import an `Object` to augment this actor's state.  Does not remove keyframe properties before importing new ones, so this could be used to "merge" keyframes across multiple actors.
+   * Import an Object to augment this actor's state.  Does not remove keyframe properties before importing new ones, so this could be used to "merge" keyframes across multiple actors.
    *
    * @param {Object} actorData Any object that has the same data format as the object generated from Actor#exportTimeline.
    */
