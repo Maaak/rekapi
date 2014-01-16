@@ -173,16 +173,14 @@ rekapiModules.push(function (context) {
   }
 
   /**
-   * Create a `Rekapi.Actor` instance.  Note that the rest of the API docs for `Rekapi.Actor` will simply refer to this Object as `Actor`.
+   * An actor represents an individual component of an animation.  An animation may have one or many actors.
    *
    * Valid properties of `opt_config` (you can omit the ones you don't need):
    *
-   * - __context__ (_Object_): The context that this Actor is associated with. If omitted, this Actor gets the `Rekapi` instance's context when it is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
-   * - __setup__ (_Function_): A function that gets called when the `Actor` is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
-   * - __update__ (_Function(Object, Object)_): A function that gets called every time that the `Actor`'s state is updated. It receives two parameters: A reference to the `Actor`'s context and an Object containing the current state properties.
-   * - __teardown__ (_Function_): A function that gets called when the `Actor` is removed with [`Rekapi#removeActor`](rekapi.core.js.html#removeActor).
-   *
-   * `Rekapi.Actor` does _not_ render to any context.  It is a base class.  Use the [`Rekapi.CanvasActor`](../renderers/canvas/rekapi.canvas.actor.js.html) or [`Rekapi.DOMActor`](../renderers/dom/rekapi.dom.actor.js.html) subclasses to render to the screen.  You can also make your own rendering subclass - see the source code for the aforementioned examples.
+   * - __context__ (_Object_): The rendering context that this actor is associated with. If omitted, this Actor gets the parent `Rekapi` instance's context when it is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
+   * - __setup__ (_Function_): A function that gets called when the actor is added to an animation with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
+   * - __render__ (_Function(Object, Object)_): A function that gets called every time the actor's state is updated (once every frame). This function should do something meaningful with state of the actor (for example, visually rendering to the screen).  This function receives two parameters: A reference to the actor's `context` and an Object containing the current state properties.
+   * - __teardown__ (_Function_): A function that gets called when the actor is removed from an animation with [`Rekapi#removeActor`](rekapi.core.js.html#removeActor).
    *
    * __[Example](../../../../docs/examples/actor.html)__
    * @param {Object} opt_config
@@ -222,15 +220,15 @@ rekapiModules.push(function (context) {
   // `Tweenable` constructor.
 
   /**
-   * Create a keyframe for the `Actor`.  `millisecond` defines where in the animation to place the keyframe, in milliseconds (assumes that `0` is when the animation began).  The animation length will automatically "grow" to accommodate any keyframe position.
+   * Create a keyframe for the actor.  `millisecond` defines where in the animation's timeline to place the keyframe (assumes that `0` is when the animation began).  The animation timeline's length will automatically "grow" to accommodate new keyframe positions.
    *
-   * `properties` should contain all of the properties that define the keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, color strings, CSS properties).
+   * `properties` should contain all of the properties that define this keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, RGB/hexadecimal color strings, and CSS properties).
    *
-   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Actor` APIs.
+   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Rekapi.Actor` APIs.
    *
    * ## Easing
    *
-   * `opt_easing`, if specified, can be a string or an Object.  If it's a string, all properties in `properties` will have the same easing formula applied to them. For example:
+   * `opt_easing`, if specified, can be a string or an Object.  If it's a string, all properties in `properties` will have the same easing curve applied to them. For example:
    *
    * ```javascript
    * actor.keyframe(1000, {
@@ -239,7 +237,7 @@ rekapiModules.push(function (context) {
    *   }, 'easeOutSine');
    * ```
    *
-   * Both `x` and `y` will have `easeOutSine` applied to them.  You can also specify multiple easing formulas with an Object:
+   * Both `x` and `y` will have `easeOutSine` applied to them.  You can also specify multiple easing curves with an Object:
    *
    * ```javascript
    * actor.keyframe(1000, {
@@ -255,21 +253,21 @@ rekapiModules.push(function (context) {
    *
    * ## Keyframe inheritance
    *
-   * Keyframes always inherit missing properties from the keyframes that came before them.  For example:
+   * Keyframes always inherit missing properties from the previous keyframe.  For example:
    *
    * ```javascript
    * actor.keyframe(0, {
    *   'x': 100
    * }).keyframe(1000{
-   *   // Inheriting the `x` from above!
+   *   // Inheriting the `x: 100` from above!
    *   'y': 50
    * });
    * ```
    *
-Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was inherited from keyframe `0`.
+   * Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was inherited from keyframe `0`.
    * @param {number} millisecond Where on the timeline to set the keyframe.
-   * @param {Object} properties Keyframe properties to set for the keyframe.
-   * @param {string|Object} opt_easing Optional easing string or configuration object.
+   * @param {Object} properties The state properties of the keyframe.
+   * @param {string|Object=} opt_easing Optional easing string or Object.
    * @return {Rekapi.Actor}
    */
   Actor.prototype.keyframe = function keyframe (
@@ -313,11 +311,11 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
+   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an actor's [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if no properties were found.
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
-   * @param {number} index The 0-based index of the KeyframeProperty in the Actor's KeyframeProperty track.
+   * @param {number} index The 0-based index of the KeyframeProperty in the actor's KeyframeProperty track.
    * @return {Rekapi.KeyframeProperty|undefined}
    */
   Actor.prototype.getKeyframeProperty = function (property, index) {
@@ -328,7 +326,7 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
+   * Modify a [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an actor.  This calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
    *
    * __[Example](../../../../docs/examples/actor_modify_keyframe_property.html)__
    * @param {string} property The name of the property to modify
