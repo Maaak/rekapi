@@ -1,4 +1,4 @@
-/*! Rekapi - v0.16.4 - 2014-01-13 - http://rekapi.com */
+/*! Rekapi - v0.16.4 - 2014-01-15 - http://rekapi.com */
 /*!
  * Rekapi - Rewritten Kapi.
  * https://github.com/jeremyckahn/rekapi
@@ -603,7 +603,7 @@ var rekapiCore = function (root, _, Tweenable) {
   };
 
   /**
-   * Import data that was created by [`exportTimeline`](#exportTimeline).  Sets up all necessary actors and keyframes.  Note that this method only creates `Rekapi.Actor` instances, not subclasses like [`Rekapi.DOMActor`](/dist/doc/renderers/dom/rekapi.dom.actor.js.html#DOMActor) or [`Rekapi.CanvasActor`](/dist/doc/renderers/canvas/rekapi.canvas.actor.js.html#CanvasActor).
+   * Import data that was created by [`exportTimeline`](#exportTimeline).  This sets up all necessary actors and keyframes.  These methods collectively allow you serialize an animation (for sending to a server for persistence, for example) and later recreating an identical animation.
    *
    * @param {Object} rekapiData Any object that has the same data format as the object generated from Rekapi#exportTimeline.
    */
@@ -809,16 +809,14 @@ rekapiModules.push(function (context) {
   }
 
   /**
-   * Create a `Rekapi.Actor` instance.  Note that the rest of the API docs for `Rekapi.Actor` will simply refer to this Object as `Actor`.
+   * An actor represents an individual component of an animation.  An animation may have one or many actors.
    *
    * Valid properties of `opt_config` (you can omit the ones you don't need):
    *
-   * - __context__ (_Object_): The context that this Actor is associated with. If omitted, this Actor gets the `Rekapi` instance's context when it is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
-   * - __setup__ (_Function_): A function that gets called when the `Actor` is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
-   * - __update__ (_Function(Object, Object)_): A function that gets called every time that the `Actor`'s state is updated. It receives two parameters: A reference to the `Actor`'s context and an Object containing the current state properties.
-   * - __teardown__ (_Function_): A function that gets called when the `Actor` is removed with [`Rekapi#removeActor`](rekapi.core.js.html#removeActor).
-   *
-   * `Rekapi.Actor` does _not_ render to any context.  It is a base class.  Use the [`Rekapi.CanvasActor`](../renderers/canvas/rekapi.canvas.actor.js.html) or [`Rekapi.DOMActor`](../renderers/dom/rekapi.dom.actor.js.html) subclasses to render to the screen.  You can also make your own rendering subclass - see the source code for the aforementioned examples.
+   * - __context__ (_Object_): The rendering context that this actor is associated with. If omitted, this Actor gets the parent `Rekapi` instance's context when it is added with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
+   * - __setup__ (_Function_): A function that gets called when the actor is added to an animation with [`Rekapi#addActor`](rekapi.core.js.html#addActor).
+   * - __render__ (_Function(Object, Object)_): A function that gets called every time the actor's state is updated (once every frame). This function should do something meaningful with state of the actor (for example, visually rendering to the screen).  This function receives two parameters: A reference to the actor's `context` and an Object containing the current state properties.
+   * - __teardown__ (_Function_): A function that gets called when the actor is removed from an animation with [`Rekapi#removeActor`](rekapi.core.js.html#removeActor).
    *
    * __[Example](../../../../docs/examples/actor.html)__
    * @param {Object} opt_config
@@ -858,15 +856,15 @@ rekapiModules.push(function (context) {
   // `Tweenable` constructor.
 
   /**
-   * Create a keyframe for the `Actor`.  `millisecond` defines where in the animation to place the keyframe, in milliseconds (assumes that `0` is when the animation began).  The animation length will automatically "grow" to accommodate any keyframe position.
+   * Create a keyframe for the actor.  `millisecond` defines where in the animation's timeline to place the keyframe (assumes that `0` is when the animation began).  The animation timeline's length will automatically "grow" to accommodate new keyframe positions.
    *
-   * `properties` should contain all of the properties that define the keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, color strings, CSS properties).
+   * `properties` should contain all of the properties that define this keyframe's state.  These properties can be any value that can be tweened by [Shifty](https://github.com/jeremyckahn/shifty) (numbers, RGB/hexadecimal color strings, and CSS properties).
    *
-   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Actor` APIs.
+   * __Note:__ Internally, this creates [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s and places them on a "track."  These [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s are managed for you by the `Rekapi.Actor` APIs.
    *
    * ## Easing
    *
-   * `opt_easing`, if specified, can be a string or an Object.  If it's a string, all properties in `properties` will have the same easing formula applied to them. For example:
+   * `opt_easing`, if specified, can be a string or an Object.  If it's a string, all properties in `properties` will have the same easing curve applied to them. For example:
    *
    * ```javascript
    * actor.keyframe(1000, {
@@ -875,7 +873,7 @@ rekapiModules.push(function (context) {
    *   }, 'easeOutSine');
    * ```
    *
-   * Both `x` and `y` will have `easeOutSine` applied to them.  You can also specify multiple easing formulas with an Object:
+   * Both `x` and `y` will have `easeOutSine` applied to them.  You can also specify multiple easing curves with an Object:
    *
    * ```javascript
    * actor.keyframe(1000, {
@@ -891,21 +889,21 @@ rekapiModules.push(function (context) {
    *
    * ## Keyframe inheritance
    *
-   * Keyframes always inherit missing properties from the keyframes that came before them.  For example:
+   * Keyframes always inherit missing properties from the previous keyframe.  For example:
    *
    * ```javascript
    * actor.keyframe(0, {
    *   'x': 100
    * }).keyframe(1000{
-   *   // Inheriting the `x` from above!
+   *   // Inheriting the `x: 100` from above!
    *   'y': 50
    * });
    * ```
    *
-Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was inherited from keyframe `0`.
+   * Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was inherited from keyframe `0`.
    * @param {number} millisecond Where on the timeline to set the keyframe.
-   * @param {Object} properties Keyframe properties to set for the keyframe.
-   * @param {string|Object} opt_easing Optional easing string or configuration object.
+   * @param {Object} properties The state properties of the keyframe.
+   * @param {string|Object=} opt_easing Optional easing string or Object.
    * @return {Rekapi.Actor}
    */
   Actor.prototype.keyframe = function keyframe (
@@ -949,38 +947,37 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an `Actor`'s [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if there were no properties found with the specified parameters.
+   * Gets the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) from an actor's [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) track. Returns `undefined` if no properties were found.
    *
    * __[Example](../../../../docs/examples/actor_get_keyframe_property.html)__
    * @param {string} property The name of the property.
-   * @param {number} index The 0-based index of the KeyframeProperty in the Actor's KeyframeProperty track.
+   * @param {number} index The millisecond of the property in the timeline.
    * @return {Rekapi.KeyframeProperty|undefined}
    */
-  Actor.prototype.getKeyframeProperty = function (property, index) {
-    if (this._propertyTracks[property]
-        && this._propertyTracks[property][index]) {
-      return this._propertyTracks[property][index];
+  Actor.prototype.getKeyframeProperty = function (property, millisecond) {
+    var propertyTrack = this._propertyTracks[property];
+    if (propertyTrack) {
+      return _.findWhere(propertyTrack, { millisecond: millisecond });
     }
   };
 
   /**
-   * Modify a specified [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an `Actor`.  Essentially, this calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
+   * Modify a [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an actor.  This calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
    *
    * __[Example](../../../../docs/examples/actor_modify_keyframe_property.html)__
-   * @param {string} property The name of the property to modify
-   * @param {number} index The property track index of the KeyframeProperty to modify
-   * @param {Object} newProperties The properties to augment the KeyframeProperty with
+   * @param {string} property The name of the property to modify.
+   * @param {number} millisecond The timeline millisecond of the KeyframeProperty to modify.
+   * @param {Object} newProperties The properties to augment the KeyframeProperty with.
    * @return {Rekapi.Actor}
    */
   Actor.prototype.modifyKeyframeProperty = function (
-      property, index, newProperties) {
+      property, millisecond, newProperties) {
 
-    if (this._propertyTracks[property]
-        && this._propertyTracks[property][index]) {
-      this._propertyTracks[property][index].modifyWith(newProperties);
+    var keyframeProperty = this.getKeyframeProperty(property, millisecond);
+    if (keyframeProperty) {
+      keyframeProperty.modifyWith(newProperties);
+      cleanupAfterKeyframeModification(this);
     }
-
-    cleanupAfterKeyframeModification(this);
 
     return this;
   };
@@ -996,18 +993,18 @@ Keyframe `1000` will have a `y` of `50`, and an `x` of `100`, because `x` was in
   };
 
   /**
-   * Get the property track length for an `Actor` (how many `KeyframeProperty`s are in a given property track).
+   * Get all of the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s for a track.
    *
    * __[Example](../../../../docs/examples/actor_get_track_length.html)__
    * @param {string} trackName
-   * @return {number}
+   * @return {Array}
    */
-  Actor.prototype.getTrackLength = function (trackName) {
-    if (!this._propertyTracks[trackName]) {
-      return;
-    }
+  Actor.prototype.getPropertiesInTrack = function (trackName) {
+    var propertyTrack = this._propertyTracks[trackName];
 
-    return this._propertyTracks[trackName].length;
+    if (propertyTrack) {
+      return propertyTrack.slice(0);
+    }
   };
 
   /**
@@ -1511,7 +1508,6 @@ rekapiModules.push(function (context) {
 
 });
 
-/* global CanvasRenderingContext2D */
 rekapiModules.push(function (context) {
 
   'use strict';
@@ -1554,24 +1550,25 @@ rekapiModules.push(function (context) {
    */
   function render (rekapi) {
     fireEvent(rekapi, 'beforeRender', _);
-    var len = rekapi.renderer._renderOrder.length;
+    var renderer = rekapi.renderer;
+    var renderOrderSorter = renderer._renderOrderSorter;
+    var len = renderer._renderOrder.length;
     var renderOrder;
 
-    if (rekapi.renderer._renderOrderSorter) {
-      var orderedActors =
-          _.sortBy(rekapi.renderer._canvasActors, rekapi.renderer._renderOrderSorter);
+    if (renderOrderSorter) {
+      var orderedActors = _.sortBy(renderer._canvasActors, renderOrderSorter);
       renderOrder = _.pluck(orderedActors, 'id');
     } else {
-      renderOrder = rekapi.renderer._renderOrder;
+      renderOrder = renderer._renderOrder;
     }
 
-    var currentActor, canvas_context;
+    var currentActor;
+    var canvasActors = renderer._canvasActors;
 
     var i;
     for (i = 0; i < len; i++) {
-      currentActor = rekapi.renderer._canvasActors[renderOrder[i]];
-      canvas_context = currentActor.context;
-      currentActor.render(canvas_context, currentActor.get());
+      currentActor = canvasActors[renderOrder[i]];
+      currentActor.render(currentActor.context, currentActor.get());
     }
     fireEvent(rekapi, 'afterRender', _);
 
@@ -1603,7 +1600,8 @@ rekapiModules.push(function (context) {
    * @param {Rekapi} rekapi
    */
   Rekapi._rendererInitHook.canvas = function (rekapi) {
-    if (!(rekapi.context instanceof CanvasRenderingContext2D)) {
+    if (typeof CanvasRenderingContext2D === 'undefined' ||
+        !(rekapi.context instanceof CanvasRenderingContext2D)) {
       return;
     }
 
@@ -1632,10 +1630,12 @@ rekapiModules.push(function (context) {
    * rekapi.renderer instanceof Rekapi.CanvasRenderer; // true
    * ```
    *
-   * `Rekapi.CanvasRenderer` adds some canvas-specifi events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)):
+   * `Rekapi.CanvasRenderer` adds some canvas-specific events you can bind to with [`Rekapi#on`](../../src/rekapi.core.js.html#on) (and unbind from with [`Rekapi#off`](../../src/rekapi.core.js.html#off)):
    *
    *  - __beforeRender__: Fires just before an actor is rendered to the screen.
    *  - __afterRender__: Fires just after an actor is rendered to the screen.
+   *
+   *  __Note__: `Rekapi.CanvasRenderer` is instantiated for you automatically as `renderer`, there is no reason to call it yourself for most use cases.
    *
    * @param {Rekapi} rekapi
    * @constructor
@@ -1681,7 +1681,9 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Move an actor around in the layer list.  Each actor is rendered in order of its layer (layers and actors have a 1:1 relationship).  Lower layers (starting with 0) are rendered earlier.  If `layer` is higher than the number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
+   * Move an actor's layer.  Each actor is rendered in order of its layer (layers and actors have a 1:1 relationship).  The later an actor is added to an animation, the higher its layer.  Lower layers (starting with 0) are rendered earlier.
+   *
+   * If `layer` is higher than the total number of layers (which can be found with [`actorCount`](../../src/rekapi.core.js.html#actorCount)) or lower than 0, this method will return `undefined`.  Otherwise `actor` is returned.
    *
    * __[Example](../../../../docs/examples/canvas_move_actor_to_layer.html)__
    * @param {Rekapi.Actor} actor
@@ -1700,7 +1702,11 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Set a function that defines the render order of the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s.  This is called each frame before the [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are rendered.  The following example assumes that all [`Rekapi.CanvasActor`](rekapi.canvas.actor.js.html)s are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframe-property.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, giving a sense of perspective.
+   * Set a function that defines the render order of the actors.  This is called each frame before the actors are rendered.
+   *
+   * The following example assumes that all actors are circles that have a `radius` [`Rekapi.KeyframeProperty`](../../src/rekapi.keyframe-property.js.html).  The circles will be rendered in order of the value of their `radius`, from smallest to largest.  This has the effect of layering larger circles on top of smaller circles, thus giving a sense of perspective.
+   *
+   * If a render order function is specified, layer changes made [`moveActorToLayer`](#moveActorToLayer) will be ignored.
    *
    * ```
    * rekapi.renderer.setOrderFunction(function (actor) {
@@ -1794,8 +1800,7 @@ rekapiModules.push(function (context) {
 
     // Node.nodeType 1 is an ELEMENT_NODE.
     // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
-    if (context.nodeType === 1 &&
-        context.nodeName.toLowerCase() !== 'canvas') {
+    if (context.nodeType === 1) {
       rekapi.renderer = new DOMRenderer(rekapi);
     }
   };
@@ -2023,38 +2028,57 @@ rekapiModules.push(function (context) {
   //
 
   /**
-   * The `DOMRenderer` module allows you to run a Rekapi animation as a CSS `@keyframe` animation.  Standard Rekapi animations are powered by JavaScript, but in many cases using CSS `@keyframes` is more performant.  `DOMRenderer` depends on [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
+   * `DOMRenderer` allows you to animate DOM elements.  This is achieved either by browser-accelerated [CSS `@keyframe` animations](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes), or by traditional inline style-based updates on every frame (like how [`jQuery.fn.animate`](http://api.jquery.com/animate/) works).  Animations are defined with the same API in either case, but you can gracefully fall back to the inline style approach if CSS `@keyframe` animations are not supported by the browser.  To render animations with the DOM, just supply any DOM element to the `Rekapi` constructor.  You may use `document.body`, since it is generally always available:
    *
-   * This method of animation is call "CSS Prerendering."  [See this article for more information](http://jeremyckahn.github.io/blog/2013/07/28/60-fps-or-bust-dynamically-prerendering-css-animations/).
+   * ```
+   * var rekapi = new Rekapi(document.body);
+   * rekapi.renderer instanceof Rekapi.DOMRenderer; // true
+   * ```
    *
-   * Advantages of playing an animation with CSS `@keyframes` instead of JavaScript:
+   * There are separate APIs for playing inline style animations and CSS `@keyframe` animations.  Advantages of playing an animation with CSS `@keyframes`:
    *
-   *   - Smoother animations in modern browsers (particularly noticeable in Webkit and mobile browsers).
+   *   - Smoother animations in modern browsers (particularly noticeable in Webkit and iOS browsers).
    *   - The JavaScript thread is freed from performing animation updates, making it available for other logic.
    *
-   * Disadvantages of CSS `@keyframes`:
+   * Disadvantages:
    *
-   *   - No start/stop/goto control - once the animation runs, it runs from start to finish.
-   *   - Prerending animations can take a noticeable amount of time, so you may have to be clever with how to spend the cycles to do it.
-   *   - No `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS animations.
+   *   - Not all browsers render CSS `@keyframe` animations smoothly.
+   *   - Limited playback control: You can only play and stop an animation, you cannot jump to or start from a specific point in the timeline.
+   *   - Generating the CSS for `@keyframe` animations can take a noticeable amount of time.  This blocks all other logic, including rendering, so you may have to be clever with how to spend the cycles to do it.
+   *   - No `Rekapi` [events](../../src/rekapi.core.js.html#on) can be bound to CSS `@keyframe` animations.
    *
-   * `DOMRenderer` can gracefully fall back to a JavaScript animation if CSS animations are not supported by the browser.  Both approaches use the same Rekapi API, but you can choose what method of animation is appropriate at run time:
+   * So, the results are a little more predictable and flexible with inline style animations, but CSS `@keyframe` may give you better performance.  Choose whichever approach makes the most sense for your needs.
+   *
+   * `DOMRenderer` can gracefully fall back to an inline style animation if CSS `@keyframe` animations are not supported by the browser:
    *
    * ```
    *  var rekapi = new Rekapi(document.body);
-   *  var actor = new Rekapi.DOMActor(document.getElementById('actor-1'));
+   *  var actor = rekapi.addActor({ context: document.getElementById('actor-1') });
    *
-   *  rekapi.addActor(actor);
    *  actor.keyframe(0,    { left: '0px'   });
    *  actor.keyframe(1000, { left: '250px' }, 'easeOutQuad');
    *
-   *  // Feature detect for @keyframe support
+   *  // Feature detect for CSS @keyframe support
    *  if (rekapi.renderer.canAnimateWithCSS()) {
+   *    // Animate with CSS @keyframes
    *    rekapi.renderer.animateWithCSS();
    *  } else {
+   *    // Animate inline styles instead
    *    rekapi.play();
    *  }
    * ```
+   *
+   * ## CSS `@keyframe` animations are controlled differently from inline style animations
+   *
+   * Inline style animations are compatible with all of the playback and timeline control methods defined by [`Rekapi`](../../src/rekapi.core.js.html#Rekapi), such as [`play`](../../src/rekapi.core.js.html#play), [`playFrom`](../../src/rekapi.core.js.html#playFrom) and [`update`](../../src/rekapi.core.js.html#update).  CSS `@keyframe` playback cannot be controlled, so `DOMRenderer` defines its own renderer-specific playback methods that you should use:
+   *
+   * - [`animateWithCSS`](#animateWithCSS)
+   * - [`isPlaying`](#isPlaying)
+   * - [`stop`](#stop)
+   *
+   * This is due to a limitation of the CSS `@keyframe` specification.
+   *
+   *  __Note__: `Rekapi.DOMRenderer` is instantiated for you automatically as `renderer`, there is no reason to call it yourself for most use cases.
    *
    * __[Example](/renderers/dom/sample/play-many-actors.html)__
    *
@@ -2088,7 +2112,99 @@ rekapiModules.push(function (context) {
   var DOMRenderer = Rekapi.DOMRenderer;
 
   /**
-   * This can be useful when used with [DOMRenderer#toString](../css-animate/rekapi.renderer.dom.js.html).  You might not ever need to use this directly, as the class is attached to an element when you create a `Rekapi.DOMActor` from said element.
+   * Whether or not the browser supports CSS `@keyframe` animations.
+   *
+   * @return {boolean}
+   */
+  DOMRenderer.prototype.canAnimateWithCSS = function () {
+    return !!getVendorPrefix();
+  };
+
+  /**
+   * Play the Rekapi animation as a CSS `@keyframe` animation.
+   *
+   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
+   * @param {number=} opt_fps How many @keyframes to generate per second of the animation.  A higher value results in a more precise CSS animation, but it will take longer to generate.  The default value is 30.  You should not need to go higher than 60.
+   */
+  DOMRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
+    if (this.isPlaying()) {
+      this.stop();
+    }
+
+    var css = this._cachedCSS || this.prerender.apply(this, arguments);
+    this._styleElement = injectStyle(css);
+    this._playTimestamp = now();
+
+    if (navigator.userAgent.match(/Presto/)) {
+      forceStyleInjection(this.rekapi);
+    }
+
+    if (opt_iterations) {
+      var animationLength = (opt_iterations * this.rekapi.animationLength());
+      this._stopSetTimeoutHandle = setTimeout(
+          _.bind(this.stop, this, true),
+          animationLength + INJECTED_STYLE_REMOVAL_BUFFER_MS);
+    }
+
+    fireEvent(this.rekapi, 'play', _);
+  };
+
+  /**
+   * Stop a CSS `@keyframe` animation.  This also removes any `<style>` elements that were dynamically injected into the DOM.  This method sets inline styles on actor elements to stay either in their target or current position.
+   *
+   * Note that this is different from [`Rekapi#stop`](../../src/rekapi.rekapi.js.html#stop).  This method only applies to CSS `@keyframe` animations.
+   *
+   * @param {boolean} opt_goToEnd If true, skip to the end of the animation.  If false or omitted, set the actor elements to stay in their current position.
+   */
+  DOMRenderer.prototype.stop = function (opt_goToEnd) {
+    if (this.isPlaying()) {
+      clearTimeout(this._stopSetTimeoutHandle);
+
+      // Forces a style update in WebKit/Presto
+      this._styleElement.innerHTML = '';
+
+      document.head.removeChild(this._styleElement);
+      this._styleElement = null;
+
+      var updateTime;
+      if (opt_goToEnd) {
+        updateTime = this.rekapi.animationLength();
+      } else {
+        updateTime = (now() - this._playTimestamp)
+            % this.rekapi.animationLength();
+      }
+
+      this.rekapi.update(updateTime);
+      fireEvent(this.rekapi, 'stop', _);
+    }
+  };
+
+  /**
+   * Prerender and cache the CSS animation so that it is immediately ready to be used when it is needed in the future.  The function signature is identical to [`DOMRenderer#animateWithCSS`](#animateWithCSS).  This is necessary to run a CSS animation and will be automatically called for you if you don't call it manually, but calling it ahead of time (such as on page load) will prevent any perceived lag when a CSS `@keyframe` animation is started.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
+   *
+   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
+   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a more precise CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
+   * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
+   */
+  DOMRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
+    return this._cachedCSS = this.toString({
+      'vendors': [getVendorPrefix()]
+      ,'fps': opt_fps
+      ,'iterations': opt_iterations
+    });
+  };
+
+  /**
+   * Whether or not a CSS `@keyframe` animation is running.
+   *
+   * @return {boolean}
+   */
+  DOMRenderer.prototype.isPlaying = function () {
+    return !!this._styleElement;
+  };
+
+  /**
+   * This is the default CSS class that is added to actors by [DOMRenderer#toString](../css-animate/rekapi.renderer.dom.js.html) if a custom animation name is not specified.  This may be useful for getting a standard and consistent CSS class name for an actor's DOM element.
    * @param {Rekapi.Actor} actor
    * @return {string}
    */
@@ -2117,7 +2233,7 @@ rekapiModules.push(function (context) {
    *   });
    * ```
    *
-   * Since CSS transform components are order-dependent, Rekapi must combine the transform components into a single string when it renders each frame.  This method lets you redefine that order.  The supported array values for `orderedFunctions` are:
+   * CSS transform string components are order-dependent, but JavaScript object properties have an unpredictable order.  Rekapi must combine transform properties supplied to [`keyframe()`](../../src/rekapi.actor.js.html#keyframe) (as shown above) into a single string when it renders each frame.  This method lets you change that order from the default.  The supported array values for `orderedFunctions` are:
    *
    * - `translateX`
    * - `translateY`
@@ -2141,9 +2257,11 @@ rekapiModules.push(function (context) {
    *   }, 'easeOutExpo easeInSine elastic');
    * ```
    *
+   * This example the one above it are equivalent.
+   *
    * @param {Rekapi.Actor} actor
    * @param {Array} orderedFunctions The array of transform function names
-   * @return {Rekapi.DOMRenderer}
+   * @return {Rekapi}
    */
   DOMRenderer.prototype.setActorTransformOrder = function (actor, orderedFunctions) {
     // TODO: Document this better...
@@ -2156,97 +2274,7 @@ rekapiModules.push(function (context) {
     // Ignore duplicate transform function names in the array
     actor._transformOrder = _.uniq(orderedFunctions);
 
-    return this;
-  };
-
-  /**
-   * Whether or not the browser supports CSS `@keyframe` animations.
-   *
-   * @return {boolean}
-   */
-  DOMRenderer.prototype.canAnimateWithCSS = function () {
-    return !!getVendorPrefix();
-  };
-
-  /**
-   * Play the Rekapi animation as a `@keyframe` animation.
-   *
-   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
-   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
-   */
-  DOMRenderer.prototype.animateWithCSS = function (opt_iterations, opt_fps) {
-    if (this.isPlaying()) {
-      this.stop();
-    }
-
-    var css = this._cachedCSS || this.prerender.apply(this, arguments);
-    this._styleElement = injectStyle(css);
-    this._playTimestamp = now();
-
-    if (navigator.userAgent.match(/Presto/)) {
-      forceStyleInjection(this.rekapi);
-    }
-
-    if (opt_iterations) {
-      var animationLength = (opt_iterations * this.rekapi.animationLength());
-      this._stopSetTimeoutHandle = setTimeout(
-          _.bind(this.stop, this, true),
-          animationLength + INJECTED_STYLE_REMOVAL_BUFFER_MS);
-    }
-
-    fireEvent(this.rekapi, 'play', _);
-  };
-
-  /**
-   * Prerender and cache the CSS animation so that it is ready to be used when it is needed in the future.  The function signature is identical to [`DOMRenderer#animateWithCSS`](#play).  This is necessary to run a CSS animation and will be called for you if you don't call it manually, but calling this ahead of time (such as on page load) will prevent any perceived lag when a CSS animation starts.  The prerendered animation is cached for reuse until the timeline is modified (by adding, removing or modifying a keyframe).
-   *
-   * @param {number=} opt_iterations How many times the animation should loop.  This can be null or 0 if you want to loop the animation endlessly but also specify a value for opt_fps.
-   * @param {number=} opt_fps How many @keyframes to prerender per second of the animation.  A higher value results in a smoother CSS animation, but it will take longer to prerender.  The default value is 30.  You should not need to go higher than 60.
-   * @return {string} The prerendered CSS string.  You likely won't need this, as it is also cached internally.
-   */
-  DOMRenderer.prototype.prerender = function (opt_iterations, opt_fps) {
-    return this._cachedCSS = this.toString({
-      'vendors': [getVendorPrefix()]
-      ,'fps': opt_fps
-      ,'iterations': opt_iterations
-    });
-  };
-
-  /**
-   * Stop a CSS animation.  This also removes any `<style>` elements that were dynamically injected into the DOM.  This method sets inline styles on actor elements to stay either in their target or current position.
-   *
-   * @param {boolean} opt_goToEnd If true, skip to the end of the animation.  If false or omitted, set the actor elements to stay in their current position.
-   */
-  DOMRenderer.prototype.stop = function (opt_goToEnd) {
-    if (this.isPlaying()) {
-      clearTimeout(this._stopSetTimeoutHandle);
-
-      // Forces a style update in WebKit/Presto
-      this._styleElement.innerHTML = '';
-
-      document.head.removeChild(this._styleElement);
-      this._styleElement = null;
-
-      var updateTime;
-      if (opt_goToEnd) {
-        updateTime = this.rekapi.animationLength();
-      } else {
-        updateTime = (now() - this._playTimestamp)
-            % this.rekapi.animationLength();
-      }
-
-      this.rekapi.update(updateTime);
-      fireEvent(this.rekapi, 'stop', _);
-    }
-  };
-
-  /**
-   * Whether or not a CSS animation is running.
-   *
-   * @return {boolean}
-   */
-  DOMRenderer.prototype.isPlaying = function () {
-    return !!this._styleElement;
+    return this.rekapi;
   };
 
   // DOMRenderer.prototype.toString CODE
@@ -2327,8 +2355,8 @@ rekapiModules.push(function (context) {
    *    - `'opera'`
    *    - `'w3'`
    *    - `'webkit'`
-   *  - __fps__ _(number)_: Defaults to 30.  Defines the "resolution" of a generated animation.  CSS `@keyframes` are comprised of a series of explicitly defined keyframe steps, and more steps will allow for a more complex animation.  More steps will also result in a larger CSS string, and more time needed to generate the string.
-   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  If omitted, the value is the same as the CSS class that was added when the DOM element was used to initialize its [`Rekapi.DOMActor`](rekapi.dom.actor.js.html#DOMActor).
+   *  - __fps__ _(number)_: Defaults to 30.  Defines the number of CSS `@keyframe` frames rendered per second of an animation.  CSS `@keyframes` are comprised of a series of explicitly defined keyframe steps, and more steps will allow for a more complex animation.  More steps will also result in a larger CSS string, and more time needed to generate the string.
+   *  - __name__ _(string)_: Define a custom name for your animation.  This becomes the class name targeted by the generated CSS.  The default value is determined by a call to [`getActorClassName`](#getActorClassName).
    *  - __isCentered__ _(boolean)_: If `true`, the generated CSS will contain `transform-origin: 0 0;`, which centers the DOM element along the path of motion.  If `false` or omitted, no `transform-origin` rule is specified and the element is aligned to the path of motion with its top-left corner.
    *  - __iterations__ _(number)_: How many times the generated animation should repeat.  If omitted, the animation will loop indefinitely.
    *
