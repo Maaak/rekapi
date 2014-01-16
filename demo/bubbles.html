@@ -127,13 +127,14 @@
               ,keyProp
               ,newMillisecond
               ,randomNumber
-              ,trackLength = bubble.getTrackLength(trackName);
+              ,track = bubble.getPropertiesInTrack(trackName)
+              ,trackLength = track.length;
 
           for (i = 1; i < trackLength - 1; i++) {
             keyProp = bubble.getKeyframeProperty(trackName, i);
             randomNumber = (Math.random() * 1000) - 50;
             newMillisecond = keyProp.millisecond + randomNumber;
-            bubble.modifyKeyframeProperty(trackName, i, {
+            bubble.modifyKeyframeProperty(trackName, track[i].millisecond, {
               'millisecond': newMillisecond
             });
           }

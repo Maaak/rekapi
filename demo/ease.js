@@ -112,12 +112,12 @@ $(function () {
 
   function  moveLastKeyframe (actor, toMillisecond) {
     var trackNames = actor.getTrackNames();
-    var lastFrameIndex = actor.getTrackLength(trackNames[0]) - 1;
+    var lastKeyframe = _.last(actor.getPropertiesInTrack(trackNames[0]));
 
     _.each(trackNames, function (trackName) {
-      actor.modifyKeyframeProperty(trackName, lastFrameIndex, {
-            'millisecond': toMillisecond
-          });
+      actor.modifyKeyframeProperty(trackName, lastKeyframe.millisecond, {
+          'millisecond': toMillisecond
+        });
     });
 
     animationDuration = toMillisecond;
