@@ -90,7 +90,8 @@ rekapiModules.push(function (context) {
    * @param {Rekapi} rekapi
    */
   Rekapi._rendererInitHook.canvas = function (rekapi) {
-    if (!(rekapi.context instanceof CanvasRenderingContext2D)) {
+    if (typeof CanvasRenderingContext2D === 'undefined' ||
+        !(rekapi.context instanceof CanvasRenderingContext2D)) {
       return;
     }
 

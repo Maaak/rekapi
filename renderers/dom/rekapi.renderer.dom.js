@@ -64,8 +64,7 @@ rekapiModules.push(function (context) {
 
     // Node.nodeType 1 is an ELEMENT_NODE.
     // https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
-    if (context.nodeType === 1 &&
-        context.nodeName.toLowerCase() !== 'canvas') {
+    if (context.nodeType === 1) {
       rekapi.renderer = new DOMRenderer(rekapi);
     }
   };
