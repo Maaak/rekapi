@@ -814,10 +814,10 @@
     });
 
 
-    module('getTrackLength');
+    module('getPropertiesInTrack');
 
 
-    test('getTrackLength returns the number of KeyframeProperties in a track',
+    test('getPropertiesInTrack returns an array KeyframeProperties in a track',
         function () {
 
       var testRekapi
@@ -831,8 +831,25 @@
         .keyframe(1000, { x: 2 })
         .keyframe(2000, { x: 3 });
 
-      equal(testActor1.getTrackLength('x'), 3,
-          'Track with Actors has a length');
+      equal(testActor1.getPropertiesInTrack('x').length, 3,
+        'Returned the correct number of KeyframeProperties');
+    });
+
+
+    test('Actor track with no KeyframeProperties returns nothing', function () {
+      var testRekapi
+          ,testActor1;
+
+      testRekapi = setupTestRekapi();
+      testActor1 = setupTestActor(testRekapi);
+
+      testActor1
+        .keyframe(0, {})
+        .keyframe(1000, {})
+        .keyframe(2000, {});
+
+      equal(testActor1.getPropertiesInTrack('x'), undefined,
+          'No properties for track were found');
     });
 
 
@@ -956,23 +973,6 @@
           'Retrieved the correct length of time the "x" track');
       equal(testActor.getLength('y'), 2000,
           'Retrieved the correct length of time the "y" track');
-    });
-
-
-    test('Actor track with no KeyframeProperties cannot be measured', function () {
-      var testRekapi
-          ,testActor1;
-
-      testRekapi = setupTestRekapi();
-      testActor1 = setupTestActor(testRekapi);
-
-      testActor1
-        .keyframe(0, {})
-        .keyframe(1000, {})
-        .keyframe(2000, {});
-
-      equal(testActor1.getTrackLength('x'), undefined,
-          'Track with Actors does not have a length');
     });
 
 

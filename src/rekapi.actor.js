@@ -329,9 +329,9 @@ rekapiModules.push(function (context) {
    * Modify a [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html) stored on an actor.  This calls [`KeyframeProperty#modifyWith`](rekapi.keyframe-property.js.html#modifyWith) (passing along `newProperties`) and then performs some cleanup.
    *
    * __[Example](../../../../docs/examples/actor_modify_keyframe_property.html)__
-   * @param {string} property The name of the property to modify
-   * @param {number} index The property track index of the KeyframeProperty to modify
-   * @param {Object} newProperties The properties to augment the KeyframeProperty with
+   * @param {string} property The name of the property to modify.
+   * @param {number} millisecond The timeline millisecond of the KeyframeProperty to modify.
+   * @param {Object} newProperties The properties to augment the KeyframeProperty with.
    * @return {Rekapi.Actor}
    */
   Actor.prototype.modifyKeyframeProperty = function (
@@ -361,18 +361,18 @@ rekapiModules.push(function (context) {
   };
 
   /**
-   * Get the property track length for an `Actor` (how many `KeyframeProperty`s are in a given property track).
+   * Get all of the [`Rekapi.KeyframeProperty`](rekapi.keyframe-property.js.html)s for a track.
    *
    * __[Example](../../../../docs/examples/actor_get_track_length.html)__
    * @param {string} trackName
-   * @return {number}
+   * @return {Array}
    */
-  Actor.prototype.getTrackLength = function (trackName) {
-    if (!this._propertyTracks[trackName]) {
-      return;
-    }
+  Actor.prototype.getPropertiesInTrack = function (trackName) {
+    var propertyTrack = this._propertyTracks[trackName];
 
-    return this._propertyTracks[trackName].length;
+    if (propertyTrack) {
+      return propertyTrack.slice(0);
+    }
   };
 
   /**
